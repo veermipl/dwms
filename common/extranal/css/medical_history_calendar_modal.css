@@ -1,0 +1,30 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 9, 2021, 8:18:39 PM
+    Author     : sahas
+*/
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+.invoice_test{
+    color: #fff !important;
+}
+.patient_material_class{
+    height: 200px !important; 
+    width: 200px !important; 
+    margin-right:   10px !important ;
+    background: #fff !important; 
+    padding: 35px !important; 
+    border: 1px solid #cccccc !important;
+}
+.documents{
+    text-align: center !important;
+}
+.option_material{
+    padding-left: 25px !important;
+}
+.address_style{
+    height: 200px !important;
+}
