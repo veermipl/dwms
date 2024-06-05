@@ -51,6 +51,8 @@ class Appointment extends MX_Controller
 
     public function request()
     {
+
+
         $data['patients'] = $this->patient_model->getPatient();
         $data['doctors'] = $this->doctor_model->getDoctor();
         $data['settings'] = $this->settings_model->getSettings();
@@ -146,7 +148,7 @@ class Appointment extends MX_Controller
     }
 
     public function addNew()
-    {;
+    {
         $id = $this->input->post('id');
         $patient = $this->input->post('patient');
         $doctor = $this->input->post('doctor');
@@ -232,7 +234,7 @@ class Appointment extends MX_Controller
         // Validating Address Field   
         $this->form_validation->set_rules('remarks', 'Remarks', 'trim|min_length[1]|max_length[1000]|xss_clean');
 
-        if ($this->form_validation->run() == FALSE) {   
+        if ($this->form_validation->run() == FALSE) {
             if (!empty($id)) {
                 redirect("appointment/editAppointment?id=$id");
             } else {
@@ -324,15 +326,15 @@ class Appointment extends MX_Controller
                 'mode_of_consultation' => htmlentities($this->input->post('mode_of_consultation')),
                 'type_of_consultation' => htmlentities($this->input->post('type_of_consultation')),
                 'remarks' => $remarks,
-                'temp' =>htmlentities($this->input->post('temp')),
-                'bp' =>htmlentities($this->input->post('bp')),
-                'pulse' =>htmlentities($this->input->post('pulse')),
-                'spo2' =>htmlentities($this->input->post('spo2')),
-                'rr' =>htmlentities($this->input->post('rr')),
-                'height' =>htmlentities($this->input->post('height')),
-                'weight' =>htmlentities($this->input->post('weight')),
-                'bmi' =>htmlentities($this->input->post('bmi')),
-                'rbs' =>htmlentities($this->input->post('rbs')),
+                'temp' => htmlentities($this->input->post('temp')),
+                'bp' => htmlentities($this->input->post('bp')),
+                'pulse' => htmlentities($this->input->post('pulse')),
+                'spo2' => htmlentities($this->input->post('spo2')),
+                'rr' => htmlentities($this->input->post('rr')),
+                'height' => htmlentities($this->input->post('height')),
+                'weight' => htmlentities($this->input->post('weight')),
+                'bmi' => htmlentities($this->input->post('bmi')),
+                'rbs' => htmlentities($this->input->post('rbs')),
             );
             $username = $this->input->post('name');
             if (empty($id)) {     // Adding New department
@@ -972,7 +974,7 @@ class Appointment extends MX_Controller
         $data = array();
         $id = $this->input->get('id');
         $appointmentData = $this->appointment_model->getAppointmentById($id);
-        if(!$id || !$appointmentData){
+        if (!$id || !$appointmentData) {
             $this->session->set_flashdata('feedback', 'Invalid Appoinment ID');
             redirect('appointment');
         }
@@ -1179,9 +1181,12 @@ class Appointment extends MX_Controller
         $i = 0;
         foreach ($data['appointments'] as $appointment) {
             $i = $i + 1;
-
             // $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
             $option1 = '<a class="btn btn-info btn-xs btn_width" title="' . lang('edit') . '" style="color: #fff;" href="appointment/editAppointment?id=' . $appointment->id . '"><i class="fa fa-edit"></i> ' . lang('edit') . '</a>';
+
+
+            $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
+
 
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
@@ -1249,7 +1254,7 @@ class Appointment extends MX_Controller
                 $appointment->mode_of_consultation,
                 $location,
                 $status,
-                $option1 . ' ' . $option2 . ' ' . $options7
+                $option11 . ' ' . $option1 . ' ' . $option2 . ' ' . $options7
             );
         }
 
@@ -1270,6 +1275,43 @@ class Appointment extends MX_Controller
 
         echo json_encode($output);
     }
+
+    // mohit code 04june2024
+    function updateApppinmentPhyscialDetail()
+    {
+        $physical_examination_date = $_POST['physical_examination_date'];
+
+        $apid = $_POST['apid'] ?? 0;
+        $patient_id = $_POST['patient_id'] ?? 0;
+        $doctor_id = $_POST['doctor_id'] ?? 0;
+
+        unset($_POST['submit']);
+        unset($_POST['apid']);
+        unset($_POST['patient_id']);
+        unset($_POST['doctor_id']);
+        unset($_POST['submit']);
+        unset($_POST['physical_examination_date']);
+        $updateData = $_POST;
+        $updateData["physical_examination_date"] = $physical_examination_date;
+
+        if ($this->appointment_model->getAppointmentById($apid)) {
+            $doctor  = $this->ion_auth->get_user_id() ?? 0;
+            if ($doctor) {
+                $doctor_id = $this->db->get_where('doctor', array('ion_user_id' => $doctor))->row()->id;
+                $this->appointment_model->updateAppointmentByIdOrDoctorId($apid, $patient_id, $doctor_id, $updateData);
+                $this->session->set_flashdata('feedback', lang('updated'));
+                redirect($_SERVER['HTTP_REFERER']);
+            } else {
+                $this->session->set_flashdata('feedback', lang('something_went_wrong'));
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+        } else {
+            $this->session->set_flashdata('feedback', lang('something_went_wrong'));
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    // mohit code 04june2024
 
     function getNoShowAppointmentList()
     {
@@ -1326,6 +1368,8 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
+            $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
+
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
@@ -1376,7 +1420,7 @@ class Appointment extends MX_Controller
                 $appointment->mode_of_consultation,
                 $location,
                 $status,
-                $option1 . ' ' . $option2
+                $option11 . ' ' . $option1 . ' ' . $option2
             );
             $i = $i + 1;
         }
@@ -1453,6 +1497,8 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
+            $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
+
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
 
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
@@ -1504,7 +1550,7 @@ class Appointment extends MX_Controller
                 $appointment->mode_of_consultation,
                 $location,
                 $status,
-                $option1 . ' ' . $option2
+                $option11 . ' ' . $option1 . ' ' . $option2
             );
             $i = $i + 1;
         }
@@ -1582,6 +1628,8 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
+            $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
+
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
@@ -1641,7 +1689,7 @@ class Appointment extends MX_Controller
                 $appointment->mode_of_consultation,
                 $location,
                 $status,
-                $option1 . ' ' . $option2 . ' ' . $options7
+                $option11 . ' ' . $option1 . ' ' . $option2 . ' ' . $options7
             );
             $i = $i + 1;
         }
@@ -1718,6 +1766,8 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
+            $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
+
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
@@ -1776,7 +1826,7 @@ class Appointment extends MX_Controller
                 $appointment->mode_of_consultation,
                 $location,
                 $status,
-                $option1 . ' ' . $option2
+                $option11 . ' ' . $option1 . ' ' . $option2
             );
             $i = $i + 1;
         }
@@ -1853,6 +1903,8 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
+            $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
+
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
@@ -1904,7 +1956,7 @@ class Appointment extends MX_Controller
                 $appointment->mode_of_consultation,
                 $location,
                 $status,
-                $option1 . ' ' . $option2
+                $option11 . ' ' . $option1 . ' ' . $option2
             );
             $i = $i + 1;
         }
@@ -1983,6 +2035,8 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
+            $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
+
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
@@ -2034,7 +2088,7 @@ class Appointment extends MX_Controller
                 $appointment->mode_of_consultation,
                 $location,
                 $status,
-                $option1 . ' ' . $option2
+                $option11 . ' ' . $option1 . ' ' . $option2
             );
             $i = $i + 1;
         }
@@ -2111,6 +2165,8 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
+            $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
+
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
 
             $option3 = '<a class="btn btn-info btn-xs btn_width" href="appointment/viewConfirmedAppointment?id=' . $appointment->id . '"><i class="fa fa-eye">' . lang('view') . ' ' . lang('appointment') . ' </i></a>';
@@ -2164,7 +2220,7 @@ class Appointment extends MX_Controller
                 $appointment->mode_of_consultation,
                 $location,
                 $status,
-                $option3 . ' ' . $option1 . ' ' . $option2
+                $option11 . ' ' .  $option3 . ' ' . $option1 . ' ' . $option2
             );
             $i = $i + 1;
         }
@@ -2240,6 +2296,10 @@ class Appointment extends MX_Controller
         foreach ($data['appointments'] as $appointment) {
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
+
+            $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
+
+
             $option3 = '<a class="btn btn-info btn-xs btn_width" href="appointment/viewAppointment?id=' . $appointment->id . '"><i class="fa fa-eye">' . lang('view') . ' ' . lang('appointment') . ' </i></a>';
 
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
@@ -2293,7 +2353,7 @@ class Appointment extends MX_Controller
                 $appointment->mode_of_consultation,
                 $location,
                 $status,
-                $option3 . ' ' . $option1 . ' ' . $option2
+                $option11 . ' ' . $option3 . ' ' . $option1 . ' ' . $option2
             );
             $i = $i + 1;
         }
@@ -2372,6 +2432,8 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
+            $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
+
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
@@ -2433,7 +2495,7 @@ class Appointment extends MX_Controller
                     $appointment->mode_of_consultation,
                     $location,
                     $status,
-                    $option1 . ' ' . $option2 . ' ' . $options7
+                    $option11 . ' ' . $option1 . ' ' . $option2 . ' ' . $options7
                 );
                 $i = $i + 1;
             } else {
@@ -2444,7 +2506,7 @@ class Appointment extends MX_Controller
                     date('d-m-Y', $appointment->date) . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
                     $appointment->remarks,
                     $appointment_status,
-                    $option1 . ' ' . $option2 . ' ' . $options7
+                    $option11 . ' ' . $option1 . ' ' . $option2 . ' ' . $options7
                 );
             }
         }
@@ -2522,6 +2584,8 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
+            $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
+
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             if ($appointment->status == 'Pending Confirmation') {
                 $appointment_status = lang('pending_confirmation');
@@ -2582,7 +2646,7 @@ class Appointment extends MX_Controller
                     $appointment->mode_of_consultation,
                     $location,
                     $status,
-                    $option1 . ' ' . $option2 . ' ' . $options7
+                    $option11 . ' ' . $option1 . ' ' . $option2 . ' ' . $options7
                 );
                 $i = $i + 1;
             } else {
@@ -2604,7 +2668,7 @@ class Appointment extends MX_Controller
                     $appointment->mode_of_consultation,
                     $location,
                     $appointment->status,
-                    $option1 . ' ' . $option2 . ' ' . $options7
+                    $option11 . ' ' . $option1 . ' ' . $option2 . ' ' . $options7
                 );
             }
         }
@@ -2685,6 +2749,8 @@ class Appointment extends MX_Controller
             $patient_id = $patient_details->id;
             if ($patient_id == $appointment->patient) {
                 $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
+
+                $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
                 $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
                 $patientdetails = $this->patient_model->getPatientById($appointment->patient);
                 if (!empty($patientdetails)) {
@@ -2748,7 +2814,7 @@ class Appointment extends MX_Controller
                         $appointment->mode_of_consultation,
                         $location,
                         $status,
-                        $options7
+                        $option11 . ' ' . $options7
                     );
                     $i = $i + 1;
                 } else {
@@ -2759,7 +2825,7 @@ class Appointment extends MX_Controller
                         date('d-m-Y', $appointment->date) . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
                         $appointment->remarks,
                         $appointment_status,
-                        $options7
+                        $option11 . ' ' . $options7
                     );
                 }
             }
@@ -2839,6 +2905,11 @@ class Appointment extends MX_Controller
         foreach ($data['appointments'] as $appointment) {
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
+
+
+            $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
+
+
             $option3 = '<a class="btn btn-info btn-xs btn_width" href="appointment/viewAppointment?id=' . $appointment->id . '"><i class="fa fa-eye">' . lang('view') . ' ' . lang('appointment') . ' </i></a>';
 
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
@@ -2893,7 +2964,7 @@ class Appointment extends MX_Controller
 
                 $location,
                 $status,
-                $option3 . ' ' . $option1 . ' ' . $option2
+                $option . ' ' . $option3 . ' ' . $option1 . ' ' . $option2
             );
             $i = $i + 1;
         }

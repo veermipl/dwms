@@ -191,7 +191,7 @@ class Patient extends MX_Controller
                 $path = $this->upload->data();
                 $img_url = "uploads/" . $path['file_name'];
 
-                $data['img_url'] =$img_url;
+                $data['img_url'] = $img_url;
             }
 
             $username = $this->input->post('name');
@@ -297,7 +297,7 @@ class Patient extends MX_Controller
     function editPatient()
     {
         $id = $this->input->get('id');
-        if(!$id){
+        if (!$id) {
             $this->session->set_flashdata('feedback', 'Invalid Patient ID');
             redirect('patient');
         }
@@ -1385,7 +1385,7 @@ class Patient extends MX_Controller
         $patient_id = $_GET['id'] ?? null;
         $patient_form_tab = $_GET['tab'] ?? null;
         $patient_data = $this->patient_model->getPatientById($patient_id);
-        $patient_form_tabs = ['general', 'vital', 'physical'];
+        $patient_form_tabs = ['appointment', 'general', 'vital', 'physical'];
 
         if ($patient_data == null || (!in_array($patient_form_tab, $patient_form_tabs))) {
             redirect('patient');
