@@ -37,7 +37,7 @@
                         <div id="todays" class="tab-pane active">
 
                             <div class="">
-
+                                <?php if ($this->ion_auth->in_group(array('Nurse'))) : ?>
                                 <div class="no-print">
 
                                     <a class="btn btn-info btn_width btn-xs" data-toggle="modal" href="#addAppointmentModal">
@@ -47,6 +47,7 @@
                                     </a>
 
                                 </div>
+                                <?php endif; ?>
 
                                 <div class="adv-table editable-table ">
 

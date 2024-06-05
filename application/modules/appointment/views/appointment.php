@@ -14,11 +14,13 @@
                             <!-- <button id="" class="btn green btn-xs">
                                 <i class="fa fa-plus-circle"></i>  <?php echo lang('add_appointment'); ?> 
                             </button> -->
+                            <?php if ($this->ion_auth->in_group(array('Nurse'))) : ?>
                             <a href="appointment/addNewView">
                                 <button class="btn green btn-xs">
                                     <i class="fa fa-plus-circle"></i> <?php echo lang('add_appointment'); ?>
                                 </button>
                             </a>
+                            <?php endif; ?>
                         </div>
                     </a>
                 </div>
