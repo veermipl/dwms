@@ -135,7 +135,7 @@
                     <?php } ?>
                     <!-- payment notification end -->
                     <!-- patient notification start-->
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Doctor', 'Nurse', 'Laboratorist'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Nurse', 'Laboratorist'))) { ?>
                         <li id="header_notification_bar" class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" title="users registered today" href="#">
                                 <i class="fa fa-user"></i>
@@ -178,61 +178,61 @@
 
                             </ul>
                         </li>
-                    <?php } ?>
                     <!-- patient notification end -->
 
 
-                    <li id="header_notification_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" title="Number Of Dispatches Pending" href="">
-                            <i class="fa fa-truck"></i>
-                            <span class="badge bg-success">
-                                <?php
-                                $query = $this->db->where('dispatches_status', '0');
-                                $query = $this->db->where('visit_status', '0');
-                                $query = $this->db->get('prescription');
-                                $count = $query->num_rows();
-                                $pending_number = 0;
-                                if (!empty($count)) {
-                                    echo   $count;
-                                } else {
+                        <li id="header_notification_bar" class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" title="Number Of Dispatches Pending" href="">
+                                <i class="fa fa-truck"></i>
+                                <span class="badge bg-success">
+                                    <?php
+                                    $query = $this->db->where('dispatches_status', '0');
+                                    $query = $this->db->where('visit_status', '0');
+                                    $query = $this->db->get('prescription');
+                                    $count = $query->num_rows();
+                                    $pending_number = 0;
+                                    if (!empty($count)) {
+                                        echo   $count;
+                                    } else {
 
-                                    echo $pending_number;
-                                }
+                                        echo $pending_number;
+                                    }
 
-                                ?>
-                            </span>
-                        </a>
-                        <ul class="dropdown-menu extended notification">
-                            <div class="notify-arrow notify-arrow-yellow"></div>
-                            <li> <a href="dispatches/pending">
-                                    <p class="yellow">
-                                        <?php
-                                        $query = $this->db->where('dispatches_status', '0');
-                                        $query = $this->db->where('visit_status', '0');
-                                        $query = $this->db->get('prescription');
-                                        $count = $query->num_rows();
-                                        $pending_number = 0;
-                                        if (!empty($count)) {
-                                            echo   $count;
-                                        } else {
+                                    ?>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu extended notification">
+                                <div class="notify-arrow notify-arrow-yellow"></div>
+                                <li> <a href="dispatches/pending">
+                                        <p class="yellow">
+                                            <?php
+                                            $query = $this->db->where('dispatches_status', '0');
+                                            $query = $this->db->where('visit_status', '0');
+                                            $query = $this->db->get('prescription');
+                                            $count = $query->num_rows();
+                                            $pending_number = 0;
+                                            if (!empty($count)) {
+                                                echo   $count;
+                                            } else {
 
-                                            echo $pending_number;
-                                        }
+                                                echo $pending_number;
+                                            }
 
-                                        ?>
-                                        Pending Dispatch
+                                            ?>
+                                            Pending Dispatch
 
-                                    </p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="dispatches/all">
-                                    <p class="green"><?php echo 'See All Dispatched'; ?></p>
-                                </a>
-                            </li>
+                                        </p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="dispatches/all">
+                                        <p class="green"><?php echo 'See All Dispatched'; ?></p>
+                                    </a>
+                                </li>
 
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                    <?php } ?>
 
 
                     <li id="header_notification_bar" class="dropdown">
@@ -407,7 +407,7 @@
                             </a>
                         </li>
                     <?php } ?>
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Nurse', 'Doctor', 'Laboratorist', 'Receptionist'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Nurse', 'Laboratorist', 'Receptionist'))) { ?>
 
                         <li class="sub-menu">
                             <a href="javascript:;">
@@ -592,7 +592,7 @@
 
 
                     <?php if ($this->ion_auth->in_group(array('Doctor'))) { ?>
-                        <li>
+                        <li style="display: none">
                             <a href="prescription">
                                 <i class="fa fa-prescription"></i>
                                 <span><?php echo lang('prescription'); ?></span>
@@ -603,7 +603,7 @@
 
 
                     <?php if ($this->ion_auth->in_group(array('admin', 'Doctor', 'Laboratorist'))) { ?>
-                        <li class="sub-menu">
+                        <li class="sub-menu" style="display: none">
                             <a href="javascript:;">
                                 <i class="fa  fa-flask"></i>
                                 <span><?php echo lang('labs'); ?></span>
@@ -677,7 +677,7 @@
 
 
                     <?php if ($this->ion_auth->in_group(array('admin', 'Nurse', 'Laboratorist', 'Doctor'))) { ?>
-                        <li class="sub-menu">
+                        <li class="sub-menu" style="display: none">
                             <a href="javascript:;">
                                 <i class="fas fa-file-medical-alt"></i>
                                 <span><?php echo lang('report'); ?></span>
@@ -915,7 +915,7 @@
 
 
                     <?php if (!$this->ion_auth->in_group(array('admin', 'Patient'))) { ?>
-                        <li class="sub-menu">
+                        <li class="sub-menu" style="display: none">
                             <a href="javascript:;">
                                 <i class="fa fa-mail-bulk"></i>
                                 <span><?php echo lang('email'); ?></span>
