@@ -274,9 +274,10 @@
 
 
         function getScheduleByDoctorByWeekday($doctor, $weekday, $location, $s_time, $e_time) {
+
             $this->db->where('doctor', $doctor);
             $this->db->where('weekday', $weekday);
-            $this->db->where('location', $location);
+            $this->db->where('location_id', $location);
             $this->db->where('s_time', $s_time);
             $this->db->where('weekday', $e_time);
             $query = $this->db->get('time_slot');
