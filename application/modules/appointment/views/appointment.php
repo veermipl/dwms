@@ -1,20 +1,24 @@
-
 <!--sidebar end-->
 <!--main content start-->
 <section id="main-content">
     <section class="wrapper site-min-height">
         <!-- page start-->
-          <link href="common/extranal/css/appointment/appointment.css" rel="stylesheet">
-        
+        <link href="common/extranal/css/appointment/appointment.css" rel="stylesheet">
+
         <section class="panel">
             <header class="panel-heading">
                 <?php echo lang('appointments'); ?>
                 <div class="clearfix no-print col-md-8 pull-right">
                     <a data-toggle="modal" href="#myModal">
                         <div class="btn-group pull-right">
-                            <button id="" class="btn green btn-xs">
+                            <!-- <button id="" class="btn green btn-xs">
                                 <i class="fa fa-plus-circle"></i>  <?php echo lang('add_appointment'); ?> 
-                            </button>
+                            </button> -->
+                            <a href="appointment/addNewView">
+                                <button class="btn green btn-xs">
+                                    <i class="fa fa-plus-circle"></i> <?php echo lang('add_appointment'); ?>
+                                </button>
+                            </a>
                         </div>
                     </a>
                 </div>
@@ -26,27 +30,27 @@
                         <li class="active">
                             <a data-toggle="tab" href="#all"><?php echo lang('all'); ?></a>
                         </li>
-                       
+
                         <li class="">
                             <a data-toggle="tab" href="#1">Pending</a>
                         </li>
-                         <li class="">
+                        <li class="">
                             <a data-toggle="tab" href="#2">Approved</a>
                         </li>
                         <li class="">
                             <a data-toggle="tab" href="#9">VIP</a>
                         </li>
-                         <li class="">
+                        <li class="">
                             <a data-toggle="tab" href="#3">Rejected</a>
                         </li>
-                         <li class="">
+                        <li class="">
                             <a data-toggle="tab" href="#7">Confirmed</a>
                         </li>
-                       
-                         <li class="">
+
+                        <li class="">
                             <a data-toggle="tab" href="#4">Completed</a>
                         </li>
-                         <li class="">
+                        <li class="">
                             <a data-toggle="tab" href="#5">No-Show</a>
                         </li>
                         <li class="">
@@ -55,12 +59,14 @@
                         <li class="">
                             <a data-toggle="tab" href="#8">Cancelled</a>
                         </li>
-                        
 
-                     
+
+
                     </ul>
 
-                    <div class="pull-right col-md-3"><div class="pull-right custom_buttonss"></div></div>
+                    <div class="pull-right col-md-3">
+                        <div class="pull-right custom_buttonss"></div>
+                    </div>
 
                 </header>
             </div>
@@ -80,10 +86,10 @@
                                                 <th> <?php echo lang('patient'); ?></th>
                                                 <th> <?php echo lang('doctor'); ?></th>
                                                 <th> <?php echo lang('date-time'); ?></th>
-                                            <!--     <th> <?php echo lang('remarks'); ?></th> -->
+                                                <!--     <th> <?php echo lang('remarks'); ?></th> -->
                                                 <th><?php echo "Consultation Type"; ?></th>
                                                 <th> <?php echo "Consultation Mode"; ?></th>
-                                               <th> <?php echo "Location"; ?></th>
+                                                <th> <?php echo "Location"; ?></th>
                                                 <th> <?php echo lang('status'); ?></th>
                                                 <th> <?php echo lang('options'); ?></th>
                                             </tr>
@@ -110,17 +116,17 @@
                                                 <th> <?php echo lang('patient'); ?></th>
                                                 <th> <?php echo lang('doctor'); ?></th>
                                                 <th> <?php echo lang('date-time'); ?></th>
-                                               <!--  <th> <?php echo lang('remarks'); ?></th> -->
+                                                <!--  <th> <?php echo lang('remarks'); ?></th> -->
                                                 <th><?php echo "Consultation Type"; ?></th>
                                                 <th> <?php echo "Consultation Mode"; ?></th>
-                                               <th> <?php echo "Location"; ?></th>
+                                                <th> <?php echo "Location"; ?></th>
                                                 <th> <?php echo lang('status'); ?></th>
                                                 <th> <?php echo lang('options'); ?></th>
                                             </tr>
                                         </thead>
                                         <tbody>
 
-                                     
+
 
 
                                         </tbody>
@@ -141,17 +147,17 @@
                                                 <th> <?php echo lang('patient'); ?></th>
                                                 <th> <?php echo lang('doctor'); ?></th>
                                                 <th> <?php echo lang('date-time'); ?></th>
-                                            <!--     <th> <?php echo lang('remarks'); ?></th> -->
-                                             <th><?php echo "Consultation Type"; ?></th>
+                                                <!--     <th> <?php echo lang('remarks'); ?></th> -->
+                                                <th><?php echo "Consultation Type"; ?></th>
                                                 <th> <?php echo "Consultation Mode"; ?></th>
-                                               <th> <?php echo "Location"; ?></th>
+                                                <th> <?php echo "Location"; ?></th>
                                                 <th> <?php echo lang('status'); ?></th>
                                                 <th> <?php echo lang('options'); ?></th>
                                             </tr>
                                         </thead>
                                         <tbody>
 
-                                     
+
 
 
 
@@ -174,10 +180,10 @@
                                                 <th> <?php echo lang('patient'); ?></th>
                                                 <th> <?php echo lang('doctor'); ?></th>
                                                 <th> <?php echo lang('date-time'); ?></th>
-                                             <!--    <th> <?php echo lang('remarks'); ?></th> -->
-                                              <th><?php echo "Consultation Type"; ?></th>
+                                                <!--    <th> <?php echo lang('remarks'); ?></th> -->
+                                                <th><?php echo "Consultation Type"; ?></th>
                                                 <th> <?php echo "Consultation Mode"; ?></th>
-                                               <th> <?php echo "Location"; ?></th>
+                                                <th> <?php echo "Location"; ?></th>
                                                 <th> <?php echo lang('status'); ?></th>
                                                 <th> <?php echo lang('options'); ?></th>
                                             </tr>
@@ -207,10 +213,10 @@
                                                 <th> <?php echo lang('patient'); ?></th>
                                                 <th> <?php echo lang('doctor'); ?></th>
                                                 <th> <?php echo lang('date-time'); ?></th>
-                                            <!--     <th> <?php echo lang('remarks'); ?></th> -->
-                                             <th><?php echo "Consultation Type"; ?></th>
+                                                <!--     <th> <?php echo lang('remarks'); ?></th> -->
+                                                <th><?php echo "Consultation Type"; ?></th>
                                                 <th> <?php echo "Consultation Mode"; ?></th>
-                                               <th> <?php echo "Location"; ?></th>
+                                                <th> <?php echo "Location"; ?></th>
                                                 <th> <?php echo lang('status'); ?></th>
                                                 <th> <?php echo lang('options'); ?></th>
                                             </tr>
@@ -239,9 +245,10 @@
                                                 <th> <?php echo lang('patient'); ?></th>
                                                 <th> <?php echo lang('doctor'); ?></th>
                                                 <th> <?php echo lang('date-time'); ?></th>
-                                            <!--     <th> <?php echo lang('remarks'); ?></th> --> <th><?php echo "Consultation Type"; ?></th>
+                                                <!--     <th> <?php echo lang('remarks'); ?></th> -->
+                                                <th><?php echo "Consultation Type"; ?></th>
                                                 <th> <?php echo "Consultation Mode"; ?></th>
-                                               <th> <?php echo "Location"; ?></th>
+                                                <th> <?php echo "Location"; ?></th>
                                                 <th> <?php echo lang('status'); ?></th>
                                                 <th> <?php echo lang('options'); ?></th>
                                             </tr>
@@ -266,9 +273,10 @@
                                                 <th> <?php echo lang('patient'); ?></th>
                                                 <th> <?php echo lang('doctor'); ?></th>
                                                 <th> <?php echo lang('date-time'); ?></th>
-                                            <!--     <th> <?php echo lang('remarks'); ?></th> --> <th><?php echo "Consultation Type"; ?></th>
+                                                <!--     <th> <?php echo lang('remarks'); ?></th> -->
+                                                <th><?php echo "Consultation Type"; ?></th>
                                                 <th> <?php echo "Consultation Mode"; ?></th>
-                                               <th> <?php echo "Location"; ?></th>
+                                                <th> <?php echo "Location"; ?></th>
                                                 <th> <?php echo lang('status'); ?></th>
                                                 <th> <?php echo lang('options'); ?></th>
                                             </tr>
@@ -293,9 +301,10 @@
                                                 <th> <?php echo lang('patient'); ?></th>
                                                 <th> <?php echo lang('doctor'); ?></th>
                                                 <th> <?php echo lang('date-time'); ?></th>
-                                            <!--     <th> <?php echo lang('remarks'); ?></th> --> <th><?php echo "Consultation Type"; ?></th>
+                                                <!--     <th> <?php echo lang('remarks'); ?></th> -->
+                                                <th><?php echo "Consultation Type"; ?></th>
                                                 <th> <?php echo "Consultation Mode"; ?></th>
-                                               <th> <?php echo "Location"; ?></th>
+                                                <th> <?php echo "Location"; ?></th>
                                                 <th> <?php echo lang('status'); ?></th>
                                                 <th> <?php echo lang('options'); ?></th>
                                             </tr>
@@ -320,9 +329,10 @@
                                                 <th> <?php echo lang('patient'); ?></th>
                                                 <th> <?php echo lang('doctor'); ?></th>
                                                 <th> <?php echo lang('date-time'); ?></th>
-                                            <!--     <th> <?php echo lang('remarks'); ?></th> --> <th><?php echo "Consultation Type"; ?></th>
+                                                <!--     <th> <?php echo lang('remarks'); ?></th> -->
+                                                <th><?php echo "Consultation Type"; ?></th>
                                                 <th> <?php echo "Consultation Mode"; ?></th>
-                                               <th> <?php echo "Location"; ?></th>
+                                                <th> <?php echo "Location"; ?></th>
                                                 <th> <?php echo lang('status'); ?></th>
                                                 <th> <?php echo lang('options'); ?></th>
                                             </tr>
@@ -335,7 +345,7 @@
                         </div>
                     </div>
 
-                     <div id="9" class="tab-pane">
+                    <div id="9" class="tab-pane">
                         <div class="">
                             <div class="panel-body">
                                 <div class="adv-table editable-table ">
@@ -347,9 +357,10 @@
                                                 <th> <?php echo lang('patient'); ?></th>
                                                 <th> <?php echo lang('doctor'); ?></th>
                                                 <th> <?php echo lang('date-time'); ?></th>
-                                            <!--     <th> <?php echo lang('remarks'); ?></th> --> <th><?php echo "Consultation Type"; ?></th>
+                                                <!--     <th> <?php echo lang('remarks'); ?></th> -->
+                                                <th><?php echo "Consultation Type"; ?></th>
                                                 <th> <?php echo "Consultation Mode"; ?></th>
-                                               <th> <?php echo "Location"; ?></th>
+                                                <th> <?php echo "Location"; ?></th>
                                                 <th> <?php echo lang('status'); ?></th>
                                                 <th> <?php echo lang('options'); ?></th>
                                             </tr>
@@ -374,24 +385,24 @@
 <!--footer start-->
 
 <!-- Add Appointment Modal-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('add_appointment'); ?></h4>
+                <h4 class="modal-title"> <?php echo lang('add_appointment'); ?></h4>
             </div>
             <div class="modal-body row">
                 <form role="form" action="appointment/addNew" method="post" class="clearfix" enctype="multipart/form-data">
                     <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('patient'); ?></label> 
-                        <select class="form-control m-bot15 pos_select" id="pos_select" name="patient" value=''> 
+                        <label for="exampleInputEmail1"> <?php echo lang('patient'); ?></label>
+                        <select class="form-control m-bot15 pos_select" id="pos_select" name="patient" value=''>
 
                         </select>
                     </div>
                     <div class="pos_client clearfix col-md-6">
                         <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('name'); ?></label> 
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('name'); ?></label>
                             <input type="text" class="form-control pay_in" name="p_name" value='' placeholder="">
                         </div>
                         <div class="payment pad_bot pull-right">
@@ -403,123 +414,120 @@
                             <input type="text" class="form-control pay_in" name="p_phone" value='' placeholder="">
                         </div>
                         <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('age'); ?></label> 
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('age'); ?></label>
                             <input type="text" class="form-control pay_in" name="p_age" value='' placeholder="">
-                        </div> 
-                        <div class="payment pad_bot"> 
+                        </div>
+                        <div class="payment pad_bot">
                             <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('gender'); ?></label>
                             <select class="form-control" name="p_gender" value=''>
 
                                 <option value="Male" <?php
-                                if (!empty($patient->sex)) {
-                                    if ($patient->sex == 'Male') {
-                                        echo 'selected';
-                                    }
-                                }
-                                ?> > Male </option>   
+                                                        if (!empty($patient->sex)) {
+                                                            if ($patient->sex == 'Male') {
+                                                                echo 'selected';
+                                                            }
+                                                        }
+                                                        ?>> Male </option>
                                 <option value="Female" <?php
-                                if (!empty($patient->sex)) {
-                                    if ($patient->sex == 'Female') {
-                                        echo 'selected';
-                                    }
-                                }
-                                ?> > Female </option>
+                                                        if (!empty($patient->sex)) {
+                                                            if ($patient->sex == 'Female') {
+                                                                echo 'selected';
+                                                            }
+                                                        }
+                                                        ?>> Female </option>
                                 <option value="Others" <?php
-                                if (!empty($patient->sex)) {
-                                    if ($patient->sex == 'Others') {
-                                        echo 'selected';
-                                    }
-                                }
-                                ?> > Others </option>
+                                                        if (!empty($patient->sex)) {
+                                                            if ($patient->sex == 'Others') {
+                                                                echo 'selected';
+                                                            }
+                                                        }
+                                                        ?>> Others </option>
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-6 panel doctor_div">
-                        <label for="exampleInputEmail1">  <?php echo lang('doctor'); ?></label> 
-                        <select class="form-control m-bot15" id="adoctors" name="doctor" value=''>  
+                        <label for="exampleInputEmail1"> <?php echo lang('doctor'); ?></label>
+                        <select class="form-control m-bot15" id="adoctors" name="doctor" value=''>
 
                         </select>
                     </div>
 
                     <div class="col-md-12 panel">
-                        <label for="exampleInputEmail1"> Location </label> 
-                        <select class="form-control m-bot15" id="alocation" name="location_id" value=''>   
+                        <label for="exampleInputEmail1"> Location </label>
+                        <select class="form-control m-bot15" id="alocation" name="location_id" value=''>
                             <option value="">Please Select Location</option>
-                            <?php 
+                            <?php
 
-                            $locsa = $patient->location; 
+                            $locsa = $patient->location;
 
-                            foreach($location as $loc)
-                            { 
-                            if($locsa == $loc->id){
-                              echo '<option value="'.$loc->id.' selected">'.$loc->name. '</option>';
-                            }else{
-                                    echo '<option value="'.$loc->id.'">'.$loc->name. '</option>';
-                            }
+                            foreach ($location as $loc) {
+                                if ($locsa == $loc->id) {
+                                    echo '<option value="' . $loc->id . ' selected">' . $loc->name . '</option>';
+                                } else {
+                                    echo '<option value="' . $loc->id . '">' . $loc->name . '</option>';
+                                }
                             }
                             ?>
 
                         </select>
-                    
+
                     </div>
 
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control default-date-picker" id="date" readonly="" name="date"  value='' placeholder="">
+                        <input type="text" class="form-control default-date-picker" id="date" readonly="" name="date" value='' placeholder="">
                     </div>
 
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1">Available Slots</label>
-                        <select class="form-control m-bot15" name="time_slot" id="aslots" value=''> 
+                        <select class="form-control m-bot15" name="time_slot" id="aslots" value=''>
 
                         </select>
                     </div>
 
                     <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo 'Mode Of Consultation'; ?> <?php echo lang('status'); ?></label> 
+                        <label for="exampleInputEmail1"> <?php echo 'Mode Of Consultation'; ?> <?php echo lang('status'); ?></label>
                         <select type="text" class="form-control" name="mode_of_consultation" id="mode_of_consultation">
-                        <option value="">Select Mode Of Consultation</option>
-                        <?php
-                        foreach($consultation as $row)
-                        {
-                         echo '<option value="'.$row->name.'">'.$row->mode_of_consultation.'</option>';
-                        }
-                        ?>
+                            <option value="">Select Mode Of Consultation</option>
+                            <?php
+                            foreach ($consultation as $row) {
+                                echo '<option value="' . $row->name . '">' . $row->mode_of_consultation . '</option>';
+                            }
+                            ?>
 
                         </select>
                     </div>
-                    
+
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1"> <?php echo 'Type Of Consultation'; ?></label>
                         <select type="text" class="form-control" name="type_of_consultation" id="type_of_consultation" value='' placeholder="">
 
-                              <option value="">Select Type Of Consultation</option>
+                            <option value="">Select Type Of Consultation</option>
 
                         </select>
                     </div>
-                   
+
 
                     <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label> 
-                        <select class="form-control m-bot15" name="status" value=''> 
+                        <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
+                        <select class="form-control m-bot15" name="status" value=''>
                             <option value="">Please Select Status</option>
-                            <?php 
-                            foreach($status as $row)
-                            { 
-                              echo '<option value="'.$row->name.'">'.$row->status_name.'</option>';
+                            <?php
+                            foreach ($status as $row) {
+                                echo '<option value="' . $row->name . '">' . $row->status_name . '</option>';
                             }
                             ?>
-                           
+
                         </select>
                     </div>
 
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1"> <?php echo lang('remarks'); ?></label>
-                        <input type="text" class="form-control" name="remarks"  value='' placeholder="">
+                        <input type="text" class="form-control" name="remarks" value='' placeholder="">
                     </div>
 
-                   
+
                     <div class="col-md-12 panel">
                         <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
                     </div>
@@ -532,13 +540,13 @@
 <!-- Add Appointment Modal-->
 
 <div class="modal fade" tabindex="-1" role="dialog" id="cmodal">
-    <div class="modal-dialog modal-lg med_his" role="document" >
+    <div class="modal-dialog modal-lg med_his" role="document">
         <div class="modal-content">
-           
+
             <div id='medical_history'>
                 <div class="col-md-12">
 
-                </div> 
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="col-md-12">
@@ -551,24 +559,24 @@
 
 
 <!-- Edit Event Modal-->
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('edit_appointment'); ?></h4>
+                <h4 class="modal-title"> <?php echo lang('edit_appointment'); ?></h4>
             </div>
             <div class="modal-body row">
                 <form role="form" id="editAppointmentForm" action="appointment/addNew" class="clearfix" method="post" enctype="multipart/form-data">
                     <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('patient'); ?></label> 
-                        <select class="form-control m-bot15  pos_select1 patient" id="pos_select1" name="patient" value=''> 
+                        <label for="exampleInputEmail1"> <?php echo lang('patient'); ?></label>
+                        <select class="form-control m-bot15  pos_select1 patient" id="pos_select1" name="patient" value=''>
 
                         </select>
                     </div>
                     <div class="pos_client1 clearfix col-md-6">
                         <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('name'); ?></label> 
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('name'); ?></label>
                             <input type="text" class="form-control pay_in" name="p_name" value='' placeholder="">
                         </div>
                         <div class="payment pad_bot pull-right">
@@ -580,61 +588,60 @@
                             <input type="text" class="form-control pay_in" name="p_phone" value='' placeholder="">
                         </div>
                         <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('age'); ?></label> 
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('age'); ?></label>
                             <input type="text" class="form-control pay_in" name="p_age" value='' placeholder="">
-                        </div> 
-                        <div class="payment pad_bot"> 
+                        </div>
+                        <div class="payment pad_bot">
                             <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('gender'); ?></label>
                             <select class="form-control" name="p_gender" value=''>
 
                                 <option value="Male" <?php
-                                if (!empty($patient->sex)) {
-                                    if ($patient->sex == 'Male') {
-                                        echo 'selected';
-                                    }
-                                }
-                                ?> > Male </option>   
+                                                        if (!empty($patient->sex)) {
+                                                            if ($patient->sex == 'Male') {
+                                                                echo 'selected';
+                                                            }
+                                                        }
+                                                        ?>> Male </option>
                                 <option value="Female" <?php
-                                if (!empty($patient->sex)) {
-                                    if ($patient->sex == 'Female') {
-                                        echo 'selected';
-                                    }
-                                }
-                                ?> > Female </option>
+                                                        if (!empty($patient->sex)) {
+                                                            if ($patient->sex == 'Female') {
+                                                                echo 'selected';
+                                                            }
+                                                        }
+                                                        ?>> Female </option>
                                 <option value="Others" <?php
-                                if (!empty($patient->sex)) {
-                                    if ($patient->sex == 'Others') {
-                                        echo 'selected';
-                                    }
-                                }
-                                ?> > Others </option>
+                                                        if (!empty($patient->sex)) {
+                                                            if ($patient->sex == 'Others') {
+                                                                echo 'selected';
+                                                            }
+                                                        }
+                                                        ?>> Others </option>
                             </select>
                         </div>
                     </div>
 
                     <div class="col-md-6 panel doctor_div1">
-                        <label for="exampleInputEmail1">  <?php echo lang('doctor'); ?></label> 
-                        <select class="form-control m-bot15 doctor" id="adoctors1" name="doctor" value=''>  
+                        <label for="exampleInputEmail1"> <?php echo lang('doctor'); ?></label>
+                        <select class="form-control m-bot15 doctor" id="adoctors1" name="doctor" value=''>
 
 
                         </select>
                     </div>
 
                     <div class="col-md-12 panel">
-                    <label for="exampleInputEmail1"> Location </label> 
-                    <select class="form-control m-bot15" id="alocation" name="location_id" value=''>   
+                        <label for="exampleInputEmail1"> Location </label>
+                        <select class="form-control m-bot15" id="alocation" name="location_id" value=''>
                             <option value="">Please Select Location</option>
-                            <?php 
+                            <?php
 
-                            $locsa = $patient->location; 
+                            $locsa = $patient->location;
 
-                            foreach($location as $loc)
-                            { 
-                            if($locsa == $loc->id){
-                              echo '<option value="'.$loc->id.' selected">'.$loc->name. '</option>';
-                            }else{
-                                    echo '<option value="'.$loc->id.'">'.$loc->name. '</option>';
-                            }
+                            foreach ($location as $loc) {
+                                if ($locsa == $loc->id) {
+                                    echo '<option value="' . $loc->id . ' selected">' . $loc->name . '</option>';
+                                } else {
+                                    echo '<option value="' . $loc->id . '">' . $loc->name . '</option>';
+                                }
                             }
                             ?>
 
@@ -642,83 +649,80 @@
                     </div>
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control default-date-picker" id="date1" readonly="" name="date"  value='' placeholder="">
+                        <input type="text" class="form-control default-date-picker" id="date1" readonly="" name="date" value='' placeholder="">
                     </div>
 
-               
+
 
 
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1">Available Slots</label>
-                        <select class="form-control m-bot15" name="time_slot" id="aslots1" value=''> 
+                        <select class="form-control m-bot15" name="time_slot" id="aslots1" value=''>
                         </select>
                     </div>
 
 
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1"> <?php echo 'Type Of Consultation'; ?></label>
-                        
-                         <select type="text" class="form-control" name="mode_of_consultation" id="modes_of_consultation">
-                        <option value="">Select Mode Of Consultation</option>
-                        <?php
 
-                        foreach($consultation as $row)
-                        {
-                        if($mode == $row->status_name){
-                              echo '<option value="'.$row->id.'"selected>'.$row->status_name. '</option>';
-                        }else{
-                         echo '<option value="'.$row->id.'">'.$row->mode_of_consultation.'</option>';
-                        }
-                        }
-                        ?>
+                        <select type="text" class="form-control" name="mode_of_consultation" id="modes_of_consultation">
+                            <option value="">Select Mode Of Consultation</option>
+                            <?php
 
-                        </select>
-                    </div>
-                    
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo 'Type Of Consultation'; ?></label>
-                         <select type="text" class="form-control" name="types_of_consultation" id="type_of_consultation"  placeholder="">
-                           
-                        <option value="">Select Type Of Consultation</option>
-                        <?php
-
-                        foreach($type as $rows)
-                        { 
-                         echo '<option value="'.$rows->id.'">'.$rows->name.'</option>';
-                        }
-                        ?>
-
-                        </select>
-                    </div>
-                   
-
-
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label> 
-                         <select class="form-control m-bot15" name="status" value=''> 
-                            <option value="">Please select Status</option>
-                            <?php 
-
-                            $stat = $patient->status; 
-
-                            foreach($status as $row)
-                            { 
-                            if($stat == $row->id){
-                              echo '<option value="'.$row->id.' selected">'.$row->status_name. '</option>';
-                            }else{
-                                    echo '<option value="'.$row->id.'">'.$row->status_name. '</option>';
-                            }
+                            foreach ($consultation as $row) {
+                                if ($mode == $row->status_name) {
+                                    echo '<option value="' . $row->id . '"selected>' . $row->status_name . '</option>';
+                                } else {
+                                    echo '<option value="' . $row->id . '">' . $row->mode_of_consultation . '</option>';
+                                }
                             }
                             ?>
-                           
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 panel">
+                        <label for="exampleInputEmail1"> <?php echo 'Type Of Consultation'; ?></label>
+                        <select type="text" class="form-control" name="types_of_consultation" id="type_of_consultation" placeholder="">
+
+                            <option value="">Select Type Of Consultation</option>
+                            <?php
+
+                            foreach ($type as $rows) {
+                                echo '<option value="' . $rows->id . '">' . $rows->name . '</option>';
+                            }
+                            ?>
+
+                        </select>
+                    </div>
+
+
+
+                    <div class="col-md-6 panel">
+                        <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
+                        <select class="form-control m-bot15" name="status" value=''>
+                            <option value="">Please select Status</option>
+                            <?php
+
+                            $stat = $patient->status;
+
+                            foreach ($status as $row) {
+                                if ($stat == $row->id) {
+                                    echo '<option value="' . $row->id . ' selected">' . $row->status_name . '</option>';
+                                } else {
+                                    echo '<option value="' . $row->id . '">' . $row->status_name . '</option>';
+                                }
+                            }
+                            ?>
+
                         </select>
                     </div>
 
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1"> <?php echo lang('remarks'); ?></label>
-                        <input type="text" class="form-control" name="remarks"  value='' placeholder="">
+                        <input type="text" class="form-control" name="remarks" value='' placeholder="">
                     </div>
-                   
+
                     <input type="hidden" name="id" id="appointment_id" value=''>
                     <div class="col-md-12 panel">
                         <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
@@ -732,36 +736,38 @@
 <!-- Edit Event Modal-->
 
 <script src="common/js/codearistos.min.js"></script>
-<script type="text/javascript">var select_doctor = "<?php echo lang('select_doctor'); ?>";</script>
-<script type="text/javascript">var select_patient = "<?php echo lang('select_patient'); ?>";</script>
-<script type="text/javascript">var language = "<?php echo $this->language; ?>";</script>
+<script type="text/javascript">
+    var select_doctor = "<?php echo lang('select_doctor'); ?>";
+</script>
+<script type="text/javascript">
+    var select_patient = "<?php echo lang('select_patient'); ?>";
+</script>
+<script type="text/javascript">
+    var language = "<?php echo $this->language; ?>";
+</script>
 
 <script src="common/extranal/js/appointment/appointment.js"></script>
 <script src="common/extranal/js/appointment/appointment_select2.js"></script>
 
 <script>
-$(document).ready(function(){
- $('#mode_of_consultation').change(function(){
-  var consultation_id = $('#mode_of_consultation').val();
-  if(consultation_id != '')
-  {
-   $.ajax({
-    url:"<?php echo base_url(); ?>appointment/fetch_type",
-    method:"POST",
-    data:{consultation_id:consultation_id},
-    success:function(data)
-    {
-     $('#type_of_consultation').html(data);
-    }
-   });
-  }
-  else
-  {
-   $('#type_of_consultation').html('<option value="">Select Type Of Consultation</option>');
-   
-  }
- });
-  });
+    $(document).ready(function() {
+        $('#mode_of_consultation').change(function() {
+            var consultation_id = $('#mode_of_consultation').val();
+            if (consultation_id != '') {
+                $.ajax({
+                    url: "<?php echo base_url(); ?>appointment/fetch_type",
+                    method: "POST",
+                    data: {
+                        consultation_id: consultation_id
+                    },
+                    success: function(data) {
+                        $('#type_of_consultation').html(data);
+                    }
+                });
+            } else {
+                $('#type_of_consultation').html('<option value="">Select Type Of Consultation</option>');
 
- </script>
-
+            }
+        });
+    });
+</script>

@@ -56,30 +56,53 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (response) {
                 "use strict";
-              
-                $('#infoPatientForm').find('[name="id"]').val(response.patient.id).end();
-                $('#infoPatientForm').find('[name="name"]').val(response.patient.name).end();
-                $('#infoPatientForm').find('[name="password"]').val(response.patient.password).end();
-                $('#infoPatientForm').find('[name="email"]').val(response.patient.email).end();
-                $('#infoPatientForm').find('[name="address"]').val(response.patient.address).end();
-                $('#infoPatientForm').find('[name="phone"]').val(response.patient.phone).end();
-                $('#infoPatientForm').find('[name="sex"]').val(response.patient.sex).end();
-                $('#infoPatientForm').find('[name="birthdate"]').val(response.patient.birthdate).end();
-                $('#infoPatientForm').find('[name="p_id"]').val(response.patient.patient_id).end();
 
-                if (response.doctor !== null) {
-                    $('#infoPatientForm').find('[name="doctor"]').val(response.doctor.name).end();
-                } else {
-                    $('#infoPatientForm').find('[name="doctor"]').val('').end();
-                }
+                // $('#infoPatientForm').find('[name="id"]').val(response.patient.id).end();
+                // $('#infoPatientForm').find('[name="name"]').val(response.patient.name).end();
+                // $('#infoPatientForm').find('[name="password"]').val(response.patient.password).end();
+                // $('#infoPatientForm').find('[name="email"]').val(response.patient.email).end();
+                // $('#infoPatientForm').find('[name="address"]').val(response.patient.address).end();
+                // $('#infoPatientForm').find('[name="phone"]').val(response.patient.phone).end();
+                // $('#infoPatientForm').find('[name="sex"]').val(response.patient.sex).end();
+                // $('#infoPatientForm').find('[name="birthdate"]').val(response.patient.birthdate).end();
+                // $('#infoPatientForm').find('[name="p_id"]').val(response.patient.patient_id).end();
+
+                // if (response.doctor !== null) {
+                //     $('#infoPatientForm').find('[name="doctor"]').val(response.doctor.name).end();
+                // } else {
+                //     $('#infoPatientForm').find('[name="doctor"]').val('').end();
+                // }
 
 
                 $("#img1").attr("src", "uploads/cardiology-patient-icon-vector-6244713.jpg");
-
                 if (typeof response.patient.img_url !== 'undefined' && response.patient.img_url != '') {
                     $("#img1").attr("src", response.patient.img_url);
                 }
 
+                $('#infoPatientForm').find('#info_name').text(response.patient.name).end();
+                $('#infoPatientForm').find('#info_email').text(response.patient.email).end();
+                $('#infoPatientForm').find('#info_phone').text(response.patient.phone).end();
+                $('#infoPatientForm').find('#info_gender').text(response.patient.sex).end();
+
+                $('#infoPatientForm').find('#info_doctor').text(response.doctor.name).end();
+                $('#infoPatientForm').find('#info_dob').text(response.patient.birthdate).end();
+                $('#infoPatientForm').find('#info_age').text(response.patient.age).end();
+                $('#infoPatientForm').find('#info_bloodgroup').text(response.patient.bloodgroup).end();
+                $('#infoPatientForm').find('#info_address').text(response.patient.address).end();
+
+                $('#infoPatientForm').find('#info_chiefComplaint').text(response.patient.chiefComplaint).end();
+                $('#infoPatientForm').find('#info_historyOfIllness').text(response.patient.historyOfIllness).end();
+                $('#infoPatientForm').find('#info_pastMedicalHistory').text(response.patient.pastMedicalHistory).end();
+                $('#infoPatientForm').find('#info_pastSurgicalHistory').text(response.patient.pastSurgicalHistory).end();
+                $('#infoPatientForm').find('#info_allergies').text('( ' + response.patient.allergies + ' )').end();
+                $('#infoPatientForm').find('#info_allergies_comment').text(response.patient.allergies_comment).end();
+
+                $('#infoPatientForm').find('#info_smoking').text('( ' + response.patient.smoking + ' )').end();
+                $('#infoPatientForm').find('#info_smoking_comment').text(response.patient.smoking_comment).end();
+                $('#infoPatientForm').find('#info_alcohol').text('( ' + response.patient.alcohol + ' )').end();
+                $('#infoPatientForm').find('#info_alcohol_comment').text(response.patient.alcohol_comment).end();
+                $('#infoPatientForm').find('#info_other_activity').text('( ' + response.patient.other_activity + ' )').end();
+                $('#infoPatientForm').find('#info_other_activity_comment').text(response.patient.other_activity_comment).end();
 
                 $('#infoModal').modal('show');
             }
@@ -105,15 +128,15 @@ $(document).ready(function () {
             loadingIndicator: true
         },
         dom: "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" +
-                "<'row'<'col-sm-12'tr>>" +
-                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
 
         buttons: [
-            {extend: 'copyHtml5', exportOptions: {columns: [0, 1, 2], }},
-            {extend: 'excelHtml5', exportOptions: {columns: [0, 1, 2], }},
-            {extend: 'csvHtml5', exportOptions: {columns: [0, 1, 2], }},
-            {extend: 'pdfHtml5', exportOptions: {columns: [0, 1, 2], }},
-            {extend: 'print', exportOptions: {columns: [0, 1, 2], }},
+            { extend: 'copyHtml5', exportOptions: { columns: [0, 1, 2], } },
+            { extend: 'excelHtml5', exportOptions: { columns: [0, 1, 2], } },
+            { extend: 'csvHtml5', exportOptions: { columns: [0, 1, 2], } },
+            { extend: 'pdfHtml5', exportOptions: { columns: [0, 1, 2], } },
+            { extend: 'print', exportOptions: { columns: [0, 1, 2], } },
         ],
         aLengthMenu: [
             [10, 25, 50, 100, -1],

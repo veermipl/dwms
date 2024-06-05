@@ -3,9 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Appointment extends MX_Controller {
+class Appointment extends MX_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
 
         $this->load->model('appointment_model');
@@ -19,7 +21,8 @@ class Appointment extends MX_Controller {
         }
     }
 
-    public function index() {
+    public function index()
+    {
 
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
@@ -41,15 +44,13 @@ class Appointment extends MX_Controller {
 
     public function fetch_type()
     {
-     if($this->input->post('consultation_id'))
-     {
-      echo $this->doctor_model->fetch_type($this->input->post('consultation_id'));
-     }
+        if ($this->input->post('consultation_id')) {
+            echo $this->doctor_model->fetch_type($this->input->post('consultation_id'));
+        }
     }
 
-    public function request() {
-
-
+    public function request()
+    {
         $data['patients'] = $this->patient_model->getPatient();
         $data['doctors'] = $this->doctor_model->getDoctor();
         $data['settings'] = $this->settings_model->getSettings();
@@ -58,7 +59,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function todays() {
+    public function todays()
+    {
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
         }
@@ -72,7 +74,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function upcoming() {
+    public function upcoming()
+    {
 
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
@@ -86,7 +89,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function myTodays() {
+    public function myTodays()
+    {
         if (!$this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
         }
@@ -100,7 +104,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function calendar() {
+    function calendar()
+    {
 
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
@@ -122,20 +127,26 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addNewView() {
+    public function addNewView()
+    {
 
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
         }
         $data = array();
-        
         $data['settings'] = $this->settings_model->getSettings();
+        $data['location'] = $this->doctor_model->getLocation();
+        $data['consultation'] = $this->doctor_model->getConsultation_Mode();
+        $data['type'] = $this->doctor_model->getType();
+        $data['status'] = $this->doctor_model->getAllStatus();
+
         $this->load->view('home/dashboard', $data); // just the header file
         $this->load->view('add_new', $data);
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addNew() {
+    public function addNew()
+    {;
         $id = $this->input->post('id');
         $patient = $this->input->post('patient');
         $doctor = $this->input->post('doctor');
@@ -144,8 +155,7 @@ class Appointment extends MX_Controller {
             $date = strtotime($date);
         }
 
-
-        $time_slot = $this->input->post('time_slot');
+        $time_slot = $this->input->post('time_slot') ?? '';
 
         $time_slot_explode = explode('To', $time_slot);
 
@@ -169,14 +179,11 @@ class Appointment extends MX_Controller {
             $request = '';
         }
 
-
         $user = $this->ion_auth->get_user_id();
 
         if ($this->ion_auth->in_group(array('Patient'))) {
             $user = '';
         }
-
-
 
         if ((empty($id))) {
             $add_date = date('m/d/y');
@@ -225,19 +232,19 @@ class Appointment extends MX_Controller {
         // Validating Address Field   
         $this->form_validation->set_rules('remarks', 'Remarks', 'trim|min_length[1]|max_length[1000]|xss_clean');
 
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == FALSE) {   
             if (!empty($id)) {
                 redirect("appointment/editAppointment?id=$id");
             } else {
-                
-                $data['settings'] = $this->settings_model->getSettings();
+
                 $data['patients'] = $this->patient_model->getPatient();
                 $data['doctors'] = $this->doctor_model->getDoctor();
-               
-                $data['status'] = $this->doctor_model->getAllStatus();
+                $data['settings'] = $this->settings_model->getSettings();
                 $data['location'] = $this->doctor_model->getLocation();
                 $data['consultation'] = $this->doctor_model->getConsultation_Mode();
-                $data['type'] =         $this->doctor_model->getType();
+                $data['type'] = $this->doctor_model->getType();
+                $data['status'] = $this->doctor_model->getAllStatus();
+
                 $this->load->view('home/dashboard', $data); // just the header file
                 $this->load->view('add_new', $data);
                 $this->load->view('home/footer'); // just the header file
@@ -279,7 +286,6 @@ class Appointment extends MX_Controller {
                 $patient = $patient_user_id;
             }
 
-
             $patient_phone = $this->patient_model->getPatientById($patient)->phone;
             if (empty($id)) {
                 $room_id = 'hms-meeting-' . $patient_phone . '-' . rand(10000, 1000000);
@@ -304,7 +310,6 @@ class Appointment extends MX_Controller {
                 's_time' => $s_time,
                 'e_time' => $e_time,
                 'time_slot' => $time_slot,
-                'remarks' => $remarks,
                 'add_date' => $add_date,
                 'registration_time' => $registration_time,
                 'status' => $status,
@@ -315,6 +320,19 @@ class Appointment extends MX_Controller {
                 'live_meeting_link' => $live_meeting_link,
                 'app_time' => $app_time,
                 'app_time_full_format' => $app_time_full_format,
+                'location_id' => htmlentities($this->input->post('location_id')),
+                'mode_of_consultation' => htmlentities($this->input->post('mode_of_consultation')),
+                'type_of_consultation' => htmlentities($this->input->post('type_of_consultation')),
+                'remarks' => $remarks,
+                'temp' =>htmlentities($this->input->post('temp')),
+                'bp' =>htmlentities($this->input->post('bp')),
+                'pulse' =>htmlentities($this->input->post('pulse')),
+                'spo2' =>htmlentities($this->input->post('spo2')),
+                'rr' =>htmlentities($this->input->post('rr')),
+                'height' =>htmlentities($this->input->post('height')),
+                'weight' =>htmlentities($this->input->post('weight')),
+                'bmi' =>htmlentities($this->input->post('bmi')),
+                'rbs' =>htmlentities($this->input->post('rbs')),
             );
             $username = $this->input->post('name');
             if (empty($id)) {     // Adding New department
@@ -354,7 +372,8 @@ class Appointment extends MX_Controller {
         }
     }
 
-    function sendSmsDuringAppointment($id, $data, $patient, $doctor, $status) {
+    function sendSmsDuringAppointment($id, $data, $patient, $doctor, $status)
+    {
         //sms
         $set['settings'] = $this->settings_model->getSettings();
         $patientdetails = $this->patient_model->getPatientById($patient);
@@ -414,7 +433,8 @@ class Appointment extends MX_Controller {
         }
     }
 
-    function getArrayKey($s_time) {
+    function getArrayKey($s_time)
+    {
         $all_slot = array(
             0 => '12:00 AM',
             1 => '12:05 AM',
@@ -710,7 +730,8 @@ class Appointment extends MX_Controller {
         return $key;
     }
 
-    function getAppointmentByJasonByDoctor() {
+    function getAppointmentByJasonByDoctor()
+    {
 
 
         $id = $this->input->get('id');
@@ -816,7 +837,8 @@ class Appointment extends MX_Controller {
         echo json_encode($jsonevents);
     }
 
-    function getAppointmentByJason() {
+    function getAppointmentByJason()
+    {
 
 
 
@@ -931,7 +953,8 @@ class Appointment extends MX_Controller {
         echo json_encode($jsonevents);
     }
 
-    function getAppointmentByDoctorId() {
+    function getAppointmentByDoctorId()
+    {
         $id = $this->input->get('id');
         $data['doctor_id'] = $id;
         $data['appointments'] = $this->appointment_model->getAppointment();
@@ -944,20 +967,32 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function editAppointment() {
+    function editAppointment()
+    {
         $data = array();
         $id = $this->input->get('id');
+        $appointmentData = $this->appointment_model->getAppointmentById($id);
+        if(!$id || !$appointmentData){
+            $this->session->set_flashdata('feedback', 'Invalid Appoinment ID');
+            redirect('appointment');
+        }
 
-        $data['settings'] = $this->settings_model->getSettings();
-        $data['appointment'] = $this->appointment_model->getAppointmentById($id);
         $data['patients'] = $this->patient_model->getPatientById($data['appointment']->patient);
         $data['doctors'] = $this->doctor_model->getDoctorById($data['appointment']->doctor);
+        $data['settings'] = $this->settings_model->getSettings();
+        $data['location'] = $this->doctor_model->getLocation();
+        $data['consultation'] = $this->doctor_model->getConsultation_Mode();
+        $data['type'] = $this->doctor_model->getType();
+        $data['status'] = $this->doctor_model->getAllStatus();
+        $data['appointment'] = $appointmentData;
+
         $this->load->view('home/dashboard', $data); // just the header file
         $this->load->view('add_new', $data);
         $this->load->view('home/footer'); // just the footer file 
     }
 
-    function editAppointmentByJason() {
+    function editAppointmentByJason()
+    {
         $id = $this->input->get('id');
         $data['appointment'] = $this->appointment_model->getAppointmentById($id);
         $data['patient'] = $this->patient_model->getPatientById($data['appointment']->patient);
@@ -965,7 +1000,8 @@ class Appointment extends MX_Controller {
         echo json_encode($data);
     }
 
-    function treatmentReport() {
+    function treatmentReport()
+    {
         $data['settings'] = $this->settings_model->getSettings();
         $data['doctors'] = $this->doctor_model->getDoctor();
 
@@ -988,7 +1024,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-    function myAppointments() {
+    function myAppointments()
+    {
         $data['appointments'] = $this->appointment_model->getAppointment();
         $data['settings'] = $this->settings_model->getSettings();
         $user_id = $this->ion_auth->user()->row()->id;
@@ -998,7 +1035,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function delete() {
+    function delete()
+    {
         $data = array();
         $id = $this->input->get('id');
         $doctor_id = $this->input->get('doctor_id');
@@ -1011,7 +1049,8 @@ class Appointment extends MX_Controller {
         }
     }
 
-    function getAppointment() {
+    function getAppointment()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1088,7 +1127,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getAppoinmentList() {
+    function getAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1140,7 +1180,8 @@ class Appointment extends MX_Controller {
         foreach ($data['appointments'] as $appointment) {
             $i = $i + 1;
 
-            $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
+            // $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
+            $option1 = '<a class="btn btn-info btn-xs btn_width" title="' . lang('edit') . '" style="color: #fff;" href="appointment/editAppointment?id=' . $appointment->id . '"><i class="fa fa-edit"></i> ' . lang('edit') . '</a>';
 
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
@@ -1155,22 +1196,22 @@ class Appointment extends MX_Controller {
             } else {
                 $doctorname = $appointment->doctorname;
             }
-            
+
             $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-            if (!empty($getLocation )) {
+
+            if (!empty($getLocation)) {
                 $location = $getLocation->name;
             } else {
-            $location ="";
-            }         
+                $location = "";
+            }
 
             $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
             if (!empty($getStatus)) {
-            $status = $getStatus->status_name;
+                $status = $getStatus->status_name;
             } else {
-            $status ="";
-            }   
+                $status = "";
+            }
 
 
 
@@ -1230,7 +1271,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getNoShowAppointmentList() {
+    function getNoShowAppointmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1299,20 +1341,20 @@ class Appointment extends MX_Controller {
             }
 
             $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-            if (!empty($getLocation )) {
+
+            if (!empty($getLocation)) {
                 $location = $getLocation->name;
             } else {
-            $location ="";
-            }  
+                $location = "";
+            }
 
             $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
             if (!empty($getStatus)) {
-            $status = $getStatus->status_name;
+                $status = $getStatus->status_name;
             } else {
-            $status ="";
-            }  
+                $status = "";
+            }
 
             if ($appointment->status == 'Pending Confirmation') {
                 $appointment_status = lang('pending_confirmation');
@@ -1357,7 +1399,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getPendingAppoinmentList() {
+    function getPendingAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1426,20 +1469,20 @@ class Appointment extends MX_Controller {
             }
 
             $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-            if (!empty($getLocation )) {
-            $location = $getLocation->name;
+
+            if (!empty($getLocation)) {
+                $location = $getLocation->name;
             } else {
-            $location ="";
-            }  
+                $location = "";
+            }
 
             $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
             if (!empty($getStatus)) {
-            $status = $getStatus->status_name;
+                $status = $getStatus->status_name;
             } else {
-            $status ="";
-            }  
+                $status = "";
+            }
 
             if ($appointment->status == 'Pending Confirmation') {
                 $appointment_status = lang('pending_confirmation');
@@ -1485,7 +1528,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getApprovedAppoinmentList() {
+    function getApprovedAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1553,20 +1597,20 @@ class Appointment extends MX_Controller {
             }
 
             $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-            if (!empty($getLocation )) {
+
+            if (!empty($getLocation)) {
                 $location = $getLocation->name;
             } else {
-            $location ="";
-            }  
+                $location = "";
+            }
 
             $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
             if (!empty($getStatus)) {
-            $status = $getStatus->status_name;
+                $status = $getStatus->status_name;
             } else {
-            $status ="";
-            }  
+                $status = "";
+            }
 
             if ($this->ion_auth->in_group(array('Doctor'))) {
                 if ($appointment->status == 'Confirmed') {
@@ -1620,7 +1664,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getRejectedAppoinmentList() {
+    function getRejectedAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1688,20 +1733,20 @@ class Appointment extends MX_Controller {
             }
 
             $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-            if (!empty($getLocation )) {
+
+            if (!empty($getLocation)) {
                 $location = $getLocation->name;
             } else {
-            $location ="";
-            }  
+                $location = "";
+            }
 
             $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
             if (!empty($getStatus)) {
-            $status = $getStatus->status_name;
+                $status = $getStatus->status_name;
             } else {
-            $status ="";
-            }  
+                $status = "";
+            }
             if ($this->ion_auth->in_group(array('admin', 'Doctor'))) {
                 if ($appointment->status == 'Confirmed') {
                     $options7 = '<a class="btn btn-info btn-xs btn_width detailsbutton" title="' . lang('start_live') . '" style="color: #fff;" href="meeting/instantLive?id=' . $appointment->id . '" target="_blank" onclick="return confirm(\'Are you sure you want to start a live meeting with this patient? SMS and Email will be sent to the Patient.\');"><i class="fa fa-headphones"></i> ' . lang('live') . '</a>';
@@ -1754,7 +1799,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getCompletedAppoinmentList() {
+    function getCompletedAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1822,20 +1868,20 @@ class Appointment extends MX_Controller {
             }
 
             $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-            if (!empty($getLocation )) {
-             $location = $getLocation->name;
+
+            if (!empty($getLocation)) {
+                $location = $getLocation->name;
             } else {
-            $location ="";
+                $location = "";
             }
-            
+
             $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
             if (!empty($getStatus)) {
-            $status = $getStatus->status_name;
+                $status = $getStatus->status_name;
             } else {
-            $status ="";
-            }  
+                $status = "";
+            }
 
             if ($appointment->status == 'Pending Confirmation') {
                 $appointment_status = lang('pending_confirmation');
@@ -1882,8 +1928,9 @@ class Appointment extends MX_Controller {
     }
 
 
-    
-    function getPostponeAppoinmentList() {
+
+    function getPostponeAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1951,20 +1998,20 @@ class Appointment extends MX_Controller {
             }
 
             $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-            if (!empty($getLocation )) {
-             $location = $getLocation->name;
+
+            if (!empty($getLocation)) {
+                $location = $getLocation->name;
             } else {
-            $location ="";
+                $location = "";
             }
-            
+
             $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
             if (!empty($getStatus)) {
-            $status = $getStatus->status_name;
+                $status = $getStatus->status_name;
             } else {
-            $status ="";
-            }  
+                $status = "";
+            }
 
             if ($appointment->status == 'Pending Confirmation') {
                 $appointment_status = lang('pending_confirmation');
@@ -2010,7 +2057,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getConfirmedAppoinmentList() {
+    function getConfirmedAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -2080,20 +2128,20 @@ class Appointment extends MX_Controller {
             }
 
             $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-            if (!empty($getLocation )) {
-             $location = $getLocation->name;
+
+            if (!empty($getLocation)) {
+                $location = $getLocation->name;
             } else {
-            $location ="";
+                $location = "";
             }
-            
+
             $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
             if (!empty($getStatus)) {
-            $status = $getStatus->status_name;
+                $status = $getStatus->status_name;
             } else {
-            $status ="";
-            }  
+                $status = "";
+            }
 
             if ($appointment->status == 'Pending Confirmation') {
                 $appointment_status = lang('pending_confirmation');
@@ -2111,12 +2159,12 @@ class Appointment extends MX_Controller {
                 $appointment->id,
                 $patientname,
                 $doctorname,
-                $appointment->date. ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
+                $appointment->date . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
                 $appointment->type_of_consultation,
                 $appointment->mode_of_consultation,
                 $location,
                 $status,
-                $option3 . ' ' . $option1. ' ' . $option2
+                $option3 . ' ' . $option1 . ' ' . $option2
             );
             $i = $i + 1;
         }
@@ -2139,7 +2187,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getCancelledAppoinmentList() {
+    function getCancelledAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -2208,20 +2257,20 @@ class Appointment extends MX_Controller {
             }
 
             $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-            if (!empty($getLocation )) {
-             $location = $getLocation->name;
+
+            if (!empty($getLocation)) {
+                $location = $getLocation->name;
             } else {
-            $location ="";
+                $location = "";
             }
-            
+
             $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
             if (!empty($getStatus)) {
-            $status = $getStatus->status_name;
+                $status = $getStatus->status_name;
             } else {
-            $status ="";
-            }  
+                $status = "";
+            }
 
             if ($appointment->status == 'Pending Confirmation') {
                 $appointment_status = lang('pending_confirmation');
@@ -2239,12 +2288,12 @@ class Appointment extends MX_Controller {
                 $appointment->id,
                 $patientname,
                 $doctorname,
-                $appointment->date. ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
+                $appointment->date . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
                 $appointment->type_of_consultation,
                 $appointment->mode_of_consultation,
                 $location,
                 $status,
-                $option3 . ' ' . $option1 .' ' .$option2
+                $option3 . ' ' . $option1 . ' ' . $option2
             );
             $i = $i + 1;
         }
@@ -2268,7 +2317,8 @@ class Appointment extends MX_Controller {
     }
 
 
-    function getTodaysAppoinmentList() {
+    function getTodaysAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -2337,20 +2387,20 @@ class Appointment extends MX_Controller {
             }
 
             $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-            if (!empty($getLocation )) {
+
+            if (!empty($getLocation)) {
                 $location = $getLocation->name;
             } else {
-            $location ="";
-            }  
+                $location = "";
+            }
 
             $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
             if (!empty($getStatus)) {
-            $status = $getStatus->status_name;
+                $status = $getStatus->status_name;
             } else {
-            $status ="";
-            }  
+                $status = "";
+            }
 
             if ($this->ion_auth->in_group(array('admin', 'Doctor'))) {
                 if ($appointment->status == 'Confirmed') {
@@ -2387,7 +2437,8 @@ class Appointment extends MX_Controller {
                 );
                 $i = $i + 1;
             } else {
-                $info1[] = array($appointment->id,
+                $info1[] = array(
+                    $appointment->id,
                     $appointment->patientname,
                     $appointment->doctorname,
                     date('d-m-Y', $appointment->date) . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
@@ -2417,7 +2468,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getUpcomingAppoinmentList() {
+    function getUpcomingAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -2497,20 +2549,20 @@ class Appointment extends MX_Controller {
                 }
 
                 $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-                if (!empty($getLocation )) {
+
+                if (!empty($getLocation)) {
                     $location = $getLocation->name;
                 } else {
-                $location ="";
-                }  
+                    $location = "";
+                }
 
                 $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
                 if (!empty($getStatus)) {
-                $status = $getStatus->status_name;
+                    $status = $getStatus->status_name;
                 } else {
-                $status ="";
-                }  
+                    $status = "";
+                }
 
                 if ($this->ion_auth->in_group(array('admin', 'Doctor'))) {
                     if ($appointment->status == 'Confirmed') {
@@ -2543,7 +2595,8 @@ class Appointment extends MX_Controller {
                 } else {
                     $options7 = '';
                 }
-                $info1[] = array($appointment->id,
+                $info1[] = array(
+                    $appointment->id,
                     $appointment->patientname,
                     $appointment->doctorname,
                     date('d-m-Y', $appointment->date) . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
@@ -2575,7 +2628,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getMyTodaysAppoinmentList() {
+    function getMyTodaysAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -2646,22 +2700,22 @@ class Appointment extends MX_Controller {
                 }
 
                 $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-                if (!empty($getLocation )) {
-                $location = $getLocation->name;
+
+                if (!empty($getLocation)) {
+                    $location = $getLocation->name;
                 } else {
-                $location ="";
+                    $location = "";
                 }
 
                 $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
-                if (!empty($getStatus)) {
-                $status = $getStatus->status_name;
-                } else {
-                $status ="";
-                }  
 
-                
+                if (!empty($getStatus)) {
+                    $status = $getStatus->status_name;
+                } else {
+                    $status = "";
+                }
+
+
 
                 if ($this->ion_auth->in_group(array('Patient'))) {
                     if ($appointment->status == 'Confirmed') {
@@ -2698,7 +2752,8 @@ class Appointment extends MX_Controller {
                     );
                     $i = $i + 1;
                 } else {
-                    $info1[] = array($appointment->id,
+                    $info1[] = array(
+                        $appointment->id,
                         $appointment->patientname,
                         $appointment->doctorname,
                         date('d-m-Y', $appointment->date) . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
@@ -2730,8 +2785,9 @@ class Appointment extends MX_Controller {
     }
 
 
-    
-    function getVipAppoinmentList() {
+
+    function getVipAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -2800,20 +2856,20 @@ class Appointment extends MX_Controller {
             }
 
             $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-            if (!empty($getLocation )) {
-             $location = $getLocation->name;
+
+            if (!empty($getLocation)) {
+                $location = $getLocation->name;
             } else {
-            $location ="";
+                $location = "";
             }
-            
+
             $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
             if (!empty($getStatus)) {
-            $status = $getStatus->status_name;
+                $status = $getStatus->status_name;
             } else {
-            $status ="";
-            }  
+                $status = "";
+            }
 
             if ($appointment->status == 'Pending Confirmation') {
                 $appointment_status = lang('pending_confirmation');
@@ -2832,12 +2888,12 @@ class Appointment extends MX_Controller {
                 $patientname,
                 $doctorname,
                 $appointment->date . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
-                                $appointment->mode_of_consultation,
+                $appointment->mode_of_consultation,
                 $appointment->type_of_consultation,
 
                 $location,
                 $status,
-                $option3 . ' ' . $option1 .' ' .$option2
+                $option3 . ' ' . $option1 . ' ' . $option2
             );
             $i = $i + 1;
         }
@@ -2861,7 +2917,8 @@ class Appointment extends MX_Controller {
     }
 
 
-    function viewAppointment() {
+    function viewAppointment()
+    {
 
         $id = $this->input->get('id');
 
@@ -2876,16 +2933,16 @@ class Appointment extends MX_Controller {
 
         $data['settings'] = $this->settings_model->getSettings();
 
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
 
-        $this->load->view('appointment_view', $data);   
+        $this->load->view('appointment_view', $data);
 
-        $this->load->view('home/footer'); 
-
+        $this->load->view('home/footer');
     }
 
 
-    function viewConfirmedAppointment() {
+    function viewConfirmedAppointment()
+    {
 
         $id = $this->input->get('id');
 
@@ -2900,12 +2957,11 @@ class Appointment extends MX_Controller {
 
         $data['settings'] = $this->settings_model->getSettings();
 
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
 
-        $this->load->view('appointment_confirm_view', $data);   
+        $this->load->view('appointment_confirm_view', $data);
 
-        $this->load->view('home/footer'); 
-
+        $this->load->view('home/footer');
     }
 
 
@@ -2922,12 +2978,11 @@ class Appointment extends MX_Controller {
         $data['type'] =         $this->doctor_model->getType();
         $data['settings'] = $this->settings_model->getSettings();
 
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
 
-        $this->load->view('cancelled_view', $data);   
+        $this->load->view('cancelled_view', $data);
 
-        $this->load->view('home/footer'); 
-
+        $this->load->view('home/footer');
     }
 
 
@@ -2944,53 +2999,51 @@ class Appointment extends MX_Controller {
         $data['type'] =         $this->doctor_model->getType();
         $data['settings'] = $this->settings_model->getSettings();
 
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
 
-        $this->load->view('postponed_view', $data);   
+        $this->load->view('postponed_view', $data);
 
-        $this->load->view('home/footer'); 
-
+        $this->load->view('home/footer');
     }
 
-  
+
 
     function markCancellationRequest()
     {
-          // var_dump($_POST);
-          $id = $this->input->post('id');
-          $aid =$this->input->post('appointment_id'); 
-          $data['reasone'] = $this->input->post('reasone');
-          $data['type'] = '8';
-         
-          $data['flag'] ='0';
-          $current_timestamp = strtotime("now");
-          $data['created_at'] = $current_timestamp;
-          $status = $this->appointment_model->cancelConfirmApp($id,$data);
-          $sdata['status'] ='8';
-          $status = $this->appointment_model->cancelConfirmAppByPending($id,$sdata);
+        // var_dump($_POST);
+        $id = $this->input->post('id');
+        $aid = $this->input->post('appointment_id');
+        $data['reasone'] = $this->input->post('reasone');
+        $data['type'] = '8';
 
-          redirect('appointment/getCancelledAppointments');
+        $data['flag'] = '0';
+        $current_timestamp = strtotime("now");
+        $data['created_at'] = $current_timestamp;
+        $status = $this->appointment_model->cancelConfirmApp($id, $data);
+        $sdata['status'] = '8';
+        $status = $this->appointment_model->cancelConfirmAppByPending($id, $sdata);
 
+        redirect('appointment/getCancelledAppointments');
     }
 
     function markPostponeRequest()
     {
-      
-      var_dump($_POST); exit;
-      $id = $this->input->post('id');
-      $aid =$this->input->post('appointment_id'); 
-      $data['reasone'] = $this->input->post('reasone');
-      $data['type'] = '6';
-     
-      $data['flag'] ='0';
-      $current_timestamp = strtotime("now");
-      $data['created_at'] = $current_timestamp;
-      $status = $this->appointment_model->postponeConfirmApp($id,$data);
-      $sdata['status'] ='6';
-      $status = $this->appointment_model->postponeConfirmAppByPending($id,$sdata);
 
-      redirect('appointment/getPostponedAppointments');
+        var_dump($_POST);
+        exit;
+        $id = $this->input->post('id');
+        $aid = $this->input->post('appointment_id');
+        $data['reasone'] = $this->input->post('reasone');
+        $data['type'] = '6';
 
+        $data['flag'] = '0';
+        $current_timestamp = strtotime("now");
+        $data['created_at'] = $current_timestamp;
+        $status = $this->appointment_model->postponeConfirmApp($id, $data);
+        $sdata['status'] = '6';
+        $status = $this->appointment_model->postponeConfirmAppByPending($id, $sdata);
+
+        redirect('appointment/getPostponedAppointments');
     }
 
     function getAllCancelledAppointmentsByPending()
@@ -3010,18 +3063,18 @@ class Appointment extends MX_Controller {
         $dir = $values[0];
         $order = $values[1];
 
-                
-              
-             
+
+
+
         $data['appointments'] = $this->appointment_model->getAllCancelledAppointmentsByPending();
-        
+
 
         $i = 0;
         foreach ($data['appointments'] as $appointment) {
 
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/markAsHandled?id=' . $appointment->c_id . '" onclick="return confirm(\'Are you sure you want to mark this item as handled?\');">Handled</a>';
 
-            $option3 = '<a class="btn btn-info btn-xs btn_width" href="appointment/viewAppointment?id='. $appointment->id.'">View Appointment</a>';
+            $option3 = '<a class="btn btn-info btn-xs btn_width" href="appointment/viewAppointment?id=' . $appointment->id . '">View Appointment</a>';
 
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
@@ -3037,20 +3090,20 @@ class Appointment extends MX_Controller {
             }
 
             $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-            if (!empty($getLocation )) {
-             $location = $getLocation->name;
+
+            if (!empty($getLocation)) {
+                $location = $getLocation->name;
             } else {
-            $location ="";
+                $location = "";
             }
-            
+
             $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
             if (!empty($getStatus)) {
-            $status = $getStatus->status_name;
+                $status = $getStatus->status_name;
             } else {
-            $status ="";
-            }  
+                $status = "";
+            }
 
             if ($appointment->status == 'Pending Confirmation') {
                 $appointment_status = lang('pending_confirmation');
@@ -3066,19 +3119,19 @@ class Appointment extends MX_Controller {
 
             $mil = $appointment->created_at * 1000;
             $seconds = $mil / 1000;
-            $created_at= date("d/m/Y H:i:s", $seconds); 
+            $created_at = date("d/m/Y H:i:s", $seconds);
 
             $info[] = array(
                 $appointment->id,
                 $patientname,
                 $appointment->date . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
-                                $appointment->mode_of_consultation,
+                $appointment->mode_of_consultation,
                 $appointment->type_of_consultation,
 
                 $location,
                 $appointment->reasone,
                 $created_at,
-                $option2.''.$option3
+                $option2 . '' . $option3
             );
             $i = $i + 1;
         }
@@ -3100,9 +3153,9 @@ class Appointment extends MX_Controller {
 
         echo json_encode($output);
     }
-    
 
-    function getAllPostponedAppointmentsByPending() 
+
+    function getAllPostponedAppointmentsByPending()
     {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
@@ -3119,18 +3172,18 @@ class Appointment extends MX_Controller {
         $dir = $values[0];
         $order = $values[1];
 
-                
-              
-                  
+
+
+
         $data['appointments'] = $this->appointment_model->getAllPostponedAppointmentsByPending();
-                 
-       
+
+
         $i = 0;
         foreach ($data['appointments'] as $appointment) {
 
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/markAsHandled?id=' . $appointment->c_id . '" onclick="return confirm(\'Are you sure you want to mark this item as handled?\');">Handled</a>';
 
-            $option3 = '<a class="btn btn-info btn-xs btn_width" href="appointment/viewAppointment?id='. $appointment->id.'">View Appointment</a>';
+            $option3 = '<a class="btn btn-info btn-xs btn_width" href="appointment/viewAppointment?id=' . $appointment->id . '">View Appointment</a>';
 
 
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
@@ -3147,20 +3200,20 @@ class Appointment extends MX_Controller {
             }
 
             $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
-            
-            if (!empty($getLocation )) {
-             $location = $getLocation->name;
+
+            if (!empty($getLocation)) {
+                $location = $getLocation->name;
             } else {
-            $location ="";
+                $location = "";
             }
-            
+
             $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
-            
+
             if (!empty($getStatus)) {
-            $status = $getStatus->status_name;
+                $status = $getStatus->status_name;
             } else {
-            $status ="";
-            }  
+                $status = "";
+            }
 
             if ($appointment->status == 'Pending Confirmation') {
                 $appointment_status = lang('pending_confirmation');
@@ -3176,19 +3229,19 @@ class Appointment extends MX_Controller {
 
             $mil = $appointment->created_at * 1000;
             $seconds = $mil / 1000;
-            $created_at= date("d/m/Y H:i:s", $seconds); 
+            $created_at = date("d/m/Y H:i:s", $seconds);
 
             $info[] = array(
                 $appointment->id,
                 $patientname,
                 $appointment->date . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
-                                $appointment->mode_of_consultation,
+                $appointment->mode_of_consultation,
                 $appointment->type_of_consultation,
 
                 $location,
                 $appointment->reasone,
                 $created_at,
-               $option2.''.$option3
+                $option2 . '' . $option3
             );
             $i = $i + 1;
         }
@@ -3210,23 +3263,19 @@ class Appointment extends MX_Controller {
 
         echo json_encode($output);
     }
-    
+
 
 
 
     function markAsHandled()
     {
-          
-          $id = $this->input->get('id');
-          $data['flag'] = '1';
-          $status = $this->appointment_model->PendingHandleApp($id,$data);
-          redirect('appointment/getCancelledAppointments');
-    } 
-    
 
-
+        $id = $this->input->get('id');
+        $data['flag'] = '1';
+        $status = $this->appointment_model->PendingHandleApp($id, $data);
+        redirect('appointment/getCancelledAppointments');
+    }
 }
 
 /* End of file appointment.php */
     /* Location: ./application/modules/appointment/controllers/appointment.php */
-    

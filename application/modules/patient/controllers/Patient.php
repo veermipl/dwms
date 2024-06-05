@@ -3,9 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Patient extends MX_Controller {
+class Patient extends MX_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->load->model('patient_model');
         $this->load->model('appointment/appointment_model');
@@ -24,7 +26,8 @@ class Patient extends MX_Controller {
         }
     }
 
-    public function index() {
+    public function index()
+    {
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
         }
@@ -36,26 +39,31 @@ class Patient extends MX_Controller {
         $this->load->view('home/footer');
     }
 
-    public function calendar() {
+    public function calendar()
+    {
         $data['settings'] = $this->settings_model->getSettings();
         $this->load->view('home/dashboard');
         $this->load->view('calendar', $data);
         $this->load->view('home/footer');
     }
 
-    public function addNewView() {
+    public function addNewView()
+    {
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
         }
         $data = array();
         $data['doctors'] = $this->doctor_model->getDoctor();
+        $data['settings'] = $this->settings_model->getSettings();
+        $data['groups'] = $this->doctor_model->getBloodGroup();
+
         $this->load->view('home/dashboard');
         $this->load->view('add_new', $data);
         $this->load->view('home/footer');
     }
 
-    public function addNew() {
-
+    public function addNew()
+    {
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
         }
@@ -75,6 +83,7 @@ class Patient extends MX_Controller {
         $birthdate = $this->input->post('birthdate');
         $bloodgroup = $this->input->post('bloodgroup');
         $patient_id = $this->input->post('p_id');
+
         if (empty($patient_id)) {
             $patient_id = rand(10000, 1000000);
         }
@@ -86,36 +95,23 @@ class Patient extends MX_Controller {
             $registration_time = $this->patient_model->getPatientById($id)->registration_time;
         }
 
-
         $email = $this->input->post('email');
         if (empty($email)) {
             $email = $name . '@' . $phone . '.com';
         }
 
-
-
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-
-
-        $this->form_validation->set_rules('name', 'Name', 'trim|required|min_length[2]|max_length[100]|xss_clean');
-
         if (empty($id)) {
             $this->form_validation->set_rules('password', 'Password', 'trim|min_length[3]|max_length[100]|xss_clean');
         }
-
+        $this->form_validation->set_rules('name', 'Name', 'trim|required|min_length[2]|max_length[100]|xss_clean');
         $this->form_validation->set_rules('email', 'Email', 'trim|min_length[2]|max_length[100]|xss_clean');
-
-        $this->form_validation->set_rules('address', 'Address', 'trim|required|min_length[2]|max_length[500]|xss_clean');
-
-        $this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[2]|max_length[50]|xss_clean');
-
-        $this->form_validation->set_rules('sex', 'Sex', 'trim|min_length[2]|max_length[100]|xss_clean');
-
         $this->form_validation->set_rules('birthdate', 'Birth Date', 'trim|min_length[2]|max_length[500]|xss_clean');
-
+        $this->form_validation->set_rules('sex', 'Sex', 'trim|min_length[2]|max_length[100]|xss_clean');
+        $this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[2]|max_length[50]|xss_clean');
         $this->form_validation->set_rules('bloodgroup', 'Blood Group', 'trim|min_length[1]|max_length[10]|xss_clean');
-
+        $this->form_validation->set_rules('address', 'Address', 'trim|required|min_length[2]|max_length[500]|xss_clean');
 
         if ($this->form_validation->run() == FALSE) {
             if (!empty($id)) {
@@ -123,8 +119,12 @@ class Patient extends MX_Controller {
                 redirect("patient/editPatient?id=$id");
             } else {
                 $data = array();
+
                 $data['setval'] = 'setval';
                 $data['doctors'] = $this->doctor_model->getDoctor();
+                $data['settings'] = $this->settings_model->getSettings();
+                $data['groups'] = $this->doctor_model->getBloodGroup();
+
                 $this->load->view('home/dashboard');
                 $this->load->view('add_new', $data);
                 $this->load->view('home/footer');
@@ -155,40 +155,43 @@ class Patient extends MX_Controller {
             $this->load->library('Upload', $config);
             $this->upload->initialize($config);
 
+            $data = array();
+            $data = array(
+                'patient_id' => $patient_id,
+                'doctor' => $doctor,
+                'name' => htmlentities($this->input->post('name')),
+                'email' => htmlentities($this->input->post('email')),
+                'birthdate' => htmlentities($this->input->post('birthdate')),
+                'age' => $this->input->post('age'),
+                'sex' => htmlentities($this->input->post('sex')),
+                'phone' => htmlentities($this->input->post('phone')),
+                'bloodgroup' => htmlentities($this->input->post('bloodgroup')),
+                'idType' => htmlentities($this->input->post('idType')),
+                'idType_passport' => htmlentities($this->input->post('idType_passport')),
+                'idType_drivers' => htmlentities($this->input->post('idType_drivers')),
+                'idType_other' => htmlentities($this->input->post('idType_other')),
+                'address' => htmlentities($this->input->post('address')),
+                'chiefComplaint' => htmlentities($this->input->post('chiefComplaint')),
+                'historyOfIllness' => htmlentities($this->input->post('historyOfIllness')),
+                'pastMedicalHistory' => htmlentities($this->input->post('pastMedicalHistory')),
+                'pastSurgicalHistory' => htmlentities($this->input->post('pastSurgicalHistory')),
+                'allergies' => htmlentities($this->input->post('allergies')),
+                'allergies_comment' => htmlentities($this->input->post('allergies_comment')),
+                'smoking' => htmlentities($this->input->post('smoking')),
+                'smoking_comment' => htmlentities($this->input->post('smoking_comment')),
+                'alcohol' => htmlentities($this->input->post('alcohol')),
+                'alcohol_comment' => htmlentities($this->input->post('alcohol_comment')),
+                'other_activity' => htmlentities($this->input->post('other_activity')),
+                'other_activity_comment' => htmlentities($this->input->post('other_activity_comment')),
+                'add_date' => $add_date,
+                'registration_time' => $registration_time
+            );
+
             if ($this->upload->do_upload('img_url')) {
                 $path = $this->upload->data();
                 $img_url = "uploads/" . $path['file_name'];
-                $data = array();
-                $data = array(
-                    'patient_id' => $patient_id,
-                    'img_url' => $img_url,
-                    'name' => $name,
-                    'email' => $email,
-                    'address' => $address,
-                    'doctor' => $doctor,
-                    'phone' => $phone,
-                    'sex' => $sex,
-                    'birthdate' => $birthdate,
-                    'bloodgroup' => $bloodgroup,
-                    'add_date' => $add_date,
-                    'registration_time' => $registration_time
-                );
-            } else {
 
-                $data = array();
-                $data = array(
-                    'patient_id' => $patient_id,
-                    'name' => $name,
-                    'email' => $email,
-                    'doctor' => $doctor,
-                    'address' => $address,
-                    'phone' => $phone,
-                    'sex' => $sex,
-                    'birthdate' => $birthdate,
-                    'bloodgroup' => $bloodgroup,
-                    'add_date' => $add_date,
-                    'registration_time' => $registration_time
-                );
+                $data['img_url'] =$img_url;
             }
 
             $username = $this->input->post('name');
@@ -291,24 +294,36 @@ class Patient extends MX_Controller {
         }
     }
 
-    function editPatient() {
-        $data = array();
+    function editPatient()
+    {
         $id = $this->input->get('id');
+        if(!$id){
+            $this->session->set_flashdata('feedback', 'Invalid Patient ID');
+            redirect('patient');
+        }
+
+        $data = array();
+        $data['id'] = $id;
         $data['patient'] = $this->patient_model->getPatientById($id);
         $data['doctors'] = $this->doctor_model->getDoctor();
+        $data['settings'] = $this->settings_model->getSettings();
+        $data['groups'] = $this->doctor_model->getBloodGroup();
+
         $this->load->view('home/dashboard');
         $this->load->view('add_new', $data);
         $this->load->view('home/footer');
     }
 
-    function editPatientByJason() {
+    function editPatientByJason()
+    {
         $id = $this->input->get('id');
         $data['patient'] = $this->patient_model->getPatientById($id);
         $data['doctor'] = $this->doctor_model->getDoctorById($data['patient']->doctor);
         echo json_encode($data);
     }
 
-    function getPatientByJason() {
+    function getPatientByJason()
+    {
         $id = $this->input->get('id');
         $data['patient'] = $this->patient_model->getPatientById($id);
 
@@ -326,7 +341,8 @@ class Patient extends MX_Controller {
         echo json_encode($data);
     }
 
-    function patientDetails() {
+    function patientDetails()
+    {
         $data = array();
         $id = $this->input->get('id');
         $data['patient'] = $this->patient_model->getPatientById($id);
@@ -335,7 +351,8 @@ class Patient extends MX_Controller {
         $this->load->view('home/footer');
     }
 
-    function report() {
+    function report()
+    {
         $data = array();
         $id = $this->input->get('id');
         $data['settings'] = $this->settings_model->getSettings();
@@ -345,7 +362,8 @@ class Patient extends MX_Controller {
         $this->load->view('home/footer');
     }
 
-    function addDiagnosticReport() {
+    function addDiagnosticReport()
+    {
         $id = $this->input->post('id');
         $invoice = $this->input->post('invoice');
         $patient = $this->input->post('patient');
@@ -388,14 +406,16 @@ class Patient extends MX_Controller {
         }
     }
 
-    function patientPayments() {
+    function patientPayments()
+    {
         $data['settings'] = $this->settings_model->getSettings();
         $this->load->view('home/dashboard');
         $this->load->view('patient_payments', $data);
         $this->load->view('home/footer');
     }
 
-    function caseList() {
+    function caseList()
+    {
         $data['settings'] = $this->settings_model->getSettings();
         $data['patients'] = $this->patient_model->getPatient();
         $data['medical_histories'] = $this->patient_model->getMedicalHistory();
@@ -404,7 +424,8 @@ class Patient extends MX_Controller {
         $this->load->view('home/footer');
     }
 
-    function documents() {
+    function documents()
+    {
         $data['patients'] = $this->patient_model->getPatient();
         $data['files'] = $this->patient_model->getPatientMaterial();
         $this->load->view('home/dashboard');
@@ -412,7 +433,8 @@ class Patient extends MX_Controller {
         $this->load->view('home/footer');
     }
 
-    function myCaseList() {
+    function myCaseList()
+    {
         if ($this->ion_auth->in_group(array('Patient'))) {
             $patient_ion_id = $this->ion_auth->get_user_id();
             $patient_id = $this->patient_model->getPatientByIonUserId($patient_ion_id)->id;
@@ -423,7 +445,8 @@ class Patient extends MX_Controller {
         }
     }
 
-    function myDocuments() {
+    function myDocuments()
+    {
         if ($this->ion_auth->in_group(array('Patient'))) {
             $patient_ion_id = $this->ion_auth->get_user_id();
             $patient_id = $this->patient_model->getPatientByIonUserId($patient_ion_id)->id;
@@ -434,7 +457,8 @@ class Patient extends MX_Controller {
         }
     }
 
-    function myPrescription() {
+    function myPrescription()
+    {
         if ($this->ion_auth->in_group(array('Patient'))) {
             $patient_ion_id = $this->ion_auth->get_user_id();
             $patient_id = $this->patient_model->getPatientByIonUserId($patient_ion_id)->id;
@@ -447,7 +471,8 @@ class Patient extends MX_Controller {
         }
     }
 
-    public function myPayment() {
+    public function myPayment()
+    {
         if ($this->ion_auth->in_group(array('Patient'))) {
             $patient_ion_id = $this->ion_auth->get_user_id();
             $patient_id = $this->patient_model->getPatientByIonUserId($patient_ion_id)->id;
@@ -459,7 +484,8 @@ class Patient extends MX_Controller {
         }
     }
 
-    function myPaymentHistory() {
+    function myPaymentHistory()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -503,7 +529,8 @@ class Patient extends MX_Controller {
         $this->load->view('home/footer');
     }
 
-    function deposit() {
+    function deposit()
+    {
         $id = $this->input->post('id');
 
 
@@ -541,7 +568,8 @@ class Patient extends MX_Controller {
             redirect('patient/myPaymentsHistory');
         } else {
             $data = array();
-            $data = array('patient' => $patient,
+            $data = array(
+                'patient' => $patient,
                 'payment_id' => $payment_id,
                 'deposited_amount' => $deposited_amount,
                 'deposit_type' => $deposit_type,
@@ -663,13 +691,14 @@ class Patient extends MX_Controller {
                         $stripe = $this->db->get_where('paymentGateway', array('name =' => 'Stripe'))->row();
                         \Stripe\Stripe::setApiKey($stripe->secret);
                         $charge = \Stripe\Charge::create(array(
-                                    "amount" => $deposited_amount * 100,
-                                    "currency" => "usd",
-                                    "source" => $token
+                            "amount" => $deposited_amount * 100,
+                            "currency" => "usd",
+                            "source" => $token
                         ));
                         $chargeJson = $charge->jsonSerialize();
                         if ($chargeJson['status'] == 'succeeded') {
-                            $data1 = array('patient' => $patient,
+                            $data1 = array(
+                                'patient' => $patient,
                                 'date' => $date,
                                 'payment_id' => $payment_id,
                                 'deposited_amount' => $deposited_amount,
@@ -738,7 +767,8 @@ class Patient extends MX_Controller {
         }
     }
 
-    function myInvoice() {
+    function myInvoice()
+    {
         $id = $this->input->get('id');
         $data['settings'] = $this->settings_model->getSettings();
         $data['discount_type'] = $this->finance_model->getDiscountType();
@@ -748,7 +778,8 @@ class Patient extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function addMedicalHistory() {
+    function addMedicalHistory()
+    {
         $id = $this->input->post('id');
         $patient_id = $this->input->post('patient_id');
 
@@ -825,7 +856,8 @@ class Patient extends MX_Controller {
         }
     }
 
-    public function diagnosticReport() {
+    public function diagnosticReport()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -844,7 +876,8 @@ class Patient extends MX_Controller {
         $this->load->view('home/footer');
     }
 
-    function medicalHistory() {
+    function medicalHistory()
+    {
         $data = array();
         $id = $this->input->get('id');
 
@@ -1018,14 +1051,16 @@ class Patient extends MX_Controller {
         $this->load->view('home/footer');
     }
 
-    function editMedicalHistoryByJason() {
+    function editMedicalHistoryByJason()
+    {
         $id = $this->input->get('id');
         $data['medical_history'] = $this->patient_model->getMedicalHistoryById($id);
         $data['patient'] = $this->patient_model->getPatientById($data['medical_history']->patient_id);
         echo json_encode($data);
     }
 
-    function getCaseDetailsByJason() {
+    function getCaseDetailsByJason()
+    {
         $id = $this->input->get('id');
         $data['case'] = $this->patient_model->getMedicalHistoryById($id);
         $patient = $data['case']->patient_id;
@@ -1033,7 +1068,8 @@ class Patient extends MX_Controller {
         echo json_encode($data);
     }
 
-    function getPatientByAppointmentByDctorId($doctor_id) {
+    function getPatientByAppointmentByDctorId($doctor_id)
+    {
         $data = array();
         $appointments = $this->appointment_model->getAppointmentByDoctor($doctor_id);
         foreach ($appointments as $appointment) {
@@ -1052,7 +1088,8 @@ class Patient extends MX_Controller {
         return $patients;
     }
 
-    function patientMaterial() {
+    function patientMaterial()
+    {
         $data = array();
         $id = $this->input->get('patient');
         $data['settings'] = $this->settings_model->getSettings();
@@ -1063,7 +1100,8 @@ class Patient extends MX_Controller {
         $this->load->view('home/footer');
     }
 
-    function addPatientMaterial() {
+    function addPatientMaterial()
+    {
         $hidden_folder_name = $this->input->post('hidden_folder_name');
         $title = $this->input->post('title');
         $folder = $this->input->post('folder');
@@ -1177,7 +1215,8 @@ class Patient extends MX_Controller {
         }
     }
 
-    function deleteCaseHistory() {
+    function deleteCaseHistory()
+    {
         $id = $this->input->get('id');
         $redirect = $this->input->get('redirect');
         $case_history = $this->patient_model->getMedicalHistoryById($id);
@@ -1190,7 +1229,8 @@ class Patient extends MX_Controller {
         }
     }
 
-    function deletePatientMaterial() {
+    function deletePatientMaterial()
+    {
         $id = $this->input->get('id');
         $redirect = $this->input->get('redirect');
         $patient_material = $this->patient_model->getPatientMaterialById($id);
@@ -1207,7 +1247,8 @@ class Patient extends MX_Controller {
         }
     }
 
-    function delete() {
+    function delete()
+    {
         $data = array();
         $id = $this->input->get('id');
         $user_data = $this->db->get_where('patient', array('id' => $id))->row();
@@ -1224,7 +1265,8 @@ class Patient extends MX_Controller {
         redirect('patient');
     }
 
-    function getPatient() {
+    function getPatient()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1258,7 +1300,8 @@ class Patient extends MX_Controller {
 
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
 
-                $options1 = ' <a type="button" class="btn editbutton" title="' . lang('edit') . '" data-toggle = "modal" data-id="' . $patient->id . '"><i class="fa fa-edit"> </i> ' . lang('edit') . '</a>';
+                // $options1 = ' <a type="button" class="btn editbutton" title="' . lang('edit') . '" data-toggle = "modal" data-id="' . $patient->id . '"><i class="fa fa-edit"> </i> ' . lang('edit') . '</a>';
+                $options1 = '<a class="btn btn-success" title="' . lang('edit') . '" style="color: #fff;" href="patient/editPatient?id=' . $patient->id . '"><i class="fa fa-edit"></i> ' . lang('edit') . '</a>';
             }
 
             $options2 = '<a class="btn detailsbutton" title="' . lang('info') . '" style="color: #fff;" href="patient/patientDetails?id=' . $patient->id . '"><i class="fa fa-info"></i> ' . lang('info') . '</a>';
@@ -1272,6 +1315,9 @@ class Patient extends MX_Controller {
             }
 
             $options6 = ' <a type="button" class="btn detailsbutton inffo" title="' . lang('info') . '" data-toggle = "modal" data-id="' . $patient->id . '"><i class="fa fa-info"> </i> ' . lang('info') . '</a>';
+
+            // $medicalOpt = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?id=' . $patient->id . '&tab=general"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
+            $medicalOpt = '';
 
 
             if ($this->ion_auth->in_group('Doctor')) {
@@ -1287,7 +1333,7 @@ class Patient extends MX_Controller {
                     $patient->name,
                     $patient->phone,
                     $this->settings_model->getSettings()->currency . $this->patient_model->getDueBalanceByPatientId($patient->id),
-                    $options1 . ' ' . $options6 . ' ' . $options3 . ' ' . $options4 . ' ' . $options5,
+                    $options1 . ' ' . $options6 . ' ' . $medicalOpt . ' ' . $options3 . ' ' . $options4 . ' ' . $options5,
                 );
             }
 
@@ -1306,7 +1352,7 @@ class Patient extends MX_Controller {
                     $patient->id,
                     $patient->name,
                     $patient->phone,
-                    $options1 . ' ' . $options6 . ' ' . $options3,
+                    $options1 . ' ' . $options6 . ' ' . $medicalOpt . ' ' . $options3,
                 );
             }
         }
@@ -1330,7 +1376,31 @@ class Patient extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getPatientPayments() {
+    function medical()
+    {
+        if ($this->ion_auth->in_group(array('Patient'))) {
+            redirect('home/permission');
+        }
+
+        $patient_id = $_GET['id'] ?? null;
+        $patient_form_tab = $_GET['tab'] ?? null;
+        $patient_data = $this->patient_model->getPatientById($patient_id);
+        $patient_form_tabs = ['general', 'vital', 'physical'];
+
+        if ($patient_data == null || (!in_array($patient_form_tab, $patient_form_tabs))) {
+            redirect('patient');
+        }
+
+        $data['patient_id'] = $patient_id;
+        $data['patient_form_tab'] = $patient_form_tab;
+
+        $this->load->view('home/dashboard');
+        $this->load->view('patient/medical', $data);
+        $this->load->view('home/footer');
+    }
+
+    function getPatientPayments()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1407,7 +1477,8 @@ class Patient extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getCaseList() {
+    function getCaseList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1487,7 +1558,8 @@ class Patient extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getDocuments() {
+    function getDocuments()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1517,7 +1589,7 @@ class Patient extends MX_Controller {
         }
 
         foreach ($data['documents'] as $document) {
-//            if ($document->folder == '') {
+            //            if ($document->folder == '') {
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
 
                 $options1 = '<a class="btn btn-info btn-xs" href="' . $document->url . '" download> ' . lang('download') . ' </a>';
@@ -1560,7 +1632,7 @@ class Patient extends MX_Controller {
                 $options1 . ' ' . $options2
             );
         }
-//        }
+        //        }
         if (!empty($data['documents'])) {
             $output = array(
                 "draw" => intval($requestData['draw']),
@@ -1579,7 +1651,8 @@ class Patient extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getMedicalHistoryByJason() {
+    function getMedicalHistoryByJason()
+    {
         $data = array();
 
         $from_where = $this->input->get('from_where');
@@ -1785,7 +1858,7 @@ class Patient extends MX_Controller {
         </td>
         <td>' . $appointment->time_slot . '</td>
         <td>'
-                    . $appointment_doctor . '
+                . $appointment_doctor . '
         </td>
         <td>' . $appointment->status . '</td>
         <td><a type="button" href="appointment/editAppointment?id=' . $appointment->id . '" class="btn btn-info btn-xs btn_width" title="Edit" data-id="' . $appointment->id . '">' . lang('edit') . '</a></td>
@@ -1888,7 +1961,7 @@ class Patient extends MX_Controller {
         if (empty($all_lab)) {
             $all_lab = '';
         }
-        
+
         $all_material = '';
         foreach ($patient_materials as $patient_material) {
             if ($patient_material->folder == '') {
@@ -2137,8 +2210,8 @@ class Patient extends MX_Controller {
                                             </tr>
                                         </thead>
                                         <tbody>'
-                . $all_lab .
-                '</tbody>
+            . $all_lab .
+            '</tbody>
                                     </table>
                                 </div>
                             </div>
@@ -2183,7 +2256,8 @@ class Patient extends MX_Controller {
         echo json_encode($data);
     }
 
-    public function getPatientinfo() {
+    public function getPatientinfo()
+    {
 
         $searchTerm = $this->input->post('searchTerm');
 
@@ -2193,7 +2267,8 @@ class Patient extends MX_Controller {
         echo json_encode($response);
     }
 
-    public function getPatientinfoWithAddNewOption() {
+    public function getPatientinfoWithAddNewOption()
+    {
 
         $searchTerm = $this->input->post('searchTerm');
 
@@ -2203,7 +2278,8 @@ class Patient extends MX_Controller {
         echo json_encode($response);
     }
 
-    public function addNewFolder() {
+    public function addNewFolder()
+    {
         if (!$this->ion_auth->in_group(array('admin'))) {
             redirect('home/permission');
         }
@@ -2255,13 +2331,15 @@ class Patient extends MX_Controller {
         }
     }
 
-    function editFolderByJason() {
+    function editFolderByJason()
+    {
         $id = $this->input->get('id');
         $data['folder'] = $this->patient_model->getFolderById($id);
         echo json_encode($data);
     }
 
-    function delet() {
+    function delet()
+    {
         $data = array();
         $id = $this->input->get('id');
         $user_data = $this->db->get_where('patient', array('id' => $id))->row();
@@ -2278,7 +2356,8 @@ class Patient extends MX_Controller {
         redirect('patient');
     }
 
-    function deleteFolder() {
+    function deleteFolder()
+    {
         $data = array();
         $id = $this->input->get('id');
         $patient = $this->input->get('patient');
@@ -2288,27 +2367,28 @@ class Patient extends MX_Controller {
         $user_data = $this->db->get_where('patient_material', array('folder' => $id))->row();
         $path = $user_data->url;
         if (!empty($path)) {
-      
+
             unlink($path);
-            
         }
         $delete = $this->patient_model->deletePatientMaterialByFolderId($id);
         foreach ($delete as $del) {
 
-           $del;
+            $del;
         }
 
         $this->session->set_flashdata('feedback', lang('deleted'));
         redirect("patient/MedicalHistory?id=" . $folder->patient);
     }
 
-    function getPatientMaterialByPatientIdByJason() {
+    function getPatientMaterialByPatientIdByJason()
+    {
         $id = $this->input->get('id');
         $data['patientMaterialByPatientId'] = $this->patient_model->getPatientMaterialByPatientId($id);
         echo json_encode($data);
     }
 
-    function medicalHistoryByFolder() {
+    function medicalHistoryByFolder()
+    {
         $data = array();
         $id = $this->input->get('id');
 
@@ -2320,7 +2400,8 @@ class Patient extends MX_Controller {
         $this->load->view('home/footer');
     }
 
-    function deletePatientMaterialInFolder() {
+    function deletePatientMaterialInFolder()
+    {
         $id = $this->input->get('id');
         $redirect = $this->input->get('redirect');
         $patient_material = $this->patient_model->getPatientMaterialById($id);
@@ -2336,9 +2417,7 @@ class Patient extends MX_Controller {
             redirect("patient/medicalHistoryByFolder?id=" . $patient_material->folder);
         }
     }
-
 }
 
 /* End of file patient.php */
     /* Location: ./application/modules/patient/controllers/patient.php */
-    
