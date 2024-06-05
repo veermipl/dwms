@@ -135,7 +135,7 @@
                     <?php } ?>
                     <!-- payment notification end -->
                     <!-- patient notification start-->
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Nurse', 'Laboratorist'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Laboratorist'))) { ?>
                         <li id="header_notification_bar" class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" title="users registered today" href="#">
                                 <i class="fa fa-user"></i>
