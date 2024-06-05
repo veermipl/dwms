@@ -83,6 +83,8 @@ class Schedule extends MX_Controller
 
     function addSchedule()
     {
+
+        // print_r($_POST); die();
         $redirect = $this->input->post('redirect');
         if (empty($redirect)) {
             $redirect = 'schedule';
@@ -94,7 +96,6 @@ class Schedule extends MX_Controller
         $weekday = $this->input->post('weekday');
         $location = $this->input->post('location');
         $duration = $this->input->post('duration');
-
         if (empty($id)) {
             $check = $this->schedule_model->getScheduleByDoctorByWeekday($doctor, $weekday, $location, $s_time, $e_time);
             if (!empty($check)) {
@@ -106,15 +107,19 @@ class Schedule extends MX_Controller
 
         if (empty($s_time)) {
             $this->session->set_flashdata('feedback', lang('fields_can_not_be_empty'));
+
             redirect($redirect);
             die();
         }
 
         if (empty($e_time)) {
             $this->session->set_flashdata('feedback', lang('fields_can_not_be_empty'));
+
             redirect($redirect);
             die();
         }
+
+
 
         $all_slot = array(
             0 => '12:00 AM',
@@ -471,6 +476,8 @@ class Schedule extends MX_Controller
 
 
 
+
+
         // Validating Starting Time Field
         $this->form_validation->set_rules('s_time', 'Start Time', 'trim|required|min_length[1]|max_length[100]|xss_clean');
         // Validating End Time Field   
@@ -497,7 +504,7 @@ class Schedule extends MX_Controller
                 'doctor' => $doctor,
                 's_time' => $s_time,
                 'e_time' => $e_time,
-                'location' => $location,
+                'location_id' => $location,
                 'weekday' => $weekday,
                 's_time_key' => $key1,
                 'duration' => $duration

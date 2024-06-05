@@ -1262,9 +1262,11 @@ class Appointment extends MX_Controller
                 $appointment->id,
                 $patientname,
                 $doctorname,
-                $appointment->date . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
+
+                date('d-m-Y',$appointment->date) . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
                 $consultation_mode_type,
                 $consultation_mode,
+
                 $location,
                 $status,
                 $option11 . ' ' . $option1 . ' ' . $option2 . ' ' . $options7

@@ -22,6 +22,7 @@ if (!defined('BASEPATH'))
 // Errors
 $lang['error_csrf'] = 'This form post did not pass our security checks.';
 $lang['doctor'] = 'Doctor';
+
 $lang['location'] = 'Location';
 $lang['patient'] = 'Patient';
 $lang['nurse'] = 'Nurse';
@@ -662,6 +663,9 @@ $lang['timezone'] = 'Time Zone';
 $lang['this_email_address_is_already_registered'] = 'This email address Is Already Registered';
 $lang['added'] = 'Added';
 $lang['updated'] = 'Updated';
+
+$lang['something_went_wrong'] = 'Something went wrong!';
+
 $lang['deleted'] = 'Deleted';
 $lang['validation_error'] = 'Validation Error!';
 $lang['message_sent'] = 'Message Sent';
@@ -762,3 +766,4 @@ $lang['delete_confirm'] = 'delete Confirm';
 $lang['medical_info'] = 'Medical Info';
 $lang['update'] = 'Update';
 $lang['something_went_wrong'] = 'Something went wrong!';
+
