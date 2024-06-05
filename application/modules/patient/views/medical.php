@@ -80,8 +80,9 @@
                                             <div class="form-group col-md-6">
                                                 <label for="temp">Location</label>
                                                 <select class="form-control m-bot15" name="status" value='' readonly disabled>
+                                                    <option value="">---</option>
                                                     <?php foreach ($location as $locKey => $locVal) : ?>
-                                                        <option value="<?= $locVal->id ?>" <?= $appointment->location_id == $locVal->id  ? 'selected' : '' ?>>
+                                                        <option value="<?= $locVal->id ?>" <?= $appointmentData->location_id == $locVal->id  ? 'selected' : '' ?>>
                                                             <?= $locVal->name ?>
                                                         </option>
                                                     <?php endforeach; ?>
@@ -89,7 +90,7 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="temp">Date</label>
-                                                <input readonly disabled type="text" class="form-control" id="temp" name="temp" value="<?= date('d-m-Y', strtotime($appointment->date)) ?>" />
+                                                <input readonly disabled type="text" class="form-control" id="temp" name="temp" value="<?= date('d-m-Y', ($appointmentData->date)) ?>" />
                                             </div>
                                         </div>
 
@@ -97,8 +98,9 @@
                                             <div class="form-group col-md-6">
                                                 <label for="temp">Mode Of Consultation</label>
                                                 <select class="form-control m-bot15" name="status" value='' readonly disabled>
+                                                    <option value="">---</option>
                                                     <?php foreach ($consultationModeList as $cmListKey => $cmListVal) : ?>
-                                                        <option value="<?= $cmListVal->id ?>" <?= $appointment->mode_of_consultation == $cmListVal->id  ? 'selected' : '' ?>>
+                                                        <option value="<?= $cmListVal->id ?>" <?= $appointmentData->mode_of_consultation == $cmListVal->id  ? 'selected' : '' ?>>
                                                             <?= $cmListVal->mode_of_consultation ?>
                                                         </option>
                                                     <?php endforeach; ?>
@@ -107,8 +109,9 @@
                                             <div class="form-group col-md-6">
                                                 <label for="temp">Type Of Consultation</label>
                                                 <select class="form-control m-bot15" name="status" value='' readonly disabled>
+                                                    <option value="">---</option>
                                                     <?php foreach ($consultationTypeList as $ctListKey => $ctListVal) : ?>
-                                                        <option value="<?= $ctListVal->id ?>" <?= $appointment->type_of_consultation == $ctListVal->id  ? 'selected' : '' ?>>
+                                                        <option value="<?= $ctListVal->id ?>" <?= $appointmentData->type_of_consultation == $ctListVal->id  ? 'selected' : '' ?>>
                                                             <?= $ctListVal->name ?>
                                                         </option>
                                                     <?php endforeach; ?>
@@ -125,7 +128,7 @@
                                                 <label for="temp">Status</label>
                                                 <select class="form-control m-bot15" name="status" value='' readonly disabled>
                                                     <?php foreach ($status as $statusVal) : ?>
-                                                        <option value="<?= $statusVal->id ?>" <?= $appointment->status == $statusVal->id  ? 'selected' : '' ?>>
+                                                        <option value="<?= $statusVal->id ?>" <?= $appointmentData->status == $statusVal->id  ? 'selected' : '' ?>>
                                                             <?= $statusVal->status_name ?>
                                                         </option>
                                                     <?php endforeach; ?>

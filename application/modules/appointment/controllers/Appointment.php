@@ -1218,6 +1218,19 @@ class Appointment extends MX_Controller
                 $status = "";
             }
 
+            $consultationMode = $this->doctor_model->getConsultationModeById($appointment->mode_of_consultation);
+            if (!empty($consultationMode)) {
+                $consultation_mode = $consultationMode->mode_of_consultation;
+            } else {
+                $consultation_mode = '';
+            }
+
+            $consultationModetype = $this->doctor_model->getTypeById($appointment->mode_of_consultation);
+            if (!empty($consultationModetype)) {
+                $consultation_mode_type = $consultationModetype->name;
+            } else {
+                $consultation_mode_type = '';
+            }
 
 
             if ($this->ion_auth->in_group(array('Doctor'))) {
@@ -1250,8 +1263,8 @@ class Appointment extends MX_Controller
                 $patientname,
                 $doctorname,
                 $appointment->date . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
-                $appointment->type_of_consultation,
-                $appointment->mode_of_consultation,
+                $consultation_mode_type,
+                $consultation_mode,
                 $location,
                 $status,
                 $option11 . ' ' . $option1 . ' ' . $option2 . ' ' . $options7

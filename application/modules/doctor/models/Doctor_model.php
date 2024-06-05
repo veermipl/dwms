@@ -8,58 +8,77 @@ if (!defined('BASEPATH'))
 
 
 
-class Doctor_model extends CI_model {
+class Doctor_model extends CI_model
+{
 
 
 
-    function __construct() {
+    function __construct()
+    {
 
         parent::__construct();
 
         $this->load->database();
-
     }
 
 
 
-    function insertDoctor($data) {
+    function insertDoctor($data)
+    {
 
         $this->db->insert('doctor', $data);
-
     }
 
 
 
-    function getDoctor() {
+    function getDoctor()
+    {
 
         $query = $this->db->get('doctor');
 
         return $query->result();
-
     }
     function getLocation()
     {
         $query = $this->db->get('location');
-        return $query->result();    
+        return $query->result();
     }
 
     function getWeekday()
     {
         $query = $this->db->get('weekdays');
-        return $query->result();    
+        return $query->result();
     }
 
-    
-    function getConsultation_Mode(){
-        $query = $this->db->where('status','1');
+
+    function getConsultation_Mode()
+    {
+        $query = $this->db->where('status', '1');
         $query = $this->db->get('consultation_mode');
         return $query->result();
     }
 
-   function getType(){
-        $query = $this->db->where('status','1');
+    function getConsultationModeById($id)
+    {
+        $query = $this->db->where('id', $id);
+        $query = $this->db->where('status', '1');
+        $query = $this->db->get('consultation_mode');
+        return $query->row();
+    }
+
+    function getType()
+    {
+        $query = $this->db->where('status', '1');
         $query = $this->db->get('consultation_type');
         return $query->result();
+    }
+
+    function getTypeById($id)
+    {
+        $query = $this->db->where('id', $id);
+        $query = $this->db->where('status', '1');
+        $query = $this->db->get('consultation_type');
+        return $query->row();
     }
 
     function getBloodGroup()
@@ -70,50 +89,46 @@ class Doctor_model extends CI_model {
     }
 
     function fetch_type($consultation_id)
-     {
-      $this->db->where('consultation_mode_id', $consultation_id);
-      // $this->db->order_by('state_name', 'ASC');
-      $query = $this->db->get('consultation_type');
-      $output = '<option value="">Select Type Of Consultation</option>';
-      foreach($query->result() as $row)
-      {
-       $output .= '<option value="'.$row->id.'">'.$row->name.'</option>';
-      }
-      return $output;
-     }
+    {
+        $this->db->where('consultation_mode_id', $consultation_id);
+        // $this->db->order_by('state_name', 'ASC');
+        $query = $this->db->get('consultation_type');
+        $output = '<option value="">Select Type Of Consultation</option>';
+        foreach ($query->result() as $row) {
+            $output .= '<option value="' . $row->id . '">' . $row->name . '</option>';
+        }
+        return $output;
+    }
 
 
 
-    function getDoctorWithoutSearch($order, $dir) {
+    function getDoctorWithoutSearch($order, $dir)
+    {
 
         if ($order != null) {
 
             $this->db->order_by($order, $dir);
-
         } else {
 
             $this->db->order_by('id', 'desc');
-
         }
 
         $query = $this->db->get('doctor');
 
         return $query->result();
-
     }
 
 
 
-    function getDoctorBySearch($search, $order, $dir) {
+    function getDoctorBySearch($search, $order, $dir)
+    {
 
         if ($order != null) {
 
             $this->db->order_by($order, $dir);
-
         } else {
 
             $this->db->order_by('id', 'desc');
-
         }
 
         $this->db->like('id', $search);
@@ -129,62 +144,56 @@ class Doctor_model extends CI_model {
         $query = $this->db->get('doctor');
 
         return $query->result();
-
     }
 
     public function getLocationById($id)
     {
-        
+
         $this->db->select('name');
         $this->db->where('id', $id);
         $query = $this->db->get('location');
         $result = $query->row();
-     
+
         return $result;
-    
     }
 
     public function getStatusById($id)
     {
-        
+
         $this->db->select('status_name');
         $this->db->where('id', $id);
         $query = $this->db->get('appointment_status');
         $result = $query->row();
-     
+
         return $result;
-    
     }
 
-    public function getAllStatus($value='')
+    public function getAllStatus($value = '')
     {
-    
-    $this->db->select('id,status_name');
-    
-    if($id!=''){
-    
-    $this->db->where('id', $id);
-    
-    }
-    
-    $query = $this->db->get('appointment_status');
-    
-    return $query->result();
-    
+
+        $this->db->select('id,status_name');
+
+        if ($id != '') {
+
+            $this->db->where('id', $id);
+        }
+
+        $query = $this->db->get('appointment_status');
+
+        return $query->result();
     }
 
 
 
-    function getDoctorByLimit($limit, $start, $order, $dir) {
+    function getDoctorByLimit($limit, $start, $order, $dir)
+    {
 
         if ($order != null) {
 
             $this->db->order_by($order, $dir);
-
         } else {
 
             $this->db->order_by('id', 'desc');
-
         }
 
         $this->db->limit($limit, $start);
@@ -192,12 +201,12 @@ class Doctor_model extends CI_model {
         $query = $this->db->get('doctor');
 
         return $query->result();
-
     }
 
 
 
-    function getDoctorByLimitBySearch($limit, $start, $search, $order, $dir) {
+    function getDoctorByLimitBySearch($limit, $start, $search, $order, $dir)
+    {
 
 
 
@@ -208,11 +217,9 @@ class Doctor_model extends CI_model {
         if ($order != null) {
 
             $this->db->order_by($order, $dir);
-
         } else {
 
             $this->db->order_by('id', 'desc');
-
         }
 
 
@@ -230,65 +237,65 @@ class Doctor_model extends CI_model {
         $query = $this->db->get('doctor');
 
         return $query->result();
-
     }
 
 
 
-    function getDoctorById($id) {
+    function getDoctorById($id)
+    {
 
         $this->db->where('id', $id);
 
         $query = $this->db->get('doctor');
 
         return $query->row();
-
     }
-     
-    function getLocationId($id) {
+
+    function getLocationId($id)
+    {
 
         $this->db->where('id', $id);
 
         $query = $this->db->get('location');
 
         return $query->row();
-
     }
 
 
-    function getDoctorByIonUserId($id) {
+    function getDoctorByIonUserId($id)
+    {
 
         $this->db->where('ion_user_id', $id);
 
         $query = $this->db->get('doctor');
 
         return $query->row();
-
     }
 
 
 
-    function updateDoctor($id, $data) {
+    function updateDoctor($id, $data)
+    {
 
         $this->db->where('id', $id);
 
         $this->db->update('doctor', $data);
-
     }
 
 
 
-    function delete($id) {
+    function delete($id)
+    {
 
         $this->db->where('id', $id);
 
         $this->db->delete('doctor');
-
     }
 
 
 
-    function updateIonUser($username, $email, $password, $ion_user_id) {
+    function updateIonUser($username, $email, $password, $ion_user_id)
+    {
 
         $uptade_ion_user = array(
 
@@ -303,12 +310,12 @@ class Doctor_model extends CI_model {
         $this->db->where('id', $ion_user_id);
 
         $this->db->update('users', $uptade_ion_user);
-
     }
 
 
 
-    function getDoctorInfo($searchTerm) {
+    function getDoctorInfo($searchTerm)
+    {
 
         if (!empty($searchTerm)) {
 
@@ -321,19 +328,17 @@ class Doctor_model extends CI_model {
             $fetched_records = $this->db->get('doctor');
 
             $users = $fetched_records->result_array();
-
         } else {
 
             $this->db->select('*');
 
-            
+
 
             $this->db->limit(10);
 
             $fetched_records = $this->db->get('doctor');
 
             $users = $fetched_records->result_array();
-
         }
 
 
@@ -351,7 +356,6 @@ class Doctor_model extends CI_model {
             $fetched_records = $this->db->get('doctor');
 
             $users = $fetched_records->result_array();
-
         }
 
 
@@ -365,16 +369,15 @@ class Doctor_model extends CI_model {
         foreach ($users as $user) {
 
             $data[] = array("id" => $user['id'], "text" => $user['name'] . ' (' . lang('id') . ': ' . $user['id'] . ')');
-
         }
 
         return $data;
-
     }
 
 
 
-    function getDoctorWithAddNewOption($searchTerm) {
+    function getDoctorWithAddNewOption($searchTerm)
+    {
 
         if (!empty($searchTerm)) {
 
@@ -387,19 +390,17 @@ class Doctor_model extends CI_model {
             $fetched_records = $this->db->get('doctor');
 
             $users = $fetched_records->result_array();
-
         } else {
 
             $this->db->select('*');
 
-           
+
 
             $this->db->limit(10);
 
             $fetched_records = $this->db->get('doctor');
 
             $users = $fetched_records->result_array();
-
         }
 
 
@@ -417,7 +418,6 @@ class Doctor_model extends CI_model {
             $fetched_records = $this->db->get('doctor');
 
             $users = $fetched_records->result_array();
-
         }
 
 
@@ -435,14 +435,8 @@ class Doctor_model extends CI_model {
         foreach ($users as $user) {
 
             $data[] = array("id" => $user['id'], "text" => $user['name'] . ' (' . lang('id') . ': ' . $user['id'] . ')');
-
         }
 
         return $data;
-
     }
-
-
-
 }
-
