@@ -27,7 +27,17 @@
             <?php $patent_id = $_GET['id'] ?? 0; ?>
 
 
-            <?php $data = $this->appointment_model->getAppointmentByIdOrDoctorId($apid, $patent_id); ?>
+            <?php
+                $patientData = $this->patient_model->getPatientById($patent_id);
+                $appointmentData = $this->appointment_model->getAppointmentById($apid);
+                $data = $this->appointment_model->getAppointmentByIdOrDoctorId($apid, $patent_id);
+
+                $patientList = $this->patient_model->getPatientById($appointmentData->patient);
+                $doctorList = $this->doctor_model->getDoctorById($appointmentData->doctor);
+
+                $consultationModeList = $this->doctor_model->getConsultation_Mode();
+                $consultationTypeList = $this->doctor_model->getType();
+            ?>
             <?php if ($data) : ?>
                 <div class="panel-body">
                     <div class="mt-3">
@@ -51,10 +61,235 @@
 
                     <div class="tab-content">
 
+                        <div class="tab-pane <?= ($patient_form_tab == 'appointment') ? 'active' : '' ?>" id="overview" role="tabpanel">
+                            <div class="card">
+                                <div class="card-body p-4">
+                                    <form role="form" action="" method="post" enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="temp">Patient</label>
+                                                <input readonly disabled type="text" class="form-control" id="temp" name="temp" value="<?= $patientList->name ?>" />
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="temp">Doctor</label>
+                                                <input readonly disabled type="text" class="form-control" id="temp" name="temp" value="<?= $doctorList->name ?>" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="temp">Location</label>
+                                                <select class="form-control m-bot15" name="status" value='' readonly disabled>
+                                                    <?php foreach ($location as $locKey => $locVal) : ?>
+                                                        <option value="<?= $locVal->id ?>" <?= $appointment->location_id == $locVal->id  ? 'selected' : '' ?>>
+                                                            <?= $locVal->name ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="temp">Date</label>
+                                                <input readonly disabled type="text" class="form-control" id="temp" name="temp" value="<?= date('d-m-Y', strtotime($appointment->date)) ?>" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="temp">Mode Of Consultation</label>
+                                                <select class="form-control m-bot15" name="status" value='' readonly disabled>
+                                                    <?php foreach ($consultationModeList as $cmListKey => $cmListVal) : ?>
+                                                        <option value="<?= $cmListVal->id ?>" <?= $appointment->mode_of_consultation == $cmListVal->id  ? 'selected' : '' ?>>
+                                                            <?= $cmListVal->mode_of_consultation ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="temp">Type Of Consultation</label>
+                                                <select class="form-control m-bot15" name="status" value='' readonly disabled>
+                                                    <?php foreach ($consultationTypeList as $ctListKey => $ctListVal) : ?>
+                                                        <option value="<?= $ctListVal->id ?>" <?= $appointment->type_of_consultation == $ctListVal->id  ? 'selected' : '' ?>>
+                                                            <?= $ctListVal->name ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="temp">Remarks</label>
+                                                <input readonly disabled type="text" class="form-control" id="temp" name="temp" value="<?= $appointmentData->remarks ?>" />
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="temp">Status</label>
+                                                <select class="form-control m-bot15" name="status" value='' readonly disabled>
+                                                    <?php foreach ($status as $statusVal) : ?>
+                                                        <option value="<?= $statusVal->id ?>" <?= $appointment->status == $statusVal->id  ? 'selected' : '' ?>>
+                                                            <?= $statusVal->status_name ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="tab-pane <?= ($patient_form_tab == 'general') ? 'active' : '' ?>" id="overview" role="tabpanel">
                             <div class="card">
                                 <div class="card-body p-4">
-                                    <h5>general info form</h5>
+                                    <form role="form" action="" method="post" enctype="multipart/form-data">
+
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="exampleInputEmail1"><?php echo lang('name'); ?><span class="text-danger">*</span></label>
+                                                <input type="text" readonly disabled class="form-control" name="name" value='<?= set_value('name', @$patientData->name) ?>' placeholder="">
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label for="exampleInputEmail1"><?php echo lang('email'); ?><span class="text-danger">*</span></label>
+                                                <input type="text" readonly disabled class="form-control" name="email" value='<?= set_value('email', @$patientData->email) ?>' placeholder="">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="form-group col-md-4">
+                                                <label><?php echo lang('birth_date'); ?></label>
+                                                <input readonly disabled class="form-control form-control-inline input-medium default-date-picker" type="text" name="birthdate" value="<?= set_value('birthdate', @$patientData->birthdate) ?>" placeholder="">
+                                            </div>
+
+                                            <div class="form-group col-md-4">
+                                                <label for="exampleInputEmail1"><?php echo lang('age'); ?></label>
+                                                <input readonly disabled type="text" class="form-control" name="age" value='<?= set_value('age', @$patientData->age) ?>' placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                            </div>
+
+                                            <div class="form-group col-md-4">
+                                                <label for="exampleInputEmail1"><?php echo lang('sex'); ?></label>
+                                                <select class="form-control m-bot15" name="sex" value='' readonly disabled>
+                                                    <option value="Male" <?= set_value('sex', @$patientData->sex) == 'Male' ? 'selected' : '' ?>> Male </option>
+                                                    <option value="Female" <?= set_value('sex', @$patientData->sex) == 'Female' ? 'selected' : '' ?>> Female </option>
+                                                    <option value="Others" <?= set_value('sex', @$patientData->sex) == 'Others' ? 'selected' : '' ?>> Others </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="exampleInputEmail1"><?php echo lang('phone'); ?><span class="text-danger">*</span></label>
+                                                <input readonly disabled type="text" class="form-control" name="phone" value='<?= set_value('phone', @$patientData->phone) ?>' placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                            </div>
+
+                                            <div class="form-group col-md-4">
+                                                <label for="exampleInputEmail1"><?php echo lang('blood_group'); ?></label>
+                                                <select class="form-control m-bot15" name="bloodgroup" value='' readonly disabled>
+
+                                                    <?php foreach ($groups as $group) : ?>
+                                                        <option value="<?= $group->blood_type ?>" <?= set_value('bloodgroup', @$patientData->bloodgroup) == $group->blood_type ? 'selected' : '' ?>>
+                                                            <?php echo $group->blood_type; ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Photographic ID:</label>
+                                            <div>
+                                                <label class="radio-inline">
+                                                    <input readonly disabled type="radio" name="idType" value="passport" <?= (set_value('idType', @$patientData->idType) == 'passport') ? 'checked' : '' ?>> Passport number
+                                                </label>
+                                                <input readonly disabled type="text" class="form-control" name="idType_passport" value="<?= set_value('idType_passport', @$patientData->idType_passport) ?>">
+
+                                                <label class="radio-inline">
+                                                    <input readonly disabled type="radio" name="idType" value="drivers" <?= (set_value('idType', @$patientData->idType) == 'drivers') ? 'checked' : '' ?>> Driver’s license number
+                                                </label>
+                                                <input readonly disabled type="text" class="form-control" name="idType_drivers" value="<?= set_value('idType_drivers', @$patientData->idType_drivers) ?>">
+
+                                                <label class="radio-inline">
+                                                    <input readonly disabled type="radio" name="idType" value="other" <?= (set_value('idType', @$patientData->idType) == 'other') ? 'checked' : '' ?>> Other
+                                                </label>
+                                                <input readonly disabled type="text" class="form-control" name="idType_other" value="<?= set_value('idType_other', @$patientData->idType_other) ?>">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><?php echo lang('address'); ?><span class="text-danger">*</span></label>
+                                            <input readonly disabled type="text" class="form-control" name="address" value='<?= set_value('address', @$patientData->address) ?>' placeholder="">
+                                        </div>
+
+                                        <h3>Medical History</h3>
+                                        <div class="form-group">
+                                            <label for="chiefComplaint">Chief Complaint:</label>
+                                            <textarea readonly disabled class="form-control" id="chiefComplaint" name="chiefComplaint"><?= set_value('chiefComplaint', @$patientData->chiefComplaint) ?></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="historyOfIllness">History of Presenting Illness:</label>
+                                            <textarea readonly disabled class="form-control" id="historyOfIllness" name="historyOfIllness"><?= set_value('historyOfIllness', @$patientData->historyOfIllness) ?></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pastMedicalHistory">Past Medical History and Drug History:</label>
+                                            <textarea readonly disabled class="form-control" id="pastMedicalHistory" name="pastMedicalHistory"><?= set_value('pastMedicalHistory', @$patientData->pastMedicalHistory) ?></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pastSurgicalHistory">Past Surgical History:</label>
+                                            <textarea readonly disabled class="form-control" id="pastSurgicalHistory" name="pastSurgicalHistory"><?= set_value('pastSurgicalHistory', @$patientData->pastSurgicalHistory) ?></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Allergies:</label>
+                                            <div>
+                                                <label class="radio-inline">
+                                                    <input readonly disabled type="radio" name="allergies" value="yes" <?= (set_value('allergies', @$patientData->allergies) == 'yes') ? 'checked' : '' ?>> Y
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input readonly disabled type="radio" name="allergies" value="no" <?= (set_value('allergies', @$patientData->allergies) == 'no') ? 'checked' : '' ?>> N
+                                                </label>
+                                            </div>
+                                            <textarea readonly disabled class="form-control mt-2" id="allergies_comment" name="allergies_comment" placeholder="Comment"><?= set_value('allergies_comment', @$patientData->allergies_comment) ?></textarea>
+                                        </div>
+
+                                        <h3>Lifestyle History</h3>
+                                        <div class="form-group">
+                                            <label>Smoking:</label>
+                                            <div>
+                                                <label class="radio-inline">
+                                                    <input readonly disabled type="radio" name="smoking" value="yes" <?= (set_value('smoking', @$patientData->smoking) == 'yes') ? 'checked' : '' ?>> Y
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input readonly disabled type="radio" name="smoking" value="no" <?= (set_value('smoking', @$patientData->smoking) == 'no') ? 'checked' : '' ?>> N
+                                                </label>
+                                            </div>
+                                            <textarea readonly disabled class="form-control mt-2" id="smoking_comment" name="smoking_comment" placeholder="Comment"><?= set_value('smoking_comment', @$patientData->smoking_comment) ?></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Alcohol use:</label>
+                                            <div>
+                                                <label class="radio-inline">
+                                                    <input readonly disabled type="radio" name="alcohol" value="yes" <?= (set_value('alcohol', @$patientData->alcohol) == 'yes') ? 'checked' : '' ?>> Y
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input readonly disabled type="radio" name="alcohol" value="no" <?= (set_value('alcohol', @$patientData->alcohol) == 'no') ? 'checked' : '' ?>> N
+                                                </label>
+                                            </div>
+                                            <textarea readonly disabled class="form-control mt-2" id="alcohol_comment" name="alcohol_comment" placeholder="Comment"><?= set_value('alcohol_comment', @$patientData->alcohol_comment) ?></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="other">Other (Sexual activity, LMP, etc.):</label>
+                                            <div>
+                                                <label class="radio-inline">
+                                                    <input readonly disabled type="radio" name="other_activity" value="yes" <?= (set_value('other_activity', @$patientData->other_activity) == 'yes') ? 'checked' : '' ?>> Y
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input readonly disabled type="radio" name="other_activity" value="no" <?= (set_value('other_activity', @$patientData->other_activity) == 'no') ? 'checked' : '' ?>> N
+                                                </label>
+                                            </div>
+                                            <textarea readonly disabled class="form-control mt-2" id="other_activity_comment" name="other_activity_comment" placeholder="Comment"><?= set_value('other_activity_comment', @$patientData->other_activity_comment) ?></textarea>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +297,54 @@
                         <div class="tab-pane <?= ($patient_form_tab == 'vital') ? 'active' : '' ?>" id="tasks" role="tabpanel">
                             <div class="card">
                                 <div class="card-body p-4">
-                                    <h5>vital info form</h5>
+                                    <form role="form" action="appointment/updateApppinmentVitalDetail" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" value="<?= $apid ?>" name="apid">
+                                        <input type="hidden" value="<?= $patent_id ?>" name="patient_id">
+                                        <input type="hidden" value="<?= $this->ion_auth->get_user_id() ?? 0 ?>" name="doctor_id">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="temp">Temp (°C):</label>
+                                                <input type="text" class="form-control" id="temp" name="temp" value="<?= set_value('temp', @$appointmentData->temp) ?>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="bp">BP (mmHg):</label>
+                                                <input type="text" class="form-control" id="bp" name="bp" value="<?= set_value('bp', @$appointmentData->bp) ?>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="pulse">Pulse (b/min):</label>
+                                                <input type="text" class="form-control" id="pulse" name="pulse" value="<?= set_value('pulse', @$appointmentData->pulse) ?>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="spo2">SpO2 (%):</label>
+                                                <input type="text" class="form-control" id="spo2" name="spo2" value="<?= set_value('spo2', @$appointmentData->spo2) ?>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="rr">RR (b/min):</label>
+                                                <input type="text" class="form-control" id="rr" name="rr" value="<?= set_value('rr', @$appointmentData->rr) ?>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="height">Height (cm):</label>
+                                                <input type="text" class="form-control" id="height" name="height" value="<?= set_value('height', @$appointmentData->height) ?>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="weight">Weight (kg):</label>
+                                                <input type="text" class="form-control" id="weight" name="weight" value="<?= set_value('weight', @$appointmentData->weight) ?>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="bmi">BMI:</label>
+                                                <input type="text" class="form-control" id="bmi" name="bmi" value="<?= set_value('bmi', @$appointmentData->bmi) ?>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="rbs">RBS (mg/dL):</label>
+                                                <input type="text" class="form-control" id="rbs" name="rbs" value="<?= set_value('rbs', @$appointmentData->rbs) ?>" />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="submit" name="submit" value="Submit" class="btn btn-primary" style="background:#097eb8 !important;border: unset;">
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

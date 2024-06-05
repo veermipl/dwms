@@ -1393,6 +1393,9 @@ class Patient extends MX_Controller
 
         $data['patient_id'] = $patient_id;
         $data['patient_form_tab'] = $patient_form_tab;
+        $data['groups'] = $this->doctor_model->getBloodGroup();
+        $data['location'] = $this->doctor_model->getLocation();
+        $data['status'] = $this->doctor_model->getAllStatus();
 
         $this->load->view('home/dashboard');
         $this->load->view('patient/medical', $data);

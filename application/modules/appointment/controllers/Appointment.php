@@ -979,6 +979,7 @@ class Appointment extends MX_Controller
             redirect('appointment');
         }
 
+        $data['appointment'] = $appointmentData;
         $data['patients'] = $this->patient_model->getPatientById($data['appointment']->patient);
         $data['doctors'] = $this->doctor_model->getDoctorById($data['appointment']->doctor);
         $data['settings'] = $this->settings_model->getSettings();
@@ -986,7 +987,6 @@ class Appointment extends MX_Controller
         $data['consultation'] = $this->doctor_model->getConsultation_Mode();
         $data['type'] = $this->doctor_model->getType();
         $data['status'] = $this->doctor_model->getAllStatus();
-        $data['appointment'] = $appointmentData;
 
         $this->load->view('home/dashboard', $data); // just the header file
         $this->load->view('add_new', $data);
@@ -1305,6 +1305,34 @@ class Appointment extends MX_Controller
                 $this->session->set_flashdata('feedback', lang('something_went_wrong'));
                 redirect($_SERVER['HTTP_REFERER']);
             }
+        } else {
+            $this->session->set_flashdata('feedback', lang('something_went_wrong'));
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    function updateApppinmentVitalDetail()
+    {
+        $apid = $_POST['apid'] ?? 0;
+        $patient_id = $_POST['patient_id'] ?? 0;
+        $doctor_id = $_POST['doctor_id'] ?? 0;
+
+        if ($this->appointment_model->getAppointmentById($apid)) {
+            $data = array(
+                'temp' => htmlentities($this->input->post('temp')),
+                'bp' => htmlentities($this->input->post('bp')),
+                'pulse' => htmlentities($this->input->post('pulse')),
+                'spo2' => htmlentities($this->input->post('spo2')),
+                'rr' => htmlentities($this->input->post('rr')),
+                'height' => htmlentities($this->input->post('height')),
+                'weight' => htmlentities($this->input->post('weight')),
+                'bmi' => htmlentities($this->input->post('bmi')),
+                'rbs' => htmlentities($this->input->post('rbs')),
+            );
+            $this->appointment_model->updateAppointment($apid, $data);
+
+            $this->session->set_flashdata('feedback', lang('updated'));
+            redirect($_SERVER['HTTP_REFERER']);
         } else {
             $this->session->set_flashdata('feedback', lang('something_went_wrong'));
             redirect($_SERVER['HTTP_REFERER']);
