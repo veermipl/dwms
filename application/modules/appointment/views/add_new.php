@@ -270,7 +270,7 @@
 
                                                                                                                         if (!empty($appointment->date)) {
 
-                                                                                                                            echo date('d-m-Y', strtotime($appointment->date));
+                                                                                                                            echo date('d-m-Y',($appointment->date));
                                                                                                                         }
 
                                                                                                                         ?>' placeholder="">
@@ -380,12 +380,6 @@
 
                                 </div>
 
-                                <div class="col-md-9">
-
-                                    <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
-
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -428,16 +422,17 @@
                             <input type="text" class="form-control" id="rbs" name="rbs" value="<?= set_value('rbs', @$appointment->rbs) ?>" />
                         </div>
                     </div>
+
+                    <div class="col-md-12 text-center mt-2">
+                        <button type="submit" name="submit" class="btn btn-info pull-right_"> <?php echo lang('submit'); ?></button>
+                    </div>
+
+                </form>
+
             </div>
-
-            </form>
-
-            </div>
-
 
 
         </section>
-
         <!-- page end-->
 
     </section>
