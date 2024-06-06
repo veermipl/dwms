@@ -1,10 +1,18 @@
 <!--sidebar end-->
 <!--main content start-->
+<style>
+    #emailErr{
+        /* font-weight: bold; */
+        margin-top: 7px;
+    }
+</style>
+
 <section id="main-content">
     <section class="wrapper site-min-height">
         <!-- page start-->
         <link href="common/extranal/css/patient/add_new.css" rel="stylesheet">
         <section class="panel">
+
             <header class="panel-heading">
                 <?php
                 if (!empty($patient->id))
@@ -14,13 +22,12 @@
                 ?>
             </header>
 
-
             <section class="panel">
                 <div class="panel-body">
 
                     <div class="col-lg-12">
                         <div class="col-lg-3"></div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <?php echo validation_errors(); ?>
                         </div>
                         <div class="col-lg-3"></div>
@@ -47,12 +54,14 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="exampleInputEmail1"><?php echo lang('name'); ?><span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="name" value='<?= set_value('name', $patient->name) ?>' placeholder="">
+                                    <input type="text" required class="form-control" name="name" value='<?= set_value('name', $patient->name) ?>' placeholder="">
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="exampleInputEmail1"><?php echo lang('email'); ?><span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="email" value='<?= set_value('email', $patient->email) ?>' placeholder="">
+                                    <input type="text" required id="patientEmail" class="form-control" name="email" value='<?= set_value('email', $patient->email) ?>' placeholder="">
+
+                                    <span id="emailErr" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -212,13 +221,13 @@
 
                             <?php if (empty($id)) { ?>
 
-                                <div class="form-group sms_send">
+                                <!-- <div class="form-group sms_send">
                                     <div class="payment_label">
                                     </div>
                                     <div class="">
                                         <input type="checkbox" name="sms" value="sms"> <?php echo lang('send_sms') ?><br>
                                     </div>
-                                </div>
+                                </div> -->
 
                             <?php } ?>
 
@@ -239,6 +248,8 @@
                             </section>
                         </form>
                     </div>
+
+                </div>
             </section>
 
         </section>
@@ -247,3 +258,12 @@
 </section>
 <!--main content end-->
 <!--footer start-->
+
+<script src="common/js/codearistos.min.js"></script>
+<script type="text/javascript">
+    var select_doctor = "<?php echo lang('select_doctor'); ?>";
+</script>
+<script type="text/javascript">
+    var language = "<?php echo $this->language; ?>";
+</script>
+<script src="common/extranal/js/patient/patient.js"></script>

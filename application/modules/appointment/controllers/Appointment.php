@@ -15,6 +15,7 @@ class Appointment extends MX_Controller
         $this->load->model('patient/patient_model');
         $this->load->model('sms/sms_model');
         $this->load->module('sms');
+        $this->load->library('sendmail');
 
         if (!$this->ion_auth->in_group(array('admin', 'Nurse', 'Doctor', 'Patient', 'Receptionist'))) {
             redirect('home/permission');
@@ -300,6 +301,7 @@ class Appointment extends MX_Controller
 
 
             $patientname = $this->patient_model->getPatientById($patient)->name;
+            $patientemail = $this->patient_model->getPatientById($patient)->email;
             $doctorname = $this->doctor_model->getDoctorById($doctor)->name;
 
             $data = array();
@@ -351,8 +353,21 @@ class Appointment extends MX_Controller
                     $data_d = array('doctor' => $doctorss);
                     $this->patient_model->updatePatient($patient, $data_d);
                 }
-                $this->sendSmsDuringAppointment($id, $data, $patient, $doctor, $status);
-                $this->session->set_flashdata('feedback', lang('added'));
+                // $this->sendSmsDuringAppointment($id, $data, $patient, $doctor, $status);
+
+                $autoemail = $this->email_model->getAutoEmailByType('patient');
+                if ($autoemail->status == 'Active') {
+                    $mail_provider = $this->settings_model->getSettings()->emailtype;
+                    $settngs_name = $this->settings_model->getSettings()->system_vendor;
+                    $emailSettings = $this->email_model->getEmailSettingsByType($mail_provider);
+
+                    $subject = 'Appointment Booking Details';
+                    $message = 'Dear ' . $data['patientname'] . ', Thank you for booking an appoinment. <br> Here is your appointment details.<br> <br>  Doctor: ' . $data['doctorname'] . ' <br> Appointment Date: ' . date('d-m-y', $data['date']) . '<br> Appointment Slot: ' . $data['time_slot'] . '<br><br> Thank You, <br>' . $this->settings->title;
+
+                    $this->sendmail->send($emailSettings->admin_email, $patientemail, $subject, $message, $settngs_name, $emailSettings);
+                }
+
+                $this->session->set_flashdata('feedback', lang('appointment_booked'));
             } else { // Updating department
                 $previous_status = $this->appointment_model->getAppointmentById($id)->status;
                 if ($previous_status != "Confirmed") {
@@ -1263,7 +1278,7 @@ class Appointment extends MX_Controller
                 $patientname,
                 $doctorname,
 
-                date('d-m-Y',$appointment->date) . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
+                date('d-m-Y', $appointment->date) . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
                 $consultation_mode_type,
                 $consultation_mode,
 

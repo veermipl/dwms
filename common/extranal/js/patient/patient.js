@@ -109,6 +109,47 @@ $(document).ready(function () {
         })
     });
 
+    var emailOnLoad = $.trim($('#patientEmail').val());
+    validateMail(emailOnLoad);
+
+    $(document).on("keyup", "#patientEmail", function (e) {
+        e.preventDefault();
+
+        var email = $.trim($(this).val());
+        validateMail(email);
+        
+    });
+
+    function validateMail(email) {
+        if (email) {
+            $.ajax({
+                url: 'patient/validatePatientMail',
+                method: 'post',
+                data: {
+                    'email': email,
+                },
+                dataType: 'json',
+                beforeSend: function(){
+                    $('#emailErr').text('').fadeOut();
+                },
+                success: function (response) {
+
+                    if (response.error === false) {
+                        $('button[name="submit"]').prop('disabled', false);
+                        $('#emailErr').text('').fadeOut();
+                    } else {
+                        $('button[name="submit"]').prop('disabled', true);
+                        $('#emailErr').text(response.msg).fadeIn();
+                    }
+                },
+                error: function (eRes) {
+                }
+            });
+        } else {
+            return false;
+        }
+    }
+
 });
 
 $(document).ready(function () {

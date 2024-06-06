@@ -135,7 +135,7 @@
                     <?php } ?>
                     <!-- payment notification end -->
                     <!-- patient notification start-->
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Nurse', 'Laboratorist'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Laboratorist'))) { ?>
                         <li id="header_notification_bar" class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" title="users registered today" href="#">
                                 <i class="fa fa-user"></i>
@@ -178,7 +178,7 @@
 
                             </ul>
                         </li>
-                    <!-- patient notification end -->
+                        <!-- patient notification end -->
 
 
                         <li id="header_notification_bar" class="dropdown">
@@ -421,7 +421,7 @@
                                         <li><a href="patient/patientPayments"><i class="fa fa-money-check"></i><?php echo lang('payments'); ?></a></li>
                                     <?php } ?>
                                      -->
-                                <?php if (!$this->ion_auth->in_group(array('Accountant', 'Receptionist'))) { ?>
+                                <?php if (!$this->ion_auth->in_group(array('Accountant', 'Receptionist', 'Nurse', 'Laboratorist'))) { ?>
                                     <li><a href="patient/caseList"><i class="fa fa-book"></i><?php echo lang('case'); ?> <?php echo lang('manager'); ?></a></li>
                                     <li><a href="patient/documents"><i class="fa fa-file"></i><?php echo lang('documents'); ?></a></li>
                                 <?php } ?>
@@ -430,7 +430,7 @@
                     <?php } ?>
 
 
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Nurse', 'Receptionist'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-clock"></i>
@@ -467,7 +467,7 @@
                             <ul class="sub">
                                 <li><a href="appointment"><i class="fa fa-list-alt"></i><?php echo lang('appointments'); ?></a></li>
                                 <?php if ($this->ion_auth->in_group(array('Nurse'))) : ?>
-                                <li><a href="appointment/addNewView"><i class="fa fa-plus-circle"></i><?php echo lang('add'); ?></a></li>
+                                    <li><a href="appointment/addNewView"><i class="fa fa-plus-circle"></i><?php echo lang('add'); ?></a></li>
                                 <?php endif; ?>
                                 <?php if ($this->ion_auth->in_group(array('admin', 'Receptionist'))) { ?>
                                     <li><a href="appointment/todays"><i class="fa fa-list-alt"></i><?php echo lang('todays'); ?></a></li>
