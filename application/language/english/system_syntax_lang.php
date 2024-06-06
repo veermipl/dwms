@@ -766,4 +766,6 @@ $lang['delete_confirm'] = 'delete Confirm';
 $lang['medical_info'] = 'Medical Info';
 $lang['update'] = 'Update';
 $lang['something_went_wrong'] = 'Something went wrong!';
+$lang['patient_added'] = 'Patient has been registered successfully!';
+$lang['appointment_booked'] = 'Appointment has been booked successfully!';
 

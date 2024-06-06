@@ -21,6 +21,7 @@ class Patient extends MX_Controller
         $this->load->model('medicine/medicine_model');
         $this->load->model('doctor/doctor_model');
         $this->load->module('paypal');
+        $this->load->library('sendmail');
         if (!$this->ion_auth->in_group(array('admin', 'Nurse', 'Patient', 'Doctor', 'Laboratorist', 'Accountant', 'Receptionist'))) {
             redirect('home/permission');
         }
@@ -104,9 +105,10 @@ class Patient extends MX_Controller
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
         if (empty($id)) {
             $this->form_validation->set_rules('password', 'Password', 'trim|min_length[3]|max_length[100]|xss_clean');
+            $this->form_validation->set_rules('email', 'Email', 'trim|required|min_length[2]|max_length[100]|xss_clean|is_unique[users.email]');
         }
         $this->form_validation->set_rules('name', 'Name', 'trim|required|min_length[2]|max_length[100]|xss_clean');
-        $this->form_validation->set_rules('email', 'Email', 'trim|min_length[2]|max_length[100]|xss_clean');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|min_length[2]|max_length[100]|xss_clean');
         $this->form_validation->set_rules('birthdate', 'Birth Date', 'trim|min_length[2]|max_length[500]|xss_clean');
         $this->form_validation->set_rules('sex', 'Sex', 'trim|min_length[2]|max_length[100]|xss_clean');
         $this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[2]|max_length[50]|xss_clean');
@@ -250,7 +252,9 @@ class Patient extends MX_Controller
                         $this->email->to($email);
                         $this->email->subject('Registration confirmation');
                         $this->email->message($messageprint1);
-                        $this->email->send();
+                        // $this->email->send();
+
+                        $this->sendmail->send($email_Settings->admin_email, $email, 'Registration confirmation', $messageprint1, $settngs_name, $email_Settings);
 
 
 
@@ -269,10 +273,12 @@ class Patient extends MX_Controller
                         $this->email->to($email);
                         $this->email->subject($subject);
                         $this->email->message($message);
-                        $this->email->send();
+                        // $this->email->send();
+
+                        $this->sendmail->send($emailSettings->admin_email, $email, $subject, $message, $settngs_name, $emailSettings);
                     }
 
-                    $this->session->set_flashdata('feedback', lang('added'));
+                    $this->session->set_flashdata('feedback', lang('patient_added'));
                 }
             } else {
                 $ion_user_id = $this->db->get_where('patient', array('id' => $id))->row()->ion_user_id;
@@ -292,6 +298,36 @@ class Patient extends MX_Controller
                 redirect('patient');
             }
         }
+    }
+
+    function validatePatientMail()
+    {
+        if (count($_POST) > 0) {
+            $mail = htmlentities($_POST['email']) ?? null;
+
+            if (!$mail) {
+                $data['error'] = true;
+                $data['msg'] = 'Email is required';
+            } else {
+                if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+                    if ($this->ion_auth->email_check($mail)) {
+                        $data['error'] = true;
+                        $data['msg'] = 'Mail already exist';
+                    } else {
+                        $data['error'] = false;
+                        $data['msg'] = 'Valid mail';
+                    }
+                } else {
+                    $data['error'] = true;
+                    $data['msg'] = 'Enter a valid email';
+                }
+            }
+        } else {
+            $data['error'] = true;
+            $data['msg'] = 'Email is required';
+        }
+
+        echo json_encode($data);
     }
 
     function editPatient()

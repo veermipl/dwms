@@ -6,6 +6,38 @@
     }
 </style>
 
+<?php if (!$this->ion_auth->in_group(array('doctor'))) : ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function() {
+
+            // Disable all input type text
+            var textInputs = document.querySelectorAll('input[type="text"]');
+            for (var i = 0; i < textInputs.length; i++) {
+                textInputs[i].disabled = true;
+            }
+
+            // Disable all textareas
+            var textareas = document.querySelectorAll('textarea');
+            for (var i = 0; i < textareas.length; i++) {
+                textareas[i].disabled = true;
+            }
+
+            // Disable all checkboxes
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].disabled = true;
+            }
+
+            // Disable all radio buttons
+            var radioButtons = document.querySelectorAll('input[type="radio"]');
+            for (var i = 0; i < radioButtons.length; i++) {
+                radioButtons[i].disabled = true;
+            }
+
+        })
+    </script>
+<?php endif; ?>
 
 <section id="main-content">
     <section class="wrapper site-min-height">
@@ -28,15 +60,15 @@
 
 
             <?php
-                $patientData = $this->patient_model->getPatientById($patent_id);
-                $appointmentData = $this->appointment_model->getAppointmentById($apid);
-                $data = $this->appointment_model->getAppointmentByIdOrDoctorId($apid, $patent_id);
+            $patientData = $this->patient_model->getPatientById($patent_id);
+            $appointmentData = $this->appointment_model->getAppointmentById($apid);
+            $data = $this->appointment_model->getAppointmentByIdOrDoctorId($apid, $patent_id);
 
-                $patientList = $this->patient_model->getPatientById($appointmentData->patient);
-                $doctorList = $this->doctor_model->getDoctorById($appointmentData->doctor);
+            $patientList = $this->patient_model->getPatientById($appointmentData->patient);
+            $doctorList = $this->doctor_model->getDoctorById($appointmentData->doctor);
 
-                $consultationModeList = $this->doctor_model->getConsultation_Mode();
-                $consultationTypeList = $this->doctor_model->getType();
+            $consultationModeList = $this->doctor_model->getConsultation_Mode();
+            $consultationTypeList = $this->doctor_model->getType();
             ?>
             <?php if ($data) : ?>
                 <div class="panel-body">
@@ -74,6 +106,11 @@
                                                 <label for="temp">Doctor</label>
                                                 <input readonly disabled type="text" class="form-control" id="temp" name="temp" value="<?= $doctorList->name ?>" />
                                             </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="temp">Time Slot</label>
+                                            <input readonly disabled type="text" class="form-control" id="temp" name="temp" value="<?= $appointmentData->time_slot ?>" />
                                         </div>
 
                                         <div class="row">
@@ -300,7 +337,9 @@
                         <div class="tab-pane <?= ($patient_form_tab == 'vital') ? 'active' : '' ?>" id="tasks" role="tabpanel">
                             <div class="card">
                                 <div class="card-body p-4">
-                                    <form role="form" action="appointment/updateApppinmentVitalDetail" method="post" enctype="multipart/form-data">
+                                    <?php if ($this->ion_auth->in_group(array('doctor'))) : ?>
+                                        <form role="form" action="appointment/updateApppinmentVitalDetail" method="post" enctype="multipart/form-data">
+                                        <?php endif; ?>
                                         <input type="hidden" value="<?= $apid ?>" name="apid">
                                         <input type="hidden" value="<?= $patent_id ?>" name="patient_id">
                                         <input type="hidden" value="<?= $this->ion_auth->get_user_id() ?? 0 ?>" name="doctor_id">
@@ -343,11 +382,15 @@
                                                 <input type="text" class="form-control" id="rbs" name="rbs" value="<?= set_value('rbs', @$appointmentData->rbs) ?>" />
                                             </div>
 
-                                            <div class="form-group">
-                                                <input type="submit" name="submit" value="Submit" class="btn btn-primary" style="background:#097eb8 !important;border: unset;">
-                                            </div>
+                                            <?php if ($this->ion_auth->in_group(array('doctor'))) : ?>
+                                                <div class="form-group">
+                                                    <input type="submit" name="submit" value="Submit" class="btn btn-primary" style="background:#097eb8 !important;border: unset;">
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
-                                    </form>
+                                        <?php if ($this->ion_auth->in_group(array('doctor'))) : ?>
+                                        </form>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -359,7 +402,9 @@
                                 <!-- <div class="card-body p-4">
                                     <h5>physical info form</h5>
                                 </div> -->
-                                <form role="form" action="appointment/updateApppinmentPhyscialDetail" method="post" enctype="multipart/form-data">
+                                <?php if ($this->ion_auth->in_group(array('doctor'))) : ?>
+                                    <form role="form" action="appointment/updateApppinmentPhyscialDetail" method="post" enctype="multipart/form-data">
+                                    <?php endif; ?>
 
                                     <input type="hidden" value="<?= $apid ?>" name="apid">
                                     <input type="hidden" value="<?= $patent_id ?>" name="patient_id">
@@ -572,13 +617,16 @@
                                         </div>
 
 
-
-                                        <div class="form-group">
-                                            <input type="submit" name="submit" value="Submit" class="btn btn-primary" style="background:#097eb8 !important;border: unset;">
-                                        </div>
+                                        <?php if ($this->ion_auth->in_group(array('doctor'))) : ?>
+                                            <div class="form-group">
+                                                <input type="submit" name="submit" value="Submit" class="btn btn-primary" style="background:#097eb8 !important;border: unset;">
+                                            </div>
+                                        <?php endif; ?>
 
                                     </div>
-                                </form>
+                                    <?php if ($this->ion_auth->in_group(array('doctor'))) : ?>
+                                    </form>
+                                <?php endif; ?>
 
 
                             </div>

@@ -269,7 +269,7 @@ class Appointment_model extends CI_model
     function getAppointmentByIdOrDoctorId($id, $patient_id)
     {
 
-        if ($this->ion_auth->in_group(array('admin'))) {
+        if ($this->ion_auth->in_group(array('admin', 'Nurse'))) {
             $doctor  = $this->ion_auth->get_user_id() ?? 0;
             if ($doctor) {
                 $this->db->where(['id' => $id, 'patient' => $patient_id]);
