@@ -337,6 +337,7 @@ class Appointment extends MX_Controller
                 'weight' => htmlentities($this->input->post('weight')),
                 'bmi' => htmlentities($this->input->post('bmi')),
                 'rbs' => htmlentities($this->input->post('rbs')),
+                'amount' => htmlentities($this->input->post('amount')),
             );
             $username = $this->input->post('name');
             if (empty($id)) {     // Adding New department
@@ -1144,6 +1145,50 @@ class Appointment extends MX_Controller
         echo json_encode($output);
     }
 
+    public function downloadInvoice()
+    {
+        if (count($_GET) > 0) {
+            $apt_id = htmlentities($_GET['appointment']);
+
+            $aptData = $this->appointment_model->getAppointmentById($apt_id);
+            $patientData = $this->patient_model->getPatientById($aptData->patient);
+            $doctorData = $this->doctor_model->getDoctorById($aptData->doctor);
+            $statusData = $this->doctor_model->getStatusById($aptData->status);
+            $consultationModeData = $this->doctor_model->getStatusById($aptData->status);
+
+            $invNumber = mt_rand(0, 999999);
+
+            $invData = [
+                'appName' => 'DWMS',
+                'appLogo' => base_url() . $this->db->get('settings')->row()->logo,
+                'appAddress' => 'A1 Peter’s Hall, East Bank Demerara,Guyana',
+                'appNumber' => '+592-620-999',
+                'appWeb' => 'www.gogole.com',
+                'appMail' => 'info@awclinicguyana.com',
+                'invDate' => date('d-m-Y'),
+                'invNumber' => $aptData->id . '-' . $invNumber,
+                'patient_id' => '#DWMS-' . $aptData->patient,
+                'apt_id' => $aptData->id,
+                'apt_date' => $aptData->add_date,
+                'patient_name' => $patientData->name,
+                'doctor_name' => $doctorData->name,
+                'apt_status' => $statusData->status_name,
+                'apt_mode_of_consultation' => ($aptData->mode_of_consultation == '1') ? 'Online' : 'In Clinic',
+                'apt_type_of_consultation' => '',
+                'apt_time_slot' => date('d-m-Y', $aptData->date) . ' - ' . $aptData->time_slot,
+                'apt_amount' => $aptData->amount,
+            ];
+
+            $this->load->library('pdf');
+            $html = $this->load->view('appointment/invoice', $invData, true);
+
+            // Create PDF from the HTML
+            $this->pdf->createPDF($html, 'Invoice.pdf');
+        } else {
+            redirect('appointment');
+        }
+    }
+
     function getAppoinmentList()
     {
         $requestData = $_REQUEST;
@@ -1225,7 +1270,7 @@ class Appointment extends MX_Controller
                 $location = "";
             }
 
-            $getStatus =  $this->doctor_model->getStatusById($appointment->status,);
+            $getStatus =  $this->doctor_model->getStatusById($appointment->status);
 
             if (!empty($getStatus)) {
                 $status = $getStatus->status_name;
@@ -1262,6 +1307,8 @@ class Appointment extends MX_Controller
                 $options7 = '';
             }
 
+            $invOpt = '<a class="btn btn-success" title="' . lang('invoice') . '" style="color: #fff;" href="appointment/downloadInvoice?appointment=' . $appointment->id . '"><i class="fa fa-file-pdf"></i> ' . lang('invoice') . '</a>';
+
             if ($appointment->status == 'Pending Confirmation') {
                 $appointment_status = lang('pending_confirmation');
             } elseif ($appointment->status == 'Confirmed') {
@@ -1284,7 +1331,7 @@ class Appointment extends MX_Controller
 
                 $location,
                 $status,
-                $option11 . ' ' . $option1 . ' ' . $option2 . ' ' . $options7
+                $option11 . ' ' . $option1 . ' ' . $invOpt . ' ' . $option2 . ' ' . $options7
             );
         }
 

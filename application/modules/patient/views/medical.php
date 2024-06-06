@@ -113,6 +113,11 @@
                                             <input readonly disabled type="text" class="form-control" id="temp" name="temp" value="<?= $appointmentData->time_slot ?>" />
                                         </div>
 
+                                        <div class="form-group">
+                                            <label for="temp">Amount</label>
+                                            <input readonly disabled type="text" class="form-control" id="amount" name="amount" value="<?= $appointmentData->amount ?>" />
+                                        </div>
+
                                         <div class="row">
                                             <div class="form-group col-md-6">
                                                 <label for="temp">Location</label>
