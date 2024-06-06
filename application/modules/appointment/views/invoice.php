@@ -57,7 +57,7 @@
                     <table style="width: 100%">
                         <tr style="max-width: 100%">
                             <td style="width: 70%; padding: 0px 0px 10px 15px;">
-                                <b>Patient Name:</b> <?= $patient_name ?>
+                                <b>Patient Name:</b> <?= $patient_name ?> <br>
                                 <b>Booking No:</b> <?= $apt_id ?> <br>
                                 <b>Created at:</b> <?= $apt_date ?><br>
                                 
@@ -103,13 +103,13 @@
                                 <?= $apt_time_slot ?>
                                 </td>
                                 <td style="text-align:center;border-bottom: 1px solid #000;border-left: 1px solid #000;">
-                                <?= $apt_amount ?>
+                                <?= $apt_amount ?? '0' ?>
                                 </td>
                                 <td style="text-align:center;border-bottom: 1px solid #000;border-left: 1px solid #000;">
                                     1
                                 </td>
                                 <td style=" text-align:center;border-bottom: 1px solid #000;border-left: 1px solid #000;border-right: 1px solid #000;">
-                                    &nbsp;$&nbsp;<?= $apt_amount ?>
+                                    &nbsp;$&nbsp;<?= $apt_amount ?? '0' ?>
                                 </td>
                             </tr>
                         
@@ -123,7 +123,7 @@
                                 style="width:15%; text-align:center;font-weight: 600;
                            color: #273477;
                            font-size: 14px;border-left: 1px solid #000;border-bottom: 1px solid #000;border-right: 1px solid #000;">
-                                &nbsp;$&nbsp;<?= $apt_amount ?>
+                                &nbsp;$&nbsp;<?= $apt_amount ?? '0' ?>
                             </td>
                         </tr>
                         
@@ -132,7 +132,7 @@
                                 Total
                             </td>
                             <td style="width:15%; text-align:center;font-weight: 600; color: #273477; font-size: 14px;border-left: 1px solid #000;border-bottom: 1px solid #000;border-right: 1px solid #000;">
-                                $&nbsp;<?= $apt_amount ?>
+                                $&nbsp;<?= $apt_amount ?? '0' ?>
                             </td>
                         </tr>
                     </table>

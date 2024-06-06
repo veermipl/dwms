@@ -363,7 +363,7 @@
 
                                 <div class="form-group">
                                     <label for="bp">Amount</label>
-                                    <input type="number" step="0.001" class="form-control" id="amount" number="amount" value="<?= set_value('amount', @$appointment->amount ?? '700.00') ?>" />
+                                    <input type="number" step="0.001" class="form-control" id="amount" name="amount" value="<?= set_value('amount', @$appointment->amount ?? '700.00') ?>" />
                                 </div>
 
                             </div>
