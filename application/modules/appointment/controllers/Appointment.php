@@ -15,7 +15,7 @@ class Appointment extends MX_Controller
         $this->load->model('patient/patient_model');
         $this->load->model('sms/sms_model');
         $this->load->module('sms');
-        $this->load->library('sendmail');
+        $this->load->library('SendMail');
 
         if (!$this->ion_auth->in_group(array('admin', 'Nurse', 'Doctor', 'Patient', 'Receptionist'))) {
             redirect('home/permission');
