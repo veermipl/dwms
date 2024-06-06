@@ -1160,7 +1160,8 @@ class Appointment extends MX_Controller
 
             $invData = [
                 'appName' => 'DWMS',
-                'appLogo' => base_url() . $this->db->get('settings')->row()->logo,
+                'appLogo' => '',
+                // 'appLogo' => base_url() . $this->db->get('settings')->row()->logo,
                 'appAddress' => 'A1 Peter’s Hall, East Bank Demerara,Guyana',
                 'appNumber' => '+592-620-999',
                 'appWeb' => 'www.gogole.com',
@@ -1179,11 +1180,14 @@ class Appointment extends MX_Controller
                 'apt_amount' => $aptData->amount,
             ];
 
+            $invoiceName = "Invoice-".$aptData->id.'.pdf';
+
             $this->load->library('pdf');
             $html = $this->load->view('appointment/invoice', $invData, true);
+            // $this->load->view('appointment/invoice', $invData);
 
             // Create PDF from the HTML
-            $this->pdf->createPDF($html, 'Invoice.pdf');
+            $this->pdf->createPDF($html, $invoiceName);
         } else {
             redirect('appointment');
         }
