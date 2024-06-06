@@ -504,11 +504,11 @@
                         <li><a href="meeting"><i class="fa fa-headphones"></i><?php echo lang('join_live'); ?></a></li>
                     <?php } ?>
 
-                    <?php if ($this->ion_auth->in_group(array('Patient'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('Patient_'))) { ?>
                         <li><a href="appointment/myTodays"><i class="fa fa-headphones"></i><?php echo lang('todays'); ?> <?php echo lang('appointment'); ?></a></li>
                     <?php } ?>
 
-                    <?php if ($this->ion_auth->in_group('admin')) { ?>
+                    <?php if ($this->ion_auth->in_group('admin_')) { ?>
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-money-check"></i>
@@ -549,7 +549,7 @@
 
 
 
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Pharmacist'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin_', 'Pharmacist'))) { ?>
                         <li>
                             <a href="prescription/all">
                                 <i class="fas fa-prescription"></i>
@@ -620,7 +620,7 @@
 
 
                     <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
-                        <li class="sub-menu">
+                        <li class="sub-menu" style="display: none">
                             <a href="javascript:;">
                                 <i class="fa  fa-medkit"></i>
                                 <span><?php echo lang('medicine'); ?></span>
@@ -629,14 +629,12 @@
                                 <li><a href="medicine"><i class="fa fa-medkit"></i><?php echo lang('medicine_list'); ?></a></li>
                                 <li><a href="medicine/medicineCategory"><i class="fa fa-edit"></i><?php echo lang('medicine_category'); ?></a></li>
                                 <li><a href="medicine/medicineStockAlert"><i class="fa fa-plus-circle"></i><?php echo lang('medicine_stock_alert'); ?></a></li>
-
-
                             </ul>
                         </li>
                     <?php } ?>
 
                     <?php if ($this->ion_auth->in_group(array('admin', 'Pharmacist'))) { ?>
-                        <li class="sub-menu">
+                        <li class="sub-menu" style="display: none">
                             <a href="javascript:;">
                                 <i class="fas fa-capsules"></i>
                                 <span><?php echo lang('pharmacy'); ?></span>
@@ -710,7 +708,7 @@
 
 
 
-                    <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin_'))) { ?>
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-mail-bulk"></i>
@@ -727,7 +725,7 @@
                         </li>
                     <?php } ?>
 
-                    <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin_'))) { ?>
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-sms"></i>
