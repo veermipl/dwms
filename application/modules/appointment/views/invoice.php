@@ -6,13 +6,13 @@
     <title>DWMS Invoice</title>
 </head>
 
-<body>
+<body onload="window.print()">
     <div class="invoice-box"
         style="max-width: 890px; margin: auto; padding: 10px; border: 1px solid #eee; box-shadow: 0 0 10px rgba(0, 0, 0, .15); font-size: 14px; line-height: 24px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #555;">
         <table cellpadding="0" cellspacing="0" style="width: 100%; line-height: inherit; text-align: left;">
             <tr class="top_rw">
                 <td colspan="2" style="width:30%;padding: 15px 15px 10px 15px;">
-                    <img src="<?= $appLogo ?>" style="width:200px">
+                    <img src="<?= base_url('uploads/invoice-pdf-logo.png'); ?>" style="width:200px">
                 </td>
                 <td style="padding: 15px 15px 10px 15px; text-align: right;">
                     <h2
