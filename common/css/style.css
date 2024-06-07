@@ -5691,12 +5691,21 @@ a.guest-on i {
     background: #eee !important;
     color: #009da7 !important;
 }
-.panel .panel-body .error{
+/*.panel .panel-body .error{
     color: #fff;
     padding: 1%;
     margin: 1%;
     width: 50%;
     background: #5A9599;
+}*/
+.panel .panel-body .error {
+    color: red;
+    padding-left: 0;
+    margin-left: 0;
+    width: 50%;
+    background: unset;
+    font-weight: 600;
+    margin-top: 10px;
 }
 
 @media print {

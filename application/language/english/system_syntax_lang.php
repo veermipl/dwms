@@ -25,7 +25,7 @@ $lang['doctor'] = 'Doctor';
 
 $lang['location'] = 'Location';
 $lang['patient'] = 'Patient';
-$lang['nurse'] = 'Nurse';
+$lang['nurse'] = 'Staff';
 $lang['pharmacist'] = 'Pharmacist';
 $lang['laboratorist'] = 'Laboratorist';
 $lang['accountant'] = 'Accountant';
@@ -95,8 +95,8 @@ $lang['date-time'] = 'Date - Time';
 $lang['remarks'] = 'Remarks';
 $lang['add_appointment'] = 'Add Appointment';
 $lang['edit_appointment'] = 'Edit Appointment';
-$lang['add_nurse'] = 'Add Nurse';
-$lang['edit_nurse'] = 'Edit Nurse';
+$lang['add_nurse'] = 'Add Staff';
+$lang['edit_nurse'] = 'Edit Staff';
 $lang['add_pharmacist'] = 'Add Pharmacist';
 $lang['edit_pharmacist'] = 'Edit Pharmacist';
 $lang['add_laboratorist'] = 'Add Laboratorist';
@@ -768,4 +768,6 @@ $lang['update'] = 'Update';
 $lang['something_went_wrong'] = 'Something went wrong!';
 $lang['patient_added'] = 'Patient has been registered successfully!';
 $lang['appointment_booked'] = 'Appointment has been booked successfully!';
+$lang['appointments_list'] = 'List';
+$lang['slot_required'] = 'Time slot is required!';
 
