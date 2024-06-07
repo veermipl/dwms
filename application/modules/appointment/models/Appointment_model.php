@@ -325,7 +325,8 @@ class Appointment_model extends CI_model
     function getAppointmentByDoctorByToday($doctor_id)
     {
 
-        $today = date('d-m-Y');
+        // $today = date('d-m-Y');
+        $today = strtotime(date('d-m-Y'));
 
         $this->db->where('doctor', $doctor_id);
 

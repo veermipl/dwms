@@ -342,7 +342,7 @@
                         <div class="tab-pane <?= ($patient_form_tab == 'vital') ? 'active' : '' ?>" id="tasks" role="tabpanel">
                             <div class="card">
                                 <div class="card-body p-4">
-                                    <?php if ($this->ion_auth->in_group(array('doctor'))) : ?>
+                                    <?php if ($this->ion_auth->in_group(array('Doctor'))) : ?>
                                         <form role="form" action="appointment/updateApppinmentVitalDetail" method="post" enctype="multipart/form-data">
                                         <?php endif; ?>
                                         <input type="hidden" value="<?= $apid ?>" name="apid">
@@ -387,13 +387,13 @@
                                                 <input type="text" class="form-control" id="rbs" name="rbs" value="<?= set_value('rbs', @$appointmentData->rbs) ?>" />
                                             </div>
 
-                                            <?php if ($this->ion_auth->in_group(array('doctor'))) : ?>
+                                            <?php if ($this->ion_auth->in_group(array('Doctor'))) : ?>
                                                 <div class="form-group">
                                                     <input type="submit" name="submit" value="Submit" class="btn btn-primary" style="background:#097eb8 !important;border: unset;">
                                                 </div>
                                             <?php endif; ?>
                                         </div>
-                                        <?php if ($this->ion_auth->in_group(array('doctor'))) : ?>
+                                        <?php if ($this->ion_auth->in_group(array('Doctor'))) : ?>
                                         </form>
                                     <?php endif; ?>
                                 </div>
@@ -407,7 +407,7 @@
                                 <!-- <div class="card-body p-4">
                                     <h5>physical info form</h5>
                                 </div> -->
-                                <?php if ($this->ion_auth->in_group(array('doctor'))) : ?>
+                                <?php if ($this->ion_auth->in_group(array('Doctor'))) : ?>
                                     <form role="form" action="appointment/updateApppinmentPhyscialDetail" method="post" enctype="multipart/form-data">
                                     <?php endif; ?>
 
@@ -622,14 +622,14 @@
                                         </div>
 
 
-                                        <?php if ($this->ion_auth->in_group(array('doctor'))) : ?>
+                                        <?php if ($this->ion_auth->in_group(array('Doctor'))) : ?>
                                             <div class="form-group">
                                                 <input type="submit" name="submit" value="Submit" class="btn btn-primary" style="background:#097eb8 !important;border: unset;">
                                             </div>
                                         <?php endif; ?>
 
                                     </div>
-                                    <?php if ($this->ion_auth->in_group(array('doctor'))) : ?>
+                                    <?php if ($this->ion_auth->in_group(array('Doctor'))) : ?>
                                     </form>
                                 <?php endif; ?>
 
