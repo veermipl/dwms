@@ -15,7 +15,7 @@
 
             <header class="panel-heading">
                 <?php
-                if (!empty($patient->id))
+                if (!empty(@$patient->id))
                     echo lang('edit_patient');
                 else
                     echo lang('add_new_patient');
@@ -41,8 +41,8 @@
                                 <select class="form-control m-bot15 js-example-basic-single" name="doctor" value=''>
                                     <?php foreach ($doctors as $doctor) { ?>
                                         <option value="<?php echo $doctor->id; ?>" <?php
-                                                                                    if (!empty($patient->doctor)) {
-                                                                                        if ($patient->doctor == $doctor->id) {
+                                                                                    if (!empty(@$patient->doctor)) {
+                                                                                        if (@$patient->doctor == $doctor->id) {
                                                                                             echo 'selected';
                                                                                         }
                                                                                     }
@@ -54,12 +54,12 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="exampleInputEmail1"><?php echo lang('name'); ?><span class="text-danger">*</span></label>
-                                    <input type="text" required class="form-control" name="name" value='<?= set_value('name', $patient->name) ?>' placeholder="">
+                                    <input type="text" required class="form-control" name="name" value='<?= set_value('name', @$patient->name) ?>' placeholder="">
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="exampleInputEmail1"><?php echo lang('email'); ?><span class="text-danger">*</span></label>
-                                    <input type="text" required id="patientEmail" class="form-control" name="email" value='<?= set_value('email', $patient->email) ?>' placeholder="">
+                                    <input type="text" required id="patientEmail" class="form-control" name="email" value='<?= set_value('email', @$patient->email) ?>' patient_id="<?= @$patient->ion_user_id ?>" placeholder="">
 
                                     <span id="emailErr" class="text-danger"></span>
                                 </div>
@@ -69,20 +69,20 @@
 
                                 <div class="form-group col-md-4">
                                     <label><?php echo lang('birth_date'); ?></label>
-                                    <input class="form-control form-control-inline input-medium default-date-picker" type="text" name="birthdate" value="<?= set_value('birthdate', $patient->birthdate) ?>" placeholder="">
+                                    <input class="form-control form-control-inline input-medium default-date-picker" type="text" name="birthdate" value="<?= set_value('birthdate', @$patient->birthdate) ?>" placeholder="">
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="exampleInputEmail1"><?php echo lang('age'); ?></label>
-                                    <input type="text" class="form-control" name="age" value='<?= set_value('age', $patient->age) ?>' placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                    <input type="text" class="form-control" name="age" value='<?= set_value('age', @$patient->age) ?>' placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="exampleInputEmail1"><?php echo lang('sex'); ?></label>
                                     <select class="form-control m-bot15" name="sex" value=''>
-                                        <option value="Male" <?= set_value('sex', $patient->sex) == 'Male' ? 'selected' : '' ?>> Male </option>
-                                        <option value="Female" <?= set_value('sex', $patient->sex) == 'Female' ? 'selected' : '' ?>> Female </option>
-                                        <option value="Others" <?= set_value('sex', $patient->sex) == 'Others' ? 'selected' : '' ?>> Others </option>
+                                        <option value="Male" <?= set_value('sex', @$patient->sex) == 'Male' ? 'selected' : '' ?>> Male </option>
+                                        <option value="Female" <?= set_value('sex', @$patient->sex) == 'Female' ? 'selected' : '' ?>> Female </option>
+                                        <option value="Others" <?= set_value('sex', @$patient->sex) == 'Others' ? 'selected' : '' ?>> Others </option>
                                     </select>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <label for="exampleInputEmail1"><?php echo lang('phone'); ?><span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="phone" value='<?= set_value('phone', $patient->phone) ?>' placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                    <input type="text" class="form-control" name="phone" value='<?= set_value('phone', @$patient->phone) ?>' placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                 </div>
 
                                 <div class="form-group col-md-4">
@@ -98,7 +98,7 @@
                                     <select class="form-control m-bot15" name="bloodgroup" value=''>
 
                                         <?php foreach ($groups as $group) : ?>
-                                            <option value="<?= $group->blood_type ?>" <?= set_value('bloodgroup', $patient->bloodgroup) == $group->blood_type ? 'selected' : '' ?>>
+                                            <option value="<?= $group->blood_type ?>" <?= set_value('bloodgroup', @$patient->bloodgroup) == $group->blood_type ? 'selected' : '' ?>>
                                                 <?php echo $group->blood_type; ?>
                                             </option>
                                         <?php endforeach; ?>
@@ -120,25 +120,25 @@
                                 <label>Photographic ID:</label>
                                 <div>
                                     <label class="radio-inline">
-                                        <input type="radio" name="idType" value="passport" <?= (set_value('idType', $patient->idType) == 'passport') ? 'checked' : '' ?>> Passport number
+                                        <input type="radio" name="idType" value="passport" <?= (set_value('idType', @$patient->idType) == 'passport') ? 'checked' : '' ?>> Passport number
                                     </label>
-                                    <input type="text" class="form-control" name="idType_passport" value="<?= set_value('idType_passport', $patient->idType_passport) ?>">
+                                    <input type="text" class="form-control" name="idType_passport" value="<?= set_value('idType_passport', @$patient->idType_passport) ?>">
 
                                     <label class="radio-inline">
-                                        <input type="radio" name="idType" value="drivers" <?= (set_value('idType', $patient->idType) == 'drivers') ? 'checked' : '' ?>> Driver’s license number
+                                        <input type="radio" name="idType" value="drivers" <?= (set_value('idType', @$patient->idType) == 'drivers') ? 'checked' : '' ?>> Driver’s license number
                                     </label>
-                                    <input type="text" class="form-control" name="idType_drivers" value="<?= set_value('idType_drivers', $patient->idType_drivers) ?>">
+                                    <input type="text" class="form-control" name="idType_drivers" value="<?= set_value('idType_drivers', @$patient->idType_drivers) ?>">
 
                                     <label class="radio-inline">
-                                        <input type="radio" name="idType" value="other" <?= (set_value('idType', $patient->idType) == 'other') ? 'checked' : '' ?>> Other
+                                        <input type="radio" name="idType" value="other" <?= (set_value('idType', @$patient->idType) == 'other') ? 'checked' : '' ?>> Other
                                     </label>
-                                    <input type="text" class="form-control" name="idType_other" value="<?= set_value('idType_other', $patient->idType_other) ?>">
+                                    <input type="text" class="form-control" name="idType_other" value="<?= set_value('idType_other', @$patient->idType_other) ?>">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1"><?php echo lang('address'); ?><span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="address" value='<?= set_value('address', $patient->address) ?>' placeholder="">
+                                <input type="text" class="form-control" name="address" value='<?= set_value('address', @$patient->address) ?>' placeholder="">
                             </div>
 
                             <div class="form-group">
@@ -154,31 +154,31 @@
                             <h3>Medical History</h3>
                             <div class="form-group">
                                 <label for="chiefComplaint">Chief Complaint:</label>
-                                <textarea class="form-control" id="chiefComplaint" name="chiefComplaint"><?= set_value('chiefComplaint', $patient->chiefComplaint) ?></textarea>
+                                <textarea class="form-control" id="chiefComplaint" name="chiefComplaint"><?= set_value('chiefComplaint', @$patient->chiefComplaint) ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="historyOfIllness">History of Presenting Illness:</label>
-                                <textarea class="form-control" id="historyOfIllness" name="historyOfIllness"><?= set_value('historyOfIllness', $patient->historyOfIllness) ?></textarea>
+                                <textarea class="form-control" id="historyOfIllness" name="historyOfIllness"><?= set_value('historyOfIllness', @$patient->historyOfIllness) ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="pastMedicalHistory">Past Medical History and Drug History:</label>
-                                <textarea class="form-control" id="pastMedicalHistory" name="pastMedicalHistory"><?= set_value('pastMedicalHistory', $patient->pastMedicalHistory) ?></textarea>
+                                <textarea class="form-control" id="pastMedicalHistory" name="pastMedicalHistory"><?= set_value('pastMedicalHistory', @$patient->pastMedicalHistory) ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="pastSurgicalHistory">Past Surgical History:</label>
-                                <textarea class="form-control" id="pastSurgicalHistory" name="pastSurgicalHistory"><?= set_value('pastSurgicalHistory', $patient->pastSurgicalHistory) ?></textarea>
+                                <textarea class="form-control" id="pastSurgicalHistory" name="pastSurgicalHistory"><?= set_value('pastSurgicalHistory', @$patient->pastSurgicalHistory) ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Allergies:</label>
                                 <div>
                                     <label class="radio-inline">
-                                        <input type="radio" name="allergies" value="yes" <?= (set_value('allergies', $patient->allergies) == 'yes') ? 'checked' : '' ?>> Y
+                                        <input type="radio" name="allergies" value="yes" <?= (set_value('allergies', @$patient->allergies) == 'yes') ? 'checked' : '' ?>> Y
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="allergies" value="no" <?= (set_value('allergies', $patient->allergies) == 'no') ? 'checked' : '' ?>> N
+                                        <input type="radio" name="allergies" value="no" <?= (set_value('allergies', @$patient->allergies) == 'no') ? 'checked' : '' ?>> N
                                     </label>
                                 </div>
-                                <textarea class="form-control mt-2" id="allergies_comment" name="allergies_comment" placeholder="Comment"><?= set_value('allergies_comment', $patient->allergies_comment) ?></textarea>
+                                <textarea class="form-control mt-2" id="allergies_comment" name="allergies_comment" placeholder="Comment"><?= set_value('allergies_comment', @$patient->allergies_comment) ?></textarea>
                             </div>
 
                             <h3>Lifestyle History</h3>
@@ -186,37 +186,37 @@
                                 <label>Smoking:</label>
                                 <div>
                                     <label class="radio-inline">
-                                        <input type="radio" name="smoking" value="yes" <?= (set_value('smoking', $patient->smoking) == 'yes') ? 'checked' : '' ?>> Y
+                                        <input type="radio" name="smoking" value="yes" <?= (set_value('smoking', @$patient->smoking) == 'yes') ? 'checked' : '' ?>> Y
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="smoking" value="no" <?= (set_value('smoking', $patient->smoking) == 'no') ? 'checked' : '' ?>> N
+                                        <input type="radio" name="smoking" value="no" <?= (set_value('smoking', @$patient->smoking) == 'no') ? 'checked' : '' ?>> N
                                     </label>
                                 </div>
-                                <textarea class="form-control mt-2" id="smoking_comment" name="smoking_comment" placeholder="Comment"><?= set_value('smoking_comment', $patient->smoking_comment) ?></textarea>
+                                <textarea class="form-control mt-2" id="smoking_comment" name="smoking_comment" placeholder="Comment"><?= set_value('smoking_comment', @$patient->smoking_comment) ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Alcohol use:</label>
                                 <div>
                                     <label class="radio-inline">
-                                        <input type="radio" name="alcohol" value="yes" <?= (set_value('alcohol', $patient->alcohol) == 'yes') ? 'checked' : '' ?>> Y
+                                        <input type="radio" name="alcohol" value="yes" <?= (set_value('alcohol', @$patient->alcohol) == 'yes') ? 'checked' : '' ?>> Y
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="alcohol" value="no" <?= (set_value('alcohol', $patient->alcohol) == 'no') ? 'checked' : '' ?>> N
+                                        <input type="radio" name="alcohol" value="no" <?= (set_value('alcohol', @$patient->alcohol) == 'no') ? 'checked' : '' ?>> N
                                     </label>
                                 </div>
-                                <textarea class="form-control mt-2" id="alcohol_comment" name="alcohol_comment" placeholder="Comment"><?= set_value('alcohol_comment', $patient->alcohol_comment) ?></textarea>
+                                <textarea class="form-control mt-2" id="alcohol_comment" name="alcohol_comment" placeholder="Comment"><?= set_value('alcohol_comment', @$patient->alcohol_comment) ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="other">Other (Sexual activity, LMP, etc.):</label>
                                 <div>
                                     <label class="radio-inline">
-                                        <input type="radio" name="other_activity" value="yes" <?= (set_value('other_activity', $patient->other_activity) == 'yes') ? 'checked' : '' ?>> Y
+                                        <input type="radio" name="other_activity" value="yes" <?= (set_value('other_activity', @$patient->other_activity) == 'yes') ? 'checked' : '' ?>> Y
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="other_activity" value="no" <?= (set_value('other_activity', $patient->other_activity) == 'no') ? 'checked' : '' ?>> N
+                                        <input type="radio" name="other_activity" value="no" <?= (set_value('other_activity', @$patient->other_activity) == 'no') ? 'checked' : '' ?>> N
                                     </label>
                                 </div>
-                                <textarea class="form-control mt-2" id="other_activity_comment" name="other_activity_comment" placeholder="Comment"><?= set_value('other_activity_comment', $patient->other_activity_comment) ?></textarea>
+                                <textarea class="form-control mt-2" id="other_activity_comment" name="other_activity_comment" placeholder="Comment"><?= set_value('other_activity_comment', @$patient->other_activity_comment) ?></textarea>
                             </div>
 
                             <?php if (empty($id)) { ?>

@@ -32,7 +32,11 @@
 
                         
 
-                        <?php foreach ($nurses as $nurse) { ?>
+                        <?php foreach ($nurses as $nurse) : ?>
+                            <?php
+                                $nurse_user_id = $nurse->ion_user_id ?? '0';
+                                $userData = $this->nurse_model->getNurseUser($nurse_user_id);
+                            ?>
                             <tr class="">
                                 <td class="img_class"><img class="img" src="<?php echo $nurse->img_url; ?>"></td>
                                 <td> <?php echo $nurse->name; ?></td>
@@ -40,11 +44,14 @@
                                 <td class="center"><?php echo $nurse->address; ?></td>
                                 <td><?php echo $nurse->phone; ?></td>
                                 <td class="no-print">
-                                    <button type="button" class="btn btn-info btn-xs btn_width editbutton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $nurse->id; ?>"><i class="fa fa-edit"> </i></button>   
+                                    <button type="button" class="btn btn-info btn-xs btn_width editbutton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $nurse->id; ?>"><i class="fa fa-edit"> </i></button> 
+                                    <a type="button" class="btn btn-xs btn_width changeStatus <?= ($userData->active == '0' ? 'btn-danger' : 'btn-success') ?>" title="<?= lang('status') ?>" data-toggle="modal" data-id="<?= $nurse->id ?>" data-status="<?= $userData->active ?>" data-user_ion_id="<?= $userData->id ?>">
+                                        <?= ($userData->active == '0' ? lang('in_active') : lang('active')) ?>
+                                    </a>  
                                     <a class="btn btn-info btn-xs btn_width delete_button" title="<?php echo lang('delete'); ?>" href="nurse/delete?id=<?php echo $nurse->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i> </a>
                                 </td>
                             </tr>
-                        <?php } ?>
+                        <?php endforeach; ?>
 
                         </tbody>
                     </table>

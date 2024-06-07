@@ -304,13 +304,14 @@ class Patient extends MX_Controller
     {
         if (count($_POST) > 0) {
             $mail = htmlentities($_POST['email']) ?? null;
+            $pat_id = htmlentities($_POST['pat_id']) ?? null;
 
             if (!$mail) {
                 $data['error'] = true;
                 $data['msg'] = 'Email is required';
             } else {
                 if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-                    if ($this->ion_auth->email_check($mail)) {
+                    if ($this->ion_auth->email_check($mail, $pat_id)) {
                         $data['error'] = true;
                         $data['msg'] = 'Mail already exist';
                     } else {

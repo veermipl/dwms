@@ -42,6 +42,8 @@
     <link href="common/extranal/css/medical_history_calendar_modal.css" rel="stylesheet">
     <link href="common/toastr/toastr.css" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <?php if ($this->db->get('settings')->row()->language == 'arabic' || $this->db->get('settings')->row()->language == 'persian') { ?>
         <link href="common/extranal/css/dashboard_arabic.css" rel="stylesheet">
     <?php } ?>
@@ -421,10 +423,10 @@
                                         <li><a href="patient/patientPayments"><i class="fa fa-money-check"></i><?php echo lang('payments'); ?></a></li>
                                     <?php } ?>
                                      -->
-                                <?php if (!$this->ion_auth->in_group(array('Accountant', 'Receptionist', 'Nurse', 'Laboratorist'))) { ?>
+                                <!-- <?php if (!$this->ion_auth->in_group(array('Accountant', 'Receptionist', 'Nurse', 'Laboratorist'))) { ?>
                                     <li><a href="patient/caseList"><i class="fa fa-book"></i><?php echo lang('case'); ?> <?php echo lang('manager'); ?></a></li>
                                     <li><a href="patient/documents"><i class="fa fa-file"></i><?php echo lang('documents'); ?></a></li>
-                                <?php } ?>
+                                <?php } ?> -->
                             </ul>
                         </li>
                     <?php } ?>

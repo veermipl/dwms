@@ -45,4 +45,28 @@ class Nurse_model extends CI_model {
         $this->db->update('users', $uptade_ion_user);
     }
 
+    function getNurseUser($id)
+    {
+        if ($id) {
+            $this->db->where('id', $id);
+            $query = $this->db->get('users');
+
+            return $query->row();
+        } else {
+            return false;
+        }
+    }
+
+    function changeUserStatus($id, $status)
+    {
+        $data = [
+            'active' => $status
+        ];
+
+        $this->db->where('id', $id);
+        $this->db->update('users', $data);
+
+        return true;
+    }
+
 }
