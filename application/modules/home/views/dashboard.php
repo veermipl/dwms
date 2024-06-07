@@ -90,7 +90,7 @@
                 <ul class="nav top-menu">
 
                     <!-- Payment notification start-->
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin_', 'Accountant'))) { ?>
                         <li id="header_inbox_bar" class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <i class="fa fa-money-check"></i>
@@ -135,7 +135,7 @@
                     <?php } ?>
                     <!-- payment notification end -->
                     <!-- patient notification start-->
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Laboratorist'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin_', 'Accountant', 'Laboratorist'))) { ?>
                         <li id="header_notification_bar" class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" title="users registered today" href="#">
                                 <i class="fa fa-user"></i>
@@ -465,7 +465,7 @@
                                 <span><?php echo lang('appointments'); ?></span>
                             </a>
                             <ul class="sub">
-                                <li><a href="appointment"><i class="fa fa-list-alt"></i><?php echo lang('appointments'); ?></a></li>
+                                <li><a href="appointment"><i class="fa fa-list-alt"></i><?php echo lang('appointments_list'); ?></a></li>
                                 <?php if ($this->ion_auth->in_group(array('Nurse'))) : ?>
                                     <li><a href="appointment/addNewView"><i class="fa fa-plus-circle"></i><?php echo lang('add'); ?></a></li>
                                 <?php endif; ?>
