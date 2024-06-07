@@ -308,7 +308,7 @@
                 <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
 
                     <?php if (!$this->ion_auth->in_group('Doctor')) { ?>
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <aside class="calendar_ui panel calendar_ui">
                                 <section class="">
                                     <div class="">
