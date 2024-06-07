@@ -3,9 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Doctor extends MX_Controller {
+class Doctor extends MX_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
 
         $this->load->model('doctor_model');
@@ -20,23 +22,26 @@ class Doctor extends MX_Controller {
         }
     }
 
-    public function index() {
+    public function index()
+    {
 
         $data['doctors'] = $this->doctor_model->getDoctor();
-        
+
         $this->load->view('home/dashboard'); // just the header file
         $this->load->view('doctor', $data);
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addNewView() {
+    public function addNewView()
+    {
         $data = array();
         $this->load->view('home/dashboard'); // just the header file
         $this->load->view('add_new', $data);
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addNew() {
+    public function addNew()
+    {
 
         $id = $this->input->post('id');
         $name = $this->input->post('name');
@@ -117,7 +122,7 @@ class Doctor extends MX_Controller {
                     'profile' => $profile
                 );
             } else {
-               
+
                 $data = array();
                 $data = array(
                     'name' => $name,
@@ -208,7 +213,8 @@ class Doctor extends MX_Controller {
         }
     }
 
-    function editDoctor() {
+    function editDoctor()
+    {
         $data = array();
         $id = $this->input->get('id');
         $data['doctor'] = $this->doctor_model->getDoctorById($id);
@@ -217,7 +223,8 @@ class Doctor extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-    function details() {
+    function details()
+    {
 
         $data = array();
 
@@ -237,7 +244,7 @@ class Doctor extends MX_Controller {
         $data['doctors'] = $this->doctor_model->getDoctor();
         $data['prescriptions'] = $this->prescription_model->getPrescriptionByDoctorId($id);
         $data['holidays'] = $this->schedule_model->getHolidaysByDoctor($id);
-        $data['schedules'] = $this->schedule_model->getScheduleByDoctor($id,$radio="");
+        $data['schedules'] = $this->schedule_model->getScheduleByDoctor($id, $radio = "");
         $data['settings'] = $this->settings_model->getSettings();
         $data['statuses'] = $this->doctor_model->getAllStatus();
         $data['location'] = $this->doctor_model->getLocation();
@@ -251,13 +258,15 @@ class Doctor extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-    function editDoctorByJason() {
+    function editDoctorByJason()
+    {
         $id = $this->input->get('id');
         $data['doctor'] = $this->doctor_model->getDoctorById($id);
         echo json_encode($data);
     }
 
-    function delete() {
+    function delete()
+    {
 
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
@@ -279,7 +288,35 @@ class Doctor extends MX_Controller {
         redirect('doctor');
     }
 
-    function getDoctor() {
+    public function toggleDoctorStatus()
+    {
+        if (count($_POST) > 0) {
+            $doctor_id = htmlentities($_POST['iid']);
+            $user_id = htmlentities($_POST['user_ion_id']);
+            $status = htmlentities($_POST['status_iid']);
+
+            $statuss = ($status == 1) ? 0 : 1;
+
+            $res = $this->doctor_model->changeUserStatus($user_id, $statuss);
+
+            if ($res === true) {
+                $data['error'] = false;
+                $data['msg'] = 'Status updated';
+            } else {
+                $data['error'] = true;
+                $data['msg'] = 'Error updating status';
+            }
+        } else {
+            $data['error'] = true;
+            $data['msg'] = 'Invalid Input';
+        }
+
+        echo json_encode($data);
+        exit;
+    }
+
+    function getDoctor()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -293,7 +330,8 @@ class Doctor extends MX_Controller {
             "3" => "phone",
         );
         $values = $this->settings_model->getColumnOrder($order, $columns_valid);
-        $dir = $values[0];
+        // $dir = $values[0];
+        $dir = 'desc';
         $order = $values[1];
 
         if ($limit == -1) {
@@ -309,16 +347,21 @@ class Doctor extends MX_Controller {
                 $data['doctors'] = $this->doctor_model->getDoctorByLimit($limit, $start, $order, $dir);
             }
         }
-       
+
 
         foreach ($data['doctors'] as $doctor) {
+            $doctor_user_id = $doctor->ion_user_id ?? '0';
+            $userData = $this->doctor_model->getDoctorUser($doctor_user_id);
+
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist'))) {
                 $options1 = '<a type="button" class="btn btn-info btn-xs btn_width editbutton" title="' . lang('edit') . '" data-toggle="modal" data-id="' . $doctor->id . '"><i class="fa fa-edit"> </i> ' . lang('edit') . '</a>';
-              
             }
             $options2 = '<a class="btn btn-info btn-xs detailsbutton" title="' . lang('appointments') . '"  href="appointment/getAppointmentByDoctorId?id=' . $doctor->id . '"> <i class="fa fa-calendar"> </i> ' . lang('appointments') . '</a>';
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist'))) {
                 // $options3 = '<a class="btn btn-info btn-xs btn_width delete_button" title="' . lang('delete') . '" href="doctor/delete?id=' . $doctor->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i> ' . lang('delete') . '</a>';
+                $statusOpt = '<a type="button" class="btn btn-xs btn_width changeStatus ' . ($userData->active == '0' ? 'btn-danger' : 'btn-success') . '" title="' . lang('status') . '" data-toggle="modal" data-id="' . $doctor->id . '" data-status="' . $userData->active . '" data-user_ion_id="' . $userData->id . '">' . ($userData->active == '0' ? lang('in_active') : lang('active')) . '</a>';
+            } else {
+                $options3 = '';
             }
 
 
@@ -335,9 +378,9 @@ class Doctor extends MX_Controller {
                 $doctor->email,
                 $doctor->phone,
                 $doctor->profile,
-            
-                $options6 . ' ' . $options1 . ' ' . $options2 . ' ' . $options4 . ' ' . $options5 . ' ' . $options3,
-                   
+
+                $options6 . ' ' . $options1 . ' ' . $options2 . ' ' . $options4 . ' ' . $options5 . ' ' . $options3 . ' ' . $statusOpt,
+
             );
         }
 
@@ -350,7 +393,7 @@ class Doctor extends MX_Controller {
             );
         } else {
             $output = array(
-                
+
                 "recordsTotal" => 0,
                 "recordsFiltered" => 0,
                 "data" => []
@@ -360,26 +403,27 @@ class Doctor extends MX_Controller {
         echo json_encode($output);
     }
 
-    public function getDoctorInfo() {
-// Search term
+    public function getDoctorInfo()
+    {
+        // Search term
         $searchTerm = $this->input->post('searchTerm');
 
-// Get users
+        // Get users
         $response = $this->doctor_model->getDoctorInfo($searchTerm);
 
         echo json_encode($response);
     }
 
-    public function getDoctorWithAddNewOption() {
-// Search term
+    public function getDoctorWithAddNewOption()
+    {
+        // Search term
         $searchTerm = $this->input->post('searchTerm');
 
-// Get users
+        // Get users
         $response = $this->doctor_model->getDoctorWithAddNewOption($searchTerm);
 
         echo json_encode($response);
     }
-
 }
 
 /* End of file doctor.php */

@@ -79,6 +79,57 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    "use strict";
+
+    $(".table").on("click", ".changeStatus", function () {
+        "use strict";
+
+        var iid = $(this).attr('data-id');
+        var user_ion_id = $(this).attr('data-user_ion_id');
+        var status_iid = $(this).attr('data-status');
+
+        Swal.fire({
+            title: "Do you want to change the status?",
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: "Yes",
+            denyButtonText: `No`,
+            icon: `warning`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: 'doctor/toggleDoctorStatus',
+                    method: 'post',
+                    data: {
+                        'iid': iid,
+                        'user_ion_id': user_ion_id,
+                        'status_iid': status_iid,
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        "use strict";
+
+                        if(response.error === false){
+                            var toggleStatus = $('a.changeStatus[data-user_ion_id="'+user_ion_id+'"]');
+                            if(parseInt(status_iid) == 0){
+                                toggleStatus.removeClass('btn-danger').addClass('btn-success').attr('data-status', '1').text('Active');
+                            }else{
+                                toggleStatus.removeClass('btn-success').addClass('btn-danger').attr('data-status', '0').text('Inactive');
+                            }
+                            // $('a.changeStatus[data-user_ion_id="'+user_ion_id+'"]').removeClass();
+                        }else{
+
+                        }
+                    }
+                })
+            } else if (result.isDenied) {
+                return true;
+            }
+        });
+    });
+});
+
 // $(document).ready(function () {
 //     "use strict";
 

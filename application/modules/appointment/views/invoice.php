@@ -79,7 +79,7 @@
                             style="background-color: #273477!important;color: #fff; font-weight: bold; font-size: 12px;width: 100%;">
                             <td
                                 style="width:50%; text-align:center;padding:5px 10px;border-left: 1px solid #000;border-bottom: 1px solid #000;border-top: 1px solid #000;">
-                                Time Slot
+                                Appointment Details
                             </td>
                             <td
                                 style="width:15%;padding: 5px 10px; text-align:center;border-left: 1px solid #000;border-top: 1px solid #000;border-bottom: 1px solid #000;">

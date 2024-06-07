@@ -165,7 +165,7 @@
 
                                 <div class="col-md-9">
 
-                                    <select class="form-control m-bot15" name="p_gender" value=''>
+                                    <select class="form-control m-bot15" required name="p_gender" value=''>
 
 
 
@@ -223,7 +223,7 @@
 
                             <div class="col-md-9 doctor_div">
 
-                                <select class="form-control m-bot15" id="adoctors" name="doctor" value=''>
+                                <select class="form-control m-bot15" required id="adoctors" name="doctor" value=''>
 
                                     <?php if (!empty($appointment->id)) { ?>
 
@@ -243,7 +243,7 @@
                             </div>
 
                             <div class="col-md-9">
-                                <select class="form-control m-bot15" id="alocation" name="location_id" value=''>
+                                <select class="form-control m-bot15" id="alocation" required name="location_id" value=''>
                                     <option value="">Please Select Location</option>
 
                                     <?php foreach ($location as $loc) : ?>
@@ -266,11 +266,13 @@
 
                                 <div class="col-md-9">
 
-                                    <input type="text" class="form-control" id="date" readonly="" name="date" value='<?php
+                                    <input type="text" class="form-control" required id="date" readonly="" min="<?=date('y-m-d')?>" name="date" value='<?php
 
                                                                                                                         if (!empty($appointment->date)) {
 
                                                                                                                             echo date('d-m-Y', ($appointment->date));
+                                                                                                                        }else{
+                                                                                                                            '';
                                                                                                                         }
 
                                                                                                                         ?>' placeholder="">
@@ -287,13 +289,14 @@
 
                                 <div class="col-md-9">
                                     <select class="form-control m-bot15" name="time_slot" id="aslots" value='' required>
+                                        <option value="">--select--</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-12 panel">
                                 <label for="exampleInputEmail1"> <?php echo 'Mode Of Consultation'; ?> <?php echo lang('status'); ?></label>
-                                <select type="text" class="form-control" name="mode_of_consultation" id="mode_of_consultation">
+                                <select class="form-control" name="mode_of_consultation" required id="mode_of_consultation">
                                     <option value="">Select Mode Of Consultation</option>
 
                                     <?php foreach ($consultation as $consultationVal) : ?>
@@ -307,9 +310,13 @@
 
                             <div class="col-md-12 panel">
                                 <label for="exampleInputEmail1"> <?php echo 'Type Of Consultation'; ?></label>
-                                <select type="text" class="form-control" name="type_of_consultation" id="type_of_consultation" value='' placeholder="">
+                                <select type="text" class="form-control"  name="type_of_consultation" id="type_of_consultation" value='' placeholder="">
 
                                     <option value="">Select Type Of Consultation</option>
+                                    <?php  if($appointment->mode_of_consultation == 1): ?>
+                                            <option value="1" <?= (@$appointment->type_of_consultation == 1) ? 'selected' : ''?> >Audio</option>
+                                            <option value="2" <?= (@$appointment->type_of_consultation == 2) ? 'selected' : ''?> >Video</option>
+                                    <?php endif ?>
 
                                 </select>
                             </div>

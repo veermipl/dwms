@@ -59,6 +59,7 @@
                     <?php foreach ($weekday as $week) { ?>
                     <form method="get">   
                     <input type="radio" id="html" onclick="if(this.checked){this.form.submit()}"  name="weekday" value="<?php echo $week->name; ?>" <?php if($radio1== $week->name) { echo "checked"; }?>>
+                    <input type="hidden" name="doctor" value="<?php echo $doctorr; ?>">
 
                     <label class="mr-3" for="<?php echo $week->name; ?>"><?php echo $week->name; ?></label><br>
                     </form>

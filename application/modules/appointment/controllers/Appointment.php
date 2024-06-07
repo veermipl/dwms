@@ -160,6 +160,7 @@ class Appointment extends MX_Controller
 
         $time_slot = $this->input->post('time_slot') ?? '';
 
+
         $time_slot_explode = explode('To', $time_slot);
 
         $s_time = trim($time_slot_explode[0]);
@@ -253,6 +254,12 @@ class Appointment extends MX_Controller
                 $this->load->view('home/footer'); // just the header file
             }
         } else {
+
+
+            if($time_slot=='' || $time_slot == 'Not Selected'){
+                $this->session->set_flashdata('feedback', lang('slot_required'));
+                redirect('appointment/addNewView');
+            }
 
             if ($patient == 'add_new') {
 

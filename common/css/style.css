@@ -5795,6 +5795,7 @@ a.guest-on i {
 .capital {
   text-transform: capitalize;
 }
+<<<<<<< HEAD
 .login {
   font-weight: 500 !important;
   background: #eee !important;
@@ -5806,6 +5807,23 @@ a.guest-on i {
   margin: 1%;
   width: 50%;
   background: #5a9599;
+=======
+/*.panel .panel-body .error{
+    color: #fff;
+    padding: 1%;
+    margin: 1%;
+    width: 50%;
+    background: #5A9599;
+}*/
+.panel .panel-body .error {
+    color: red;
+    padding-left: 0;
+    margin-left: 0;
+    width: 50%;
+    background: unset;
+    font-weight: 600;
+    margin-top: 10px;
+>>>>>>> b9fd493b6ab0e2a76b7e20400f9e7f336ae803ce
 }
 
 @media print {
