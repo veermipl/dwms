@@ -233,7 +233,16 @@
 
                                     <tr class="">
 
-                                        <td><?php $datetime = explode(" ",$payment->created_at); $date = $datetime[0]; $date = new DateTime($date); $date = $date->format('d-m-Y'); echo $date; ?></td>
+                                        <td>
+                                            <?php
+                                                $datetime = explode(" ", $payment->created_at);
+                                                // $date = $datetime[0];
+                                                // $date = new DateTime($date);
+                                                // print_r($date);die;
+                                                // $date = $date->format('d-m-Y');
+                                                // echo $date;
+                                            ?>
+                                        </td>
 
                                         <td> <?php echo $payment->id; ?></td>
 
