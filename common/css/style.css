@@ -3180,6 +3180,12 @@ ul.amounts li {
 .progress-sm {
   height: 12px;
 }
+.sorting_1 img{
+        width: 70px !important;
+    height: 70px;
+    border-radius: 50px;
+}
+
 
 .panel-heading .nav {
   border: medium none;
@@ -3189,7 +3195,6 @@ ul.amounts li {
 .panel-heading-2 .nav {
   background-color: #f1f1f1;
 }
-
 .tab-bg-dark-navy-blue {
   background: #7087a3;
   border-radius: 5px 5px 0 0;
