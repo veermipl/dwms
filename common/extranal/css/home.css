@@ -8,21 +8,21 @@ and open the template in the editor.
     Author     : sahas
 */
 
-table{
+table {
     box-shadow: none;
 }
 
-.fc-head{
+.fc-head {
 
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
 
 }
 
-.panel-body{
+.panel-body {
     background: #fff;
 }
 
-thead{
+thead {
     background: #fff;
 }
 
@@ -40,15 +40,15 @@ thead{
     text-align: center;
 }
 
-.add_patient{
+.add_patient {
     background: #009988;
 }
 
-.add_appointment{
+.add_appointment {
     background: #f8d347;
 }
 
-.add_prescription{
+.add_prescription {
     background: blue;
 }
 
@@ -59,45 +59,51 @@ thead{
     width: 40px;
 }
 
-.sale_color{
+.sale_color {
     background: #69D2E7 !important;
     padding: 10px !important;
     font-size: 5px;
     margin-right: 10px;
 }
 
-.expense_color{
+.expense_color {
     background: #F38630 !important;
     padding: 10px !important;
     font-size: 5px;
     margin-right: 10px;
 }
 
-audio, canvas, progress, video {
+audio,
+canvas,
+progress,
+video {
     display: inline-block;
     vertical-align: baseline;
     width: 100% !important;
     height: 101% !important;
     margin-bottom: 18%;
-}  
+}
 
 
-.panel-heading{
+.panel-heading {
     margin-top: 0px;
 }
 
 .wrapper {
-    margin-top: 60px;
+    margin-top: 70px;
     padding: 0px 10px 0px 0px !important;
     padding: 11px 20px 0px 10px !important;
     padding: 0px 35px 0px 25px !important;
 }
-.header_modal{
+
+.header_modal {
     width: 80%;
 }
-.state_overview_design{
+
+.state_overview_design {
     padding: 23px 0px;
 }
-.detailsbutton{
+
+.detailsbutton {
     color: #fff;
 }

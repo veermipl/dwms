@@ -29,15 +29,28 @@
     <div class="container">
         <form class="form-signin" method="post" action="auth/login">
             <h2 class="login form-signin-heading">
-                <?php echo $this->db->get('settings')->row()->title; ?><br /><br />
-                <img alt="" src="uploads/favicon.png">
+                <!-- <?php echo $this->db->get('settings')->row()->title; ?><br /><br /> -->
+                <img alt="" src="uploads/login.png">
                 <!-- <img src="<?php echo $this->db->get('settings')->row()->logo; ?>"> -->
             </h2>
             <div id="infoMessage"><?php echo $message; ?></div>
             <div class="login-wrap">
-                <input type="text" class="form-control" name="identity" placeholder="User Email" autofocus>
-                <input type="password" class="form-control" name="password" placeholder="Password">
-                <p><a data-toggle="modal" href="#myModal"> Forgot Password?</a></p>
+                <div class="row">
+                    <div class="col-lg-12 mb-3">
+                        <label>Email <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control c_tys" name="identity" placeholder="Enter Email" autofocus>
+                    </div>
+                    <div class="col-lg-12 mb-3">
+                        <label class="left-a">Password <span class="text-danger">*</span></label>
+                        <lable class="right-a">
+                            <p><a data-toggle="modal" href="#myModal"> Forgot your password?</a></p>
+                        </lable>
+                        <input type="password" class="form-control c_tys" name="password" placeholder="Enter Password">
+                    </div>
+                </div>
+
+
+
 
 
                 <button class="btn btn-lg btn-login btn-block" type="submit">Sign in</button>
