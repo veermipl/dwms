@@ -15,7 +15,7 @@
 
             <header class="panel-heading">
                 <?php
-                if (!empty($patient->id))
+                if (!empty(@$patient->id))
                     echo lang('edit_patient');
                 else
                     echo lang('add_new_patient');
@@ -55,12 +55,12 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="exampleInputEmail1"><?php echo lang('name'); ?><span class="text-danger">*</span></label>
-                                    <input type="text" required class="form-control" name="name" value='<?= set_value('name', $patient->name) ?>' placeholder="">
+                                    <input type="text" required class="form-control" name="name" value='<?= set_value('name', @$patient->name) ?>' placeholder="">
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="exampleInputEmail1"><?php echo lang('email'); ?><span class="text-danger">*</span></label>
-                                    <input type="text" required id="patientEmail" class="form-control" name="email" value='<?= set_value('email', $patient->email) ?>' placeholder="">
+                                    <input type="text" required id="patientEmail" class="form-control" name="email" value='<?= set_value('email', @$patient->email) ?>' patient_id="<?= @$patient->ion_user_id ?>" placeholder="">
 
                                     <span id="emailErr" class="text-danger"></span>
                                 </div>
@@ -70,20 +70,20 @@
 
                                 <div class="form-group col-md-4">
                                     <label><?php echo lang('birth_date'); ?></label>
-                                    <input class="form-control form-control-inline input-medium default-date-picker" type="text" name="birthdate" value="<?= set_value('birthdate', $patient->birthdate) ?>" placeholder="">
+                                    <input class="form-control form-control-inline input-medium default-date-picker" type="text" name="birthdate" value="<?= set_value('birthdate', @$patient->birthdate) ?>" placeholder="">
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="exampleInputEmail1"><?php echo lang('age'); ?></label>
-                                    <input type="text" class="form-control" name="age" value='<?= set_value('age', $patient->age) ?>' placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                    <input type="text" class="form-control" name="age" value='<?= set_value('age', @$patient->age) ?>' placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="exampleInputEmail1"><?php echo lang('sex'); ?></label>
                                     <select class="form-control m-bot15" name="sex" value=''>
-                                        <option value="Male" <?= set_value('sex', $patient->sex) == 'Male' ? 'selected' : '' ?>> Male </option>
-                                        <option value="Female" <?= set_value('sex', $patient->sex) == 'Female' ? 'selected' : '' ?>> Female </option>
-                                        <option value="Others" <?= set_value('sex', $patient->sex) == 'Others' ? 'selected' : '' ?>> Others </option>
+                                        <option value="Male" <?= set_value('sex', @$patient->sex) == 'Male' ? 'selected' : '' ?>> Male </option>
+                                        <option value="Female" <?= set_value('sex', @$patient->sex) == 'Female' ? 'selected' : '' ?>> Female </option>
+                                        <option value="Others" <?= set_value('sex', @$patient->sex) == 'Others' ? 'selected' : '' ?>> Others </option>
                                     </select>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <label for="exampleInputEmail1"><?php echo lang('phone'); ?><span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="phone" value='<?= set_value('phone', $patient->phone) ?>' placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                    <input type="text" class="form-control" name="phone" value='<?= set_value('phone', @$patient->phone) ?>' placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                 </div>
 
                                 <div class="form-group col-md-4">
@@ -99,7 +99,7 @@
                                     <select class="form-control m-bot15" name="bloodgroup" value=''>
 
                                         <?php foreach ($groups as $group) : ?>
-                                            <option value="<?= $group->blood_type ?>" <?= set_value('bloodgroup', $patient->bloodgroup) == $group->blood_type ? 'selected' : '' ?>>
+                                            <option value="<?= $group->blood_type ?>" <?= set_value('bloodgroup', @$patient->bloodgroup) == $group->blood_type ? 'selected' : '' ?>>
                                                 <?php echo $group->blood_type; ?>
                                             </option>
                                         <?php endforeach; ?>

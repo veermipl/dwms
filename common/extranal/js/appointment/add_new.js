@@ -53,7 +53,7 @@ $(document).ready(function () {
 
 
             if ($('#aslots').has('option').length == 0) {                    //if it is blank. 
-                $('#aslots').append($('<option>').text('No Further Time Slots').val('Not Selected')).end();
+                $('#aslots').append($('<option>').text('No Further Time Slots').val('')).end();
             }
         }
     })
@@ -68,6 +68,7 @@ $(document).ready(function () {
     $('#date').datepicker({
         format: "dd-mm-yyyy",
         autoclose: true,
+        startDate: new Date() // Disables selection of dates before today
     })
             //Listen for the change even on the input
             .change(dateChanged)
@@ -95,7 +96,8 @@ function dateChanged() {
             });
 
             if ($('#aslots').has('option').length == 0) {                    //if it is blank. 
-                $('#aslots').append($('<option>').text('No Further Time Slots').val('Not Selected')).end();
+                // $('#aslots').append($('<option>').text('No Further Time Slots').val('Not Selected')).end();
+                $('#aslots').append($('<option>').text('No Further Time Slots').val('')).end();
             }
         }
     })

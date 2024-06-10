@@ -141,7 +141,7 @@ $(document).ready(function () {
     "use strict";
     $('.timepicker-default').timepicker({defaultTime: 'value'}).on('change', function (event) {
                   calculateTime();
-                  calculateTime1();
+                  // calculateTime1(); comment by mohit beacuse second time click is not working 
                                 
 
     });

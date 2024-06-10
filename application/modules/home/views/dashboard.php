@@ -42,6 +42,8 @@
     <link href="common/extranal/css/medical_history_calendar_modal.css" rel="stylesheet">
     <link href="common/toastr/toastr.css" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <?php if ($this->db->get('settings')->row()->language == 'arabic' || $this->db->get('settings')->row()->language == 'persian') { ?>
         <link href="common/extranal/css/dashboard_arabic.css" rel="stylesheet">
     <?php } ?>
@@ -90,7 +92,7 @@
                 <ul class="nav top-menu">
 
                     <!-- Payment notification start-->
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin_', 'Accountant'))) { ?>
                         <li id="header_inbox_bar" class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <i class="fa fa-money-check"></i>
@@ -135,7 +137,7 @@
                     <?php } ?>
                     <!-- payment notification end -->
                     <!-- patient notification start-->
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Laboratorist'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin_', 'Accountant', 'Laboratorist'))) { ?>
                         <li id="header_notification_bar" class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" title="users registered today" href="#">
                                 <i class="fa fa-user"></i>
@@ -421,10 +423,10 @@
                                         <li><a href="patient/patientPayments"><i class="fa fa-money-check"></i><?php echo lang('payments'); ?></a></li>
                                     <?php } ?>
                                      -->
-                                <?php if (!$this->ion_auth->in_group(array('Accountant', 'Receptionist', 'Nurse', 'Laboratorist'))) { ?>
+                                <!-- <?php if (!$this->ion_auth->in_group(array('Accountant', 'Receptionist', 'Nurse', 'Laboratorist'))) { ?>
                                     <li><a href="patient/caseList"><i class="fa fa-book"></i><?php echo lang('case'); ?> <?php echo lang('manager'); ?></a></li>
                                     <li><a href="patient/documents"><i class="fa fa-file"></i><?php echo lang('documents'); ?></a></li>
-                                <?php } ?>
+                                <?php } ?> -->
                             </ul>
                         </li>
                     <?php } ?>
@@ -465,7 +467,7 @@
                                 <span><?php echo lang('appointments'); ?></span>
                             </a>
                             <ul class="sub">
-                                <li><a href="appointment"><i class="fa fa-list-alt"></i><?php echo lang('appointments'); ?></a></li>
+                                <li><a href="appointment"><i class="fa fa-list-alt"></i><?php echo lang('appointments_list'); ?></a></li>
                                 <?php if ($this->ion_auth->in_group(array('Nurse'))) : ?>
                                     <li><a href="appointment/addNewView"><i class="fa fa-plus-circle"></i><?php echo lang('add'); ?></a></li>
                                 <?php endif; ?>

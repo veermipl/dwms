@@ -124,7 +124,7 @@ class Finance_model extends CI_model
 
         $this->db->where('name', $name);
 
-        $query = $this->db->get('paymentGateway')->row();
+        $query = $this->db->get('paymentgateway')->row();
 
         return $query;
     }

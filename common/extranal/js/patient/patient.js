@@ -110,26 +110,29 @@ $(document).ready(function () {
     });
 
     var emailOnLoad = $.trim($('#patientEmail').val());
-    validateMail(emailOnLoad);
+    var pat_idOnLoad = $.trim($('#patientEmail').attr('patient_id'));
+    validateMail(emailOnLoad, pat_idOnLoad);
 
     $(document).on("keyup", "#patientEmail", function (e) {
         e.preventDefault();
 
         var email = $.trim($(this).val());
-        validateMail(email);
-        
+        var pat_id = $.trim($(this).attr('patient_id'));
+        validateMail(email, pat_id);
+
     });
 
-    function validateMail(email) {
+    function validateMail(email, pat_id = null) {
         if (email) {
             $.ajax({
                 url: 'patient/validatePatientMail',
                 method: 'post',
                 data: {
                     'email': email,
+                    'pat_id': pat_id,
                 },
                 dataType: 'json',
-                beforeSend: function(){
+                beforeSend: function () {
                     $('#emailErr').text('').fadeOut();
                 },
                 success: function (response) {

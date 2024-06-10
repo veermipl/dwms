@@ -177,6 +177,33 @@ class Nurse extends MX_Controller {
         redirect('nurse');
     }
 
+    public function toggleNurseStatus()
+    {
+        if (count($_POST) > 0) {
+            $nurse_id = htmlentities($_POST['iid']);
+            $user_id = htmlentities($_POST['user_ion_id']);
+            $status = htmlentities($_POST['status_iid']);
+
+            $statuss = ($status == 1) ? 0 : 1;
+
+            $res = $this->nurse_model->changeUserStatus($user_id, $statuss);
+
+            if ($res === true) {
+                $data['error'] = false;
+                $data['msg'] = 'Status updated';
+            } else {
+                $data['error'] = true;
+                $data['msg'] = 'Error updating status';
+            }
+        } else {
+            $data['error'] = true;
+            $data['msg'] = 'Invalid Input';
+        }
+
+        echo json_encode($data);
+        exit;
+    }
+
 }
 
 /* End of file nurse.php */

@@ -6053,6 +6053,16 @@ a.guest-on i {
     background: #5A9599;
 }
 
+*/ .panel .panel-body .error {
+    color: red;
+    padding-left: 0;
+    margin-left: 0;
+    width: 50%;
+    background: unset;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
 @media print {
     .no-print {
         display: none;
@@ -6712,8 +6722,8 @@ table.dataTable.no-footer {
     padding-left: 15px;
 }
 
-.sorting_1 img{
+.sorting_1 img {
     width: 70px !important;
-height: 70px;
-border-radius: 50px;
+    height: 70px;
+    border-radius: 50px;
 }
