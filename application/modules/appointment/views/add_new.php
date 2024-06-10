@@ -370,7 +370,7 @@
 
                                 <div class="form-group">
                                     <label for="bp">Amount</label>
-                                    <input type="number" step="0.001" class="form-control" id="amount" name="amount" value="<?= set_value('amount', @$appointment->amount ?? '700.00') ?>" />
+                                    <input type="number" step="0.01" class="form-control" id="numberInput" name="amount" value="<?= set_value('amount', @$appointment->amount ?? '700.00') ?>" />
                                 </div>
 
                             </div>
@@ -506,6 +506,13 @@
 
 
 <script>
+      const numberInput = document.getElementById('numberInput');
+      
+      numberInput.addEventListener('input', function() {
+        if (this.value < 0) {
+          this.value = 0;
+        }
+      });
     $(document).ready(function() {
         $('#mode_of_consultation').change(function() {
             var consultation_id = $('#mode_of_consultation').val();

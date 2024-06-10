@@ -771,4 +771,5 @@ $lang['appointment_booked'] = 'Appointment has been booked successfully!';
 $lang['appointments_list'] = 'List';
 $lang['slot_required'] = 'Time slot is required!';
 $lang['slot_type'] = 'Slot Type';
+$lang['Please_enter_a_valid_amount'] = 'Please enter a valid amount!';
 

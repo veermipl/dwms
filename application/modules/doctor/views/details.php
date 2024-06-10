@@ -623,7 +623,7 @@
                                     class="label pull-right r-activity"><?php echo $doctor->profile; ?></span></li>
 
                             <li> <?php echo lang('address'); ?><span
-                                    class="label pull-right r-activity"><?php echo $doctor->address; ?></span></li>
+                                    class="label pull-right r-activity"><?php echo $doctor->address ??''; ?></span></li>
 
                             <li> <?php echo lang('phone'); ?><span
                                     class="label pull-right r-activity"><?php echo $doctor->phone; ?></span></li>
