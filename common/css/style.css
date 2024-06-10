@@ -6625,6 +6625,12 @@ table.dataTable.no-footer {
     font-weight: 500;
 }
 
+/*mohit css 10June2024*/
+.custome-btn-dwms{
+    margin-top: 0 !important;
+    height: 38px;
+}
+/*mohit css 10June2024*/
 
 .btn {
     border-radius: 4px !important;
