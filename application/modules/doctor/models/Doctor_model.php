@@ -110,14 +110,15 @@ class Doctor_model extends CI_model
         return $query->result();
     }
 
-    function fetch_type($consultation_id)
+    function fetch_type($consultation_id, $selected_consultation_type_id = null)
     {
         $this->db->where('consultation_mode_id', $consultation_id);
         // $this->db->order_by('state_name', 'ASC');
         $query = $this->db->get('consultation_type');
         $output = '<option value="">Select Type Of Consultation</option>';
         foreach ($query->result() as $row) {
-            $output .= '<option value="' . $row->id . '">' . $row->name . '</option>';
+            $is_sel = ($selected_consultation_type_id == $row->id) ? "selected" : "";
+            $output .= '<option ' . $is_sel . ' value="' . $row->id . '">' . $row->name . '</option>';
         }
         return $output;
     }

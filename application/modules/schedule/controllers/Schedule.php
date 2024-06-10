@@ -80,16 +80,43 @@ class Schedule extends MX_Controller
         $this->load->view('home/footer');
     }
 
+    function addScheduleView()
+    {
+        $data['settings'] = $this->settings_model->getSettings();
+        $data['doctors'] = $this->doctor_model->getDoctor();
+        $data['location'] = $this->schedule_model->getLocation();
+        $data['weekday'] = $this->schedule_model->getWeekday();
 
+        $this->load->view('home/dashboard', $data);
+        $this->load->view('schedule_add');
+        $this->load->view('home/footer');
+    }
+
+    function editSchedule($id = null)
+    {
+        if ($id) {
+            $data['settings'] = $this->settings_model->getSettings();
+            $data['doctors'] = $this->doctor_model->getDoctor();
+            $data['location'] = $this->schedule_model->getLocation();
+            $data['weekday'] = $this->schedule_model->getWeekday();
+            $data['schedule'] = $this->schedule_model->getScheduleById($id);
+
+            $this->load->view('home/dashboard', $data);
+            $this->load->view('schedule_add');
+            $this->load->view('home/footer');
+        } else {
+            redirect("schedule");
+        }
+    }
 
     function addSchedule()
     {
-
         // print_r($_POST); die();
-        $redirect = $this->input->post('redirect');
+        $redirect = $this->input->post('redirect') ?? null;
         if (empty($redirect)) {
             $redirect = 'schedule';
         }
+
         $id = $this->input->post('id');
         $doctor = $this->input->post('doctor');
         $s_time = $this->input->post('s_time');
@@ -98,6 +125,7 @@ class Schedule extends MX_Controller
         $location = $this->input->post('location_id');
         $duration = $this->input->post('duration');
         $membership_code = $this->input->post('membership_code');
+
         if (empty($id)) {
             $check = $this->schedule_model->getScheduleByDoctorByWeekday($doctor, $weekday, $location, $s_time, $e_time);
             if (!empty($check)) {
@@ -107,21 +135,19 @@ class Schedule extends MX_Controller
             }
         }
 
-        if (empty($s_time)) {
-            $this->session->set_flashdata('feedback', lang('fields_can_not_be_empty'));
+        // if (empty($s_time)) {
+        //     $this->session->set_flashdata('feedback', lang('fields_can_not_be_empty'));
 
-            redirect($redirect);
-            die();
-        }
+        //     redirect($redirect);
+        //     die();
+        // }
 
-        if (empty($e_time)) {
-            $this->session->set_flashdata('feedback', lang('fields_can_not_be_empty'));
+        // if (empty($e_time)) {
+        //     $this->session->set_flashdata('feedback', lang('fields_can_not_be_empty'));
 
-            redirect($redirect);
-            die();
-        }
-
-
+        //     redirect($redirect);
+        //     die();
+        // }
 
         $all_slot = array(
             0 => '12:00 AM',
@@ -414,12 +440,8 @@ class Schedule extends MX_Controller
             287 => '11:55 PM',
         );
 
-
         $key1 = array_search($s_time, $all_slot);
         $key2 = array_search($e_time, $all_slot);
-
-
-
 
         if ($key1 > $key2) {
             $this->session->set_flashdata('feedback', lang('time_selection_error'));
@@ -476,29 +498,30 @@ class Schedule extends MX_Controller
             }
         }
 
-
-
-
-
+        $this->form_validation->set_rules('doctor', 'Doctor', 'trim|required|min_length[1]|max_length[100]|xss_clean');
+        $this->form_validation->set_rules('weekday', 'Weekend', 'trim|required|min_length[1]|max_length[100]|xss_clean');
         // Validating Starting Time Field
         $this->form_validation->set_rules('s_time', 'Start Time', 'trim|required|min_length[1]|max_length[100]|xss_clean');
         // Validating End Time Field   
         $this->form_validation->set_rules('e_time', 'End Time', 'trim|required|min_length[1]|max_length[500]|xss_clean');
         // Validating Week Day Field   
         $this->form_validation->set_rules('e_time', 'End Time', 'trim|required|min_length[1]|max_length[500]|xss_clean');
-
         // Validating Duration Field   
         $this->form_validation->set_rules('duration', 'Duration', 'trim|required|min_length[1]|max_length[500]|xss_clean');
 
         if ($this->form_validation->run() == FALSE) {
+
+            $data['settings'] = $this->settings_model->getSettings();
+            $data['doctors'] = $this->doctor_model->getDoctor();
+            $data['location'] = $this->schedule_model->getLocation();
+            $data['weekday'] = $this->schedule_model->getWeekday();
+
             if (!empty($id)) {
-                redirect("schedule/editSchedule?id=$id");
-            } else {
-                $data['settings'] = $this->settings_model->getSettings();
-                $this->load->view('home/dashboard', $data);
-                $this->load->view('timeschedule');
-                $this->load->view('home/footer');
+                $data['schedule'] = $this->schedule_model->getScheduleById($id);
             }
+            $this->load->view('home/dashboard', $data);
+            $this->load->view('schedule_add');
+            $this->load->view('home/footer');
         } else {
 
             $data = array();
@@ -553,7 +576,8 @@ class Schedule extends MX_Controller
                 $this->session->set_flashdata('feedback', lang('added'));
             }
 
-            redirect($redirect);
+            // redirect($redirect);
+            redirect('schedule');
         }
     }
 

@@ -313,10 +313,6 @@
                                 <select type="text" class="form-control"  name="type_of_consultation" id="type_of_consultation" value='' placeholder="">
 
                                     <option value="">Select Type Of Consultation</option>
-                                    <?php  if($appointment->mode_of_consultation == 1): ?>
-                                            <option value="1" <?= (@$appointment->type_of_consultation == 1) ? 'selected' : ''?> >Audio</option>
-                                            <option value="2" <?= (@$appointment->type_of_consultation == 2) ? 'selected' : ''?> >Video</option>
-                                    <?php endif ?>
 
                                 </select>
                             </div>
@@ -507,14 +503,25 @@
 
 <script>
     $(document).ready(function() {
+        var sel_mode_of_consultation_id = $('#mode_of_consultation').val();
+        getConsultationType(sel_mode_of_consultation_id);
+
         $('#mode_of_consultation').change(function() {
             var consultation_id = $('#mode_of_consultation').val();
+
+            getConsultationType(consultation_id);
+        });
+
+        function getConsultationType(consultation_id){
+            var selected_type_of_consultation = '<?php echo @$appointment->type_of_consultation ?? null ?>';
+
             if (consultation_id != '') {
                 $.ajax({
                     url: "<?php echo base_url(); ?>appointment/fetch_type",
                     method: "POST",
                     data: {
-                        consultation_id: consultation_id
+                        consultation_id: consultation_id,
+                        selected_type_of_consultation: selected_type_of_consultation,
                     },
                     success: function(data) {
                         $('#type_of_consultation').html(data);
@@ -524,6 +531,6 @@
                 $('#type_of_consultation').html('<option value="">Select Type Of Consultation</option>');
 
             }
-        });
+        }
     });
 </script>

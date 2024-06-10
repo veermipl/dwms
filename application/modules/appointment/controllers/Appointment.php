@@ -46,7 +46,7 @@ class Appointment extends MX_Controller
     public function fetch_type()
     {
         if ($this->input->post('consultation_id')) {
-            echo $this->doctor_model->fetch_type($this->input->post('consultation_id'));
+            echo $this->doctor_model->fetch_type($this->input->post('consultation_id'), $this->input->post('selected_type_of_consultation'));
         }
     }
 
@@ -1296,7 +1296,7 @@ class Appointment extends MX_Controller
                 $consultation_mode = '';
             }
 
-            $consultationModetype = $this->doctor_model->getTypeById($appointment->mode_of_consultation);
+            $consultationModetype = $this->doctor_model->getTypeById($appointment->type_of_consultation);
             if (!empty($consultationModetype)) {
                 $consultation_mode_type = $consultationModetype->name;
             } else {
