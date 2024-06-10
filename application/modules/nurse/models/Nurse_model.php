@@ -15,7 +15,7 @@ class Nurse_model extends CI_model {
     }
 
     function getNurse() {
-        $query = $this->db->get('nurse');
+        $query = $this->db->order_by('id','desc')->get('nurse');
         return $query->result();
     }
 

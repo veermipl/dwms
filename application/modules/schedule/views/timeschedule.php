@@ -79,6 +79,8 @@
                                 <th> <?php echo lang('start_time'); ?></th>
 
                                 <th> <?php echo lang('end_time'); ?></th>
+                                <th> <?php echo lang('location'); ?></th>
+                                <th> <?php echo lang('slot_type'); ?></th>
 
                                
                                 <th> <?php echo lang('options'); ?></th>
@@ -110,6 +112,8 @@
                                     <td><?php echo $schedule->s_time; ?></td>
 
                                     <td><?php echo $schedule->e_time; ?></td>
+                                    <td><?php echo $this->schedule_model->getLocationById($schedule->location_id)->name ?? ''; ?></td>
+                                    <td><?php echo ucwords($schedule->membership_code); ?></td>
 
                                   
                                     <td>
@@ -208,7 +212,7 @@
                         <div class="input-group bootstrap-timepicker">
                             <input type="text" class="form-control timepicker-default s_time" name="s_time"  value=''>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button"><i class="fa fa-clock"></i></button>
+                                <button class="btn btn-default custome-btn-dwms" type="button"><i class="fa fa-clock"></i></button>
                             </span>
                         </div>
 
@@ -292,7 +296,7 @@
                         <div class="input-group bootstrap-timepicker">
                             <input type="text" class="form-control timepicker-default e_time" name="e_time"  value='' readonly="readonly">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button"><i class="fa fa-clock"></i></button>
+                                <button class="btn btn-default custome-btn-dwms" type="button"><i class="fa fa-clock"></i></button>
                             </span>
                         </div>
 
