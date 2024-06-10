@@ -28,7 +28,7 @@
 
             <div class="col-md-12">
                 <header class="panel-heading tab-bg-dark-navy-blueee row">
-                    <ul class="nav nav-tabs col-md-9">
+                    <ul class="nav nav-tabs col-md-12">
                         <li class="active">
                             <a data-toggle="tab" href="#all"><?php echo lang('all'); ?></a>
                         </li>
@@ -352,7 +352,8 @@
                             <div class="panel-body">
                                 <div class="adv-table editable-table ">
                                     <div class="space15"></div>
-                                    <table class="table table-striped table-hover table-bordered" id="editable-sample10">
+                                    <table class="table table-striped table-hover table-bordered"
+                                        id="editable-sample10">
                                         <thead>
                                             <tr>
                                                 <th> <?php echo lang('id'); ?></th>
@@ -395,7 +396,8 @@
                 <h4 class="modal-title"> <?php echo lang('add_appointment'); ?></h4>
             </div>
             <div class="modal-body row">
-                <form role="form" action="appointment/addNew" method="post" class="clearfix" enctype="multipart/form-data">
+                <form role="form" action="appointment/addNew" method="post" class="clearfix"
+                    enctype="multipart/form-data">
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1"> <?php echo lang('patient'); ?></label>
                         <select class="form-control m-bot15 pos_select" id="pos_select" name="patient" value=''>
@@ -404,23 +406,28 @@
                     </div>
                     <div class="pos_client clearfix col-md-6">
                         <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('name'); ?></label>
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?>
+                                <?php echo lang('name'); ?></label>
                             <input type="text" class="form-control pay_in" name="p_name" value='' placeholder="">
                         </div>
                         <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('email'); ?></label>
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?>
+                                <?php echo lang('email'); ?></label>
                             <input type="text" class="form-control pay_in" name="p_email" value='' placeholder="">
                         </div>
                         <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('phone'); ?></label>
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?>
+                                <?php echo lang('phone'); ?></label>
                             <input type="text" class="form-control pay_in" name="p_phone" value='' placeholder="">
                         </div>
                         <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('age'); ?></label>
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?>
+                                <?php echo lang('age'); ?></label>
                             <input type="text" class="form-control pay_in" name="p_age" value='' placeholder="">
                         </div>
                         <div class="payment pad_bot">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('gender'); ?></label>
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?>
+                                <?php echo lang('gender'); ?></label>
                             <select class="form-control" name="p_gender" value=''>
 
                                 <option value="Male" <?php
@@ -478,7 +485,8 @@
 
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control default-date-picker" id="date" readonly="" name="date" value='' placeholder="">
+                        <input type="text" class="form-control default-date-picker" id="date" readonly="" name="date"
+                            value='' placeholder="">
                     </div>
 
                     <div class="col-md-6 panel">
@@ -489,7 +497,8 @@
                     </div>
 
                     <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo 'Mode Of Consultation'; ?> <?php echo lang('status'); ?></label>
+                        <label for="exampleInputEmail1"> <?php echo 'Mode Of Consultation'; ?>
+                            <?php echo lang('status'); ?></label>
                         <select type="text" class="form-control" name="mode_of_consultation" id="mode_of_consultation">
                             <option value="">Select Mode Of Consultation</option>
                             <?php
@@ -503,7 +512,8 @@
 
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1"> <?php echo 'Type Of Consultation'; ?></label>
-                        <select type="text" class="form-control" name="type_of_consultation" id="type_of_consultation" value='' placeholder="">
+                        <select type="text" class="form-control" name="type_of_consultation" id="type_of_consultation"
+                            value='' placeholder="">
 
                             <option value="">Select Type Of Consultation</option>
 
@@ -512,7 +522,8 @@
 
 
                     <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
+                        <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?>
+                            <?php echo lang('status'); ?></label>
                         <select class="form-control m-bot15" name="status" value=''>
                             <option value="">Please Select Status</option>
                             <?php
@@ -531,7 +542,8 @@
 
 
                     <div class="col-md-12 panel">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
+                        <button type="submit" name="submit" class="btn btn-info pull-right">
+                            <?php echo lang('submit'); ?></button>
                     </div>
 
                 </form>
@@ -569,32 +581,39 @@
                 <h4 class="modal-title"> <?php echo lang('edit_appointment'); ?></h4>
             </div>
             <div class="modal-body row">
-                <form role="form" id="editAppointmentForm" action="appointment/addNew" class="clearfix" method="post" enctype="multipart/form-data">
+                <form role="form" id="editAppointmentForm" action="appointment/addNew" class="clearfix" method="post"
+                    enctype="multipart/form-data">
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1"> <?php echo lang('patient'); ?></label>
-                        <select class="form-control m-bot15  pos_select1 patient" id="pos_select1" name="patient" value=''>
+                        <select class="form-control m-bot15  pos_select1 patient" id="pos_select1" name="patient"
+                            value=''>
 
                         </select>
                     </div>
                     <div class="pos_client1 clearfix col-md-6">
                         <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('name'); ?></label>
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?>
+                                <?php echo lang('name'); ?></label>
                             <input type="text" class="form-control pay_in" name="p_name" value='' placeholder="">
                         </div>
                         <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('email'); ?></label>
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?>
+                                <?php echo lang('email'); ?></label>
                             <input type="text" class="form-control pay_in" name="p_email" value='' placeholder="">
                         </div>
                         <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('phone'); ?></label>
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?>
+                                <?php echo lang('phone'); ?></label>
                             <input type="text" class="form-control pay_in" name="p_phone" value='' placeholder="">
                         </div>
                         <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('age'); ?></label>
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?>
+                                <?php echo lang('age'); ?></label>
                             <input type="text" class="form-control pay_in" name="p_age" value='' placeholder="">
                         </div>
                         <div class="payment pad_bot">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('gender'); ?></label>
+                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?>
+                                <?php echo lang('gender'); ?></label>
                             <select class="form-control" name="p_gender" value=''>
 
                                 <option value="Male" <?php
@@ -651,7 +670,8 @@
                     </div>
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control default-date-picker" id="date1" readonly="" name="date" value='' placeholder="">
+                        <input type="text" class="form-control default-date-picker" id="date1" readonly="" name="date"
+                            value='' placeholder="">
                     </div>
 
 
@@ -685,7 +705,8 @@
 
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1"> <?php echo 'Type Of Consultation'; ?></label>
-                        <select type="text" class="form-control" name="types_of_consultation" id="type_of_consultation" placeholder="">
+                        <select type="text" class="form-control" name="types_of_consultation" id="type_of_consultation"
+                            placeholder="">
 
                             <option value="">Select Type Of Consultation</option>
                             <?php
@@ -701,7 +722,8 @@
 
 
                     <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
+                        <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?>
+                            <?php echo lang('status'); ?></label>
                         <select class="form-control m-bot15" name="status" value=''>
                             <option value="">Please select Status</option>
                             <?php
@@ -727,7 +749,8 @@
 
                     <input type="hidden" name="id" id="appointment_id" value=''>
                     <div class="col-md-12 panel">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
+                        <button type="submit" name="submit" class="btn btn-info pull-right">
+                            <?php echo lang('submit'); ?></button>
                     </div>
                 </form>
 
@@ -739,37 +762,37 @@
 
 <script src="common/js/codearistos.min.js"></script>
 <script type="text/javascript">
-    var select_doctor = "<?php echo lang('select_doctor'); ?>";
+var select_doctor = "<?php echo lang('select_doctor'); ?>";
 </script>
 <script type="text/javascript">
-    var select_patient = "<?php echo lang('select_patient'); ?>";
+var select_patient = "<?php echo lang('select_patient'); ?>";
 </script>
 <script type="text/javascript">
-    var language = "<?php echo $this->language; ?>";
+var language = "<?php echo $this->language; ?>";
 </script>
 
 <script src="common/extranal/js/appointment/appointment.js"></script>
 <script src="common/extranal/js/appointment/appointment_select2.js"></script>
 
 <script>
-    $(document).ready(function() {
-        $('#mode_of_consultation').change(function() {
-            var consultation_id = $('#mode_of_consultation').val();
-            if (consultation_id != '') {
-                $.ajax({
-                    url: "<?php echo base_url(); ?>appointment/fetch_type",
-                    method: "POST",
-                    data: {
-                        consultation_id: consultation_id
-                    },
-                    success: function(data) {
-                        $('#type_of_consultation').html(data);
-                    }
-                });
-            } else {
-                $('#type_of_consultation').html('<option value="">Select Type Of Consultation</option>');
+$(document).ready(function() {
+    $('#mode_of_consultation').change(function() {
+        var consultation_id = $('#mode_of_consultation').val();
+        if (consultation_id != '') {
+            $.ajax({
+                url: "<?php echo base_url(); ?>appointment/fetch_type",
+                method: "POST",
+                data: {
+                    consultation_id: consultation_id
+                },
+                success: function(data) {
+                    $('#type_of_consultation').html(data);
+                }
+            });
+        } else {
+            $('#type_of_consultation').html('<option value="">Select Type Of Consultation</option>');
 
-            }
-        });
+        }
     });
+});
 </script>
