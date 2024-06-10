@@ -5998,7 +5998,6 @@ a.guest-on i {
     background: unset;
     font-weight: 600;
     margin-top: 10px;
->>>>>>> b9fd493b6ab0e2a76b7e20400f9e7f336ae803ce
 }
 
 @media print {
@@ -6405,6 +6404,13 @@ table.dataTable.no-footer {
 .my-4 {
     margin-top: 1.5rem !important
 }
+
+/*mohit css 10June2024*/
+.custome-btn-dwms{
+    margin-top: 0 !important;
+    height: 38px;
+}
+/*mohit css 10June2024*/
 
 .mr-4,
 .mx-4 {

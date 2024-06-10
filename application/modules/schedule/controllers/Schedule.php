@@ -97,6 +97,7 @@ class Schedule extends MX_Controller
         $weekday = $this->input->post('weekday');
         $location = $this->input->post('location_id');
         $duration = $this->input->post('duration');
+        $membership_code = $this->input->post('membership_code');
         if (empty($id)) {
             $check = $this->schedule_model->getScheduleByDoctorByWeekday($doctor, $weekday, $location, $s_time, $e_time);
             if (!empty($check)) {
@@ -508,7 +509,8 @@ class Schedule extends MX_Controller
                 'location_id' => $location,
                 'weekday' => $weekday,
                 's_time_key' => $key1,
-                'duration' => $duration
+                'duration' => $duration,
+                'membership_code' => $membership_code
             );
             if (!empty($id)) {
                 $this->session->set_flashdata('feedback', lang('updated'));
@@ -535,7 +537,8 @@ class Schedule extends MX_Controller
                                         'weekday' => $weekday,
                                         'location_id' => $location,
                                         's_time_key' => $key_start,
-                                        'duration' => $duration
+                                        'duration' => $duration,
+                                        'membership_code' => $membership_code
                                     );
 
                                     $this->schedule_model->insertTimeSlot($slot_data);

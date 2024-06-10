@@ -770,4 +770,5 @@ $lang['patient_added'] = 'Patient has been registered successfully!';
 $lang['appointment_booked'] = 'Appointment has been booked successfully!';
 $lang['appointments_list'] = 'List';
 $lang['slot_required'] = 'Time slot is required!';
+$lang['slot_type'] = 'Slot Type';
 
