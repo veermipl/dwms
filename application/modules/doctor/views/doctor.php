@@ -3,12 +3,12 @@
 <section id="main-content">
     <section class="wrapper site-min-height">
         <!-- page start-->
-          <link href="common/extranal/css/doctor/doctor.css" rel="stylesheet">
-         
+        <link href="common/extranal/css/doctor/doctor.css" rel="stylesheet">
+
         <section class="panel">
             <header class="panel-heading">
-                <?php echo lang('doctor'); ?>    
-                <div class="col-md-4 no-print pull-right"> 
+                <?php echo lang('doctor'); ?>
+                <div class="col-md-4 no-print pull-right">
                     <a href="doctor.php"></a>
                     <a data-toggle="modal" href="#myModal">
                         <div class="btn-group pull-right">
@@ -20,7 +20,7 @@
                 </div>
             </header>
             <div class="panel-body">
-                <div class="adv-table editable-table ">
+                <div class="adv-table editable-table table-responsive ">
                     <div class="space15"></div>
                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                         <thead>
@@ -35,7 +35,7 @@
                         </thead>
                         <tbody>
 
-                       
+
 
 
                         </tbody>
@@ -54,35 +54,35 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('add_new_doctor'); ?></h4>
+                <h4 class="modal-title"> <?php echo lang('add_new_doctor'); ?></h4>
             </div>
             <div class="modal-body row">
                 <form role="form" action="doctor/addNew" class="clearfix" method="post" enctype="multipart/form-data">
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('name'); ?></label>
-                        <input type="text" class="form-control" name="name"  value='' placeholder="">
+                        <input type="text" class="form-control" name="name" value='' placeholder="">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('email'); ?></label>
-                        <input type="text" class="form-control" name="email"  value='' placeholder="">
+                        <input type="text" class="form-control" name="email" value='' placeholder="">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('password'); ?></label>
-                        <input type="password" class="form-control" name="password"  placeholder="********">
+                        <input type="password" class="form-control" name="password" placeholder="********">
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('address'); ?></label>
-                        <input type="text" class="form-control" name="address"  value='' placeholder="">
+                        <input type="text" class="form-control" name="address" value='' placeholder="">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('phone'); ?></label>
-                        <input type="text" class="form-control" name="phone"  value='' placeholder="">
+                        <input type="text" class="form-control" name="phone" value='' placeholder="">
                     </div>
-                    
+
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('profile'); ?></label>
-                        <input type="text" class="form-control" name="profile"  value='' placeholder="">
+                        <input type="text" class="form-control" name="profile" value='' placeholder="">
                     </div>
                     <div class="form-group last col-md-6">
                         <label class="control-label">Image Upload</label>
@@ -96,7 +96,7 @@
                                     <span class="btn btn-white btn-file">
                                         <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
                                         <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                        <input type="file" class="default" name="img_url"/>
+                                        <input type="file" class="default" name="img_url" />
                                     </span>
                                     <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
                                 </div>
@@ -134,29 +134,29 @@
                 <form role="form" id="editDoctorForm" class="clearfix" action="doctor/addNew" method="post" enctype="multipart/form-data">
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('name'); ?></label>
-                        <input type="text" class="form-control" name="name"  value='' placeholder="">
+                        <input type="text" class="form-control" name="name" value='' placeholder="">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('email'); ?></label>
-                        <input type="text" class="form-control" name="email"  value='' placeholder="">
+                        <input type="text" class="form-control" name="email" value='' placeholder="">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('password'); ?></label>
-                        <input type="password" class="form-control" name="password"  placeholder="********">
+                        <input type="password" class="form-control" name="password" placeholder="********">
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('address'); ?></label>
-                        <input type="text" class="form-control" name="address"  value='' placeholder="">
+                        <input type="text" class="form-control" name="address" value='' placeholder="">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('phone'); ?></label>
-                        <input type="text" class="form-control" name="phone"  value='' placeholder="">
+                        <input type="text" class="form-control" name="phone" value='' placeholder="">
                     </div>
-                    
+
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('profile'); ?></label>
-                        <input type="text" class="form-control" name="profile"  value='' placeholder="">
+                        <input type="text" class="form-control" name="profile" value='' placeholder="">
                     </div>
                     <div class="form-group last col-md-6">
                         <label class="control-label">Image Upload</label>
@@ -170,7 +170,7 @@
                                     <span class="btn btn-white btn-file">
                                         <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
                                         <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                        <input type="file" class="default" name="img_url"/>
+                                        <input type="file" class="default" name="img_url" />
                                     </span>
                                     <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
                                 </div>
@@ -231,7 +231,7 @@
                         <label for="exampleInputEmail1"><?php echo lang('phone'); ?></label>
                         <div class="phoneClass"></div>
                     </div>
-                    
+
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('profile'); ?></label>
                         <div class="profileClass"></div>
@@ -249,8 +249,10 @@
 
 
 
- <script src="common/js/codearistos.min.js"></script>
+<script src="common/js/codearistos.min.js"></script>
 
-<script type="text/javascript">var language = "<?php echo $this->language; ?>";</script>
+<script type="text/javascript">
+    var language = "<?php echo $this->language; ?>";
+</script>
 
 <script src="common/extranal/js/doctor/doctor.js"></script>
