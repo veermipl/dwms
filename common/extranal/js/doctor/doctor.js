@@ -28,7 +28,8 @@ $(document).ready(function () {
                 $('#editDoctorForm').find('[name="profile"]').val(response.doctor.profile).end();
 
                 if (typeof response.doctor.img_url !== 'undefined' && response.doctor.img_url !== '') {
-                    $("#img").attr("src", response.doctor.img_url);
+                    // $("#img").attr("src", response.doctor.img_url);
+                    $("#img_url_output").attr("src", response.doctor.img_url).show();
                 }
 
                 $('.js-example-basic-single.department').val(response.doctor.department).trigger('change');
@@ -231,4 +232,24 @@ $(document).ready(function () {
     $(".flashmessage").delay(3000).fadeOut(100);
 });
 
+var loadDocFile = function(event, id, error_id) {
+    var file = event.target.files[0];
+    var output = document.getElementById(id);
+    var allowedExtensions = ['jpeg', 'png', 'jpg', 'svg'];
+    var extension = file.name.split('.').pop().toLowerCase();
 
+    if (allowedExtensions.indexOf(extension) === -1) {
+        $('span#' + error_id + '').text('Invalid file format. Please select a JPG, JPEG, or PNG image file.');
+        output.setAttribute('src', '');
+        output.style.display = "none";
+        return;
+    }
+
+    $('span#' + error_id + '').text('');
+    output.src = URL.createObjectURL(file);
+    output.style.display = "block";
+
+    output.onload = function() {
+        URL.revokeObjectURL(output.src); // free memory
+    };
+};
