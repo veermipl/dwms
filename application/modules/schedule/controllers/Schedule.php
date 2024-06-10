@@ -21,6 +21,7 @@ class Schedule extends MX_Controller
     {
         // var_dump($_GET);
         if (!empty($this->input->get('weekday'))) {
+
             $data['radio1'] = $this->input->get('weekday');
 
             $radio1 = $this->input->get('weekday');
@@ -94,7 +95,7 @@ class Schedule extends MX_Controller
         $s_time = $this->input->post('s_time');
         $e_time = $this->input->post('e_time');
         $weekday = $this->input->post('weekday');
-        $location = $this->input->post('location');
+        $location = $this->input->post('location_id');
         $duration = $this->input->post('duration');
         if (empty($id)) {
             $check = $this->schedule_model->getScheduleByDoctorByWeekday($doctor, $weekday, $location, $s_time, $e_time);
@@ -533,8 +534,10 @@ class Schedule extends MX_Controller
                                         'e_time' => $p_slot_e_time,
                                         'weekday' => $weekday,
                                         'location_id' => $location,
-                                        's_time_key' => $key_start
+                                        's_time_key' => $key_start,
+                                        'duration' => $duration
                                     );
+
                                     $this->schedule_model->insertTimeSlot($slot_data);
                                 }
                             }
@@ -543,7 +546,7 @@ class Schedule extends MX_Controller
                         $slot_e_time = $slot_s_time + $duration;
                     }
                 }
-                $this->schedule_model->insertSchedule($data);
+                // $this->schedule_model->insertSchedule($data);
                 $this->session->set_flashdata('feedback', lang('added'));
             }
 
