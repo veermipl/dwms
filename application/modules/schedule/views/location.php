@@ -27,7 +27,7 @@
                                 <th> <?php echo 'Code' ?></th>
                                 <th> <?php echo 'Address' ?></th>
                                 <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
-                                    <th> <?php echo lang('options'); ?></th>
+                                <th> <?php echo lang('options'); ?></th>
                                 <?php } ?>
 
                             </tr>
@@ -38,19 +38,24 @@
                             foreach ($location as $schedule) {
                                 $i = $i + 1;
                             ?>
-                                <tr class="">
-                                    <td> <?php echo $i; ?></td>
+                            <tr class="">
+                                <td> <?php echo $i; ?></td>
 
-                                    <td> <?php echo $schedule->name; ?></td>
-                                    <td><?php echo $schedule->loc_code; ?></td>
-                                    <td><?php echo $schedule->location_address; ?></td>
-                                    <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
-                                        <td>
-                                            <button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $schedule->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></button>
-                                            <a class="btn btn-info btn-xs btn_width delete_button" href="schedule/deleteLocation?id=<?php echo $schedule->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i> <?php echo lang('delete'); ?></a>
-                                        </td>
-                                    <?php } ?>
-                                </tr>
+                                <td> <?php echo $schedule->name; ?></td>
+                                <td><?php echo $schedule->loc_code; ?></td>
+                                <td><?php echo $schedule->location_address; ?></td>
+                                <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-xs btn_width editbutton"
+                                        data-toggle="modal" data-id="<?php echo $schedule->id; ?>"><i
+                                            class="fa fa-edit"></i> <?php echo lang('edit'); ?></button>
+                                    <a class="btn btn-info btn-xs btn_width delete_button"
+                                        href="schedule/deleteLocation?id=<?php echo $schedule->id; ?>"
+                                        onclick="return confirm('Are you sure you want to delete this item?');"><i
+                                            class="fa fa-trash"> </i></a>
+                                </td>
+                                <?php } ?>
+                            </tr>
                             <?php } ?>
                         </tbody>
                     </table>
@@ -75,7 +80,8 @@
                 <h4 class="modal-title"> <?php echo lang('add'); ?> <?php echo 'Location'; ?> </h4>
             </div>
             <div class="modal-body row">
-                <form role="form" action="schedule/addLocation" class="clearfix" method="post" enctype="multipart/form-data">
+                <form role="form" action="schedule/addLocation" class="clearfix" method="post"
+                    enctype="multipart/form-data">
 
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"> <?php echo 'Location Name'; ?></label>
@@ -93,7 +99,8 @@
                     </div>
 
                     <div class="form-group col-md-12">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
+                        <button type="submit" name="submit" class="btn btn-info pull-right">
+                            <?php echo lang('submit'); ?></button>
                     </div>
                 </form>
 
@@ -113,7 +120,8 @@
                 <h4 class="modal-title"><i class="fa fa-plus-circle"></i> <?php echo 'Location'; ?></h4>
             </div>
             <div class="modal-body">
-                <form role="form" id="editLocationForm" action="schedule/addLocation" method="post" enctype="multipart/form-data">
+                <form role="form" id="editLocationForm" action="schedule/addLocation" method="post"
+                    enctype="multipart/form-data">
 
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"> <?php echo 'Location Name'; ?> </label>
@@ -144,13 +152,13 @@
 
 <script src="common/js/codearistos.min.js"></script>
 <script type="text/javascript">
-    var select_doctor = "<?php echo lang('select_doctor'); ?>";
+var select_doctor = "<?php echo lang('select_doctor'); ?>";
 </script>
 <script type="text/javascript">
-    var select_patient = "<?php echo lang('select_patient'); ?>";
+var select_patient = "<?php echo lang('select_patient'); ?>";
 </script>
 <script type="text/javascript">
-    var language = "<?php echo $this->language; ?>";
+var language = "<?php echo $this->language; ?>";
 </script>
 
 <script src="common/extranal/js/schedule/location.js"></script>
