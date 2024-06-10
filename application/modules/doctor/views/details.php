@@ -93,6 +93,7 @@
                                             <tr class="">
 
                                                 <td><?php echo $todays_appointment->date; ?></td>
+                                                <td><?php echo date('d-m-Y', $todays_appointment->date); ?></td>
 
                                                 <td><?php echo $todays_appointment->patient; ?></td>
 
