@@ -10,20 +10,21 @@ and open the template in the editor.
 
 
 
-.img_url{
+/* .img_url{
     height:20px;
     width:20px;
     background-size: contain; 
     max-height:20px;
     border-radius: 100px;
-}
+} */
 
-.img_class{
-    width: 200px !important; 
+.img_class {
+    width: 200px !important;
     height: 150px !important;
 }
-.img_url{
-    max-width: 200px !important; 
+
+.img_url {
+    max-width: 200px !important;
     max-height: 150px !important;
     line-height: 20px !important;
 }

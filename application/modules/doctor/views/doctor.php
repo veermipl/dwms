@@ -1,5 +1,7 @@
 <!--sidebar end-->
 <!--main content start-->
+
+
 <section id="main-content">
     <section class="wrapper site-min-height">
         <!-- page start-->
@@ -20,26 +22,28 @@
                 </div>
             </header>
             <div class="panel-body">
-                <div class="adv-table editable-table table-responsive ">
+                <div class="adv-table editable-table  ">
                     <div class="space15"></div>
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample">
-                        <thead>
-                            <tr>
-                                <th><?php echo lang('doctor'); ?> <?php echo lang('id'); ?></th>
-                                <th><?php echo lang('name'); ?></th>
-                                <th><?php echo lang('email'); ?></th>
-                                <th><?php echo lang('phone'); ?></th>
-                                <th><?php echo lang('profile'); ?></th>
-                                <th class="no-print"><?php echo lang('options'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive  " id="agt_rt">
+                        <table class="table table-striped table-hover table-bordered " id="editable-sample">
+                            <thead>
+                                <tr>
+                                    <th><?php echo lang('doctor'); ?> <?php echo lang('id'); ?></th>
+                                    <th><?php echo lang('name'); ?></th>
+                                    <th><?php echo lang('email'); ?></th>
+                                    <th><?php echo lang('phone'); ?></th>
+                                    <th><?php echo lang('profile'); ?></th>
+                                    <th class="no-print"><?php echo lang('options'); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
 
 
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>
@@ -203,38 +207,56 @@
             <div class="modal-body">
                 <form role="form" id="editDoctorForm1" class="clearfix" action="doctor/addNew" method="post" enctype="multipart/form-data">
 
-                    <div class="form-group last col-md-6">
-                        <div class="">
-                            <div class="fileupload fileupload-new" data-provides="fileupload">
-                                <div class="fileupload-new thumbnail img_class">
-                                    <img src="" id="img1" alt="" />
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class=" last col-md-6">
+                                        <div class="">
+                                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                <div class="fileupload-new thumbnail img_class">
+                                                    <img src="" id="img1" alt="" />
+                                                </div>
+                                                <div class="fileupload-preview fileupload-exists thumbnail img_url"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="fileupload-preview fileupload-exists thumbnail img_url"></div>
+                                <div class="col-lg-12">
+                                    <div class="form-group col-md-12">
+                                        <label for="exampleInputEmail1"><?php echo lang('profile'); ?></label>
+                                        <div class="profileClass"></div>
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('name'); ?></label>
-                        <div class="nameClass"></div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('email'); ?></label>
-                        <div class="emailClass"></div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('address'); ?></label>
-                        <div class="addressClass"></div>
-                    </div>
+                        <div class="col-lg-6">
 
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('phone'); ?></label>
-                        <div class="phoneClass"></div>
-                    </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group col-md-12">
+                                        <label for="exampleInputEmail1"><?php echo lang('name'); ?></label>
+                                        <div class="nameClass"></div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="exampleInputEmail1"><?php echo lang('email'); ?></label>
+                                        <div class="emailClass"></div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="exampleInputEmail1"><?php echo lang('address'); ?></label>
+                                        <div class="addressClass"></div>
+                                    </div>
 
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('profile'); ?></label>
-                        <div class="profileClass"></div>
+                                    <div class="form-group col-md-12">
+                                        <label for="exampleInputEmail1"><?php echo lang('phone'); ?></label>
+                                        <div class="phoneClass"></div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
 

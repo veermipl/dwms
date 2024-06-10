@@ -104,11 +104,15 @@
             </div>
             <div class="modal-body">
                 <form role="form" id="editHolidayForm" action="schedule/addHoliday" class='clearfix' method="post" enctype="multipart/form-data">
-                    <div class="form-group">
+                     <div class="row">
+                        <div class="col-lg-12">
+                        <div class="form-group">
                         <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
-                        <div class="input-group bootstrap-timepicker">
+                        <div class="input-group bootstrap-timepicker w-100">
                             <input type="text" class="form-control default-date-picker" name="date"  value='' readonly="">
                         </div>
+                        </div>
+                     </div>
 
                     </div>
                     <input type="hidden" name="doctor" value='<?php echo $doctorr; ?>'>

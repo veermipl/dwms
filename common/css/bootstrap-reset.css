@@ -881,8 +881,12 @@ a.dt-button {
 
 .btn {
     font-weight: 600;
-    margin-top: 5px;
+
     border-radius: 26px;
+}
+
+.input-group-btn .btn {
+    margin-top: 0px;
 }
 
 .btn:hover {
