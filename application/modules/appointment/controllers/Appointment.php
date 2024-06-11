@@ -46,7 +46,7 @@ class Appointment extends MX_Controller
     public function fetch_type()
     {
         if ($this->input->post('consultation_id')) {
-            echo $this->doctor_model->fetch_type($this->input->post('consultation_id'));
+            echo $this->doctor_model->fetch_type($this->input->post('consultation_id'), $this->input->post('selected_type_of_consultation'));
         }
     }
 
@@ -310,7 +310,10 @@ class Appointment extends MX_Controller
             $patientname = $this->patient_model->getPatientById($patient)->name;
             $patientemail = $this->patient_model->getPatientById($patient)->email;
             $doctorname = $this->doctor_model->getDoctorById($doctor)->name;
-
+            if($this->input->post('amount') <=0){
+                $this->session->set_flashdata('feedback', lang('Please_enter_a_valid_amount'));
+                redirect('appointment/addNewView');
+            }
             $data = array();
             $data = array(
                 'patient' => $patient,
@@ -344,7 +347,7 @@ class Appointment extends MX_Controller
                 'weight' => htmlentities($this->input->post('weight')),
                 'bmi' => htmlentities($this->input->post('bmi')),
                 'rbs' => htmlentities($this->input->post('rbs')),
-                'amount' => htmlentities($this->input->post('amount')),
+                'amount' => htmlentities($amount),
             );
             $username = $this->input->post('name');
             if (empty($id)) {     // Adding New department
@@ -1296,7 +1299,7 @@ class Appointment extends MX_Controller
                 $consultation_mode = '';
             }
 
-            $consultationModetype = $this->doctor_model->getTypeById($appointment->mode_of_consultation);
+            $consultationModetype = $this->doctor_model->getTypeById($appointment->type_of_consultation);
             if (!empty($consultationModetype)) {
                 $consultation_mode_type = $consultationModetype->name;
             } else {

@@ -79,7 +79,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label for="exampleInputEmail1"><?php echo lang('sex'); ?></label>
+                                    <label for="exampleInputEmail1"><?php echo lang('gender'); ?></label>
                                     <select class="form-control m-bot15" name="sex" value=''>
                                         <option value="Male" <?= set_value('sex', @$patient->sex) == 'Male' ? 'selected' : '' ?>> Male </option>
                                         <option value="Female" <?= set_value('sex', @$patient->sex) == 'Female' ? 'selected' : '' ?>> Female </option>

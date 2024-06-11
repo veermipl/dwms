@@ -608,13 +608,21 @@
                                             </tbody>
                                         </table>
 
+                                        <?php
+                                            $doctor = [];
+                                            if ($this->ion_auth->in_group(array('Doctor'))) {
+                                                $doctor_ion_id = $this->ion_auth->get_user_id();
+                                                $doctor = $this->db->get_where('doctor', array('ion_user_id' => $doctor_ion_id))->row();
+                                            }
+                                        ?>
+
                                         <div class="form-group">
                                             <label for="comments">Physician’s Signature</label>
-                                            <textarea class="form-control" id="comments" name="physical_physician_signature" rows="2"><?= $data->physical_physician_signature ?? '' ?></textarea>
+                                            <textarea class="form-control" id="comments" name="physical_physician_signature" rows="2"><?= $data->physical_physician_signature ?? ucwords($doctor->name) ?></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="comments">Physician’s Name</label>
-                                            <input type="text" class="form-control" name="physical_physician_name" value="DR. AYESHA WILBURG">
+                                            <input type="text" class="form-control" name="physical_physician_name" value="<?=$data->name ?? ucwords($doctor->name)?>">
                                         </div>
                                         <div class="form-group">
                                             <label for="comments">Date of examination (DD/MM/YY)</label>

@@ -26,9 +26,15 @@
                 <div class="col-md-4 clearfix pull-right">
                     <a data-toggle="modal" href="#myModal">
                         <div class="btn-group pull-right">
-                            <button id="" class="btn green btn-xs">
+                            <!-- <button id="" class="btn green btn-xs">
                                 <i class="fa fa-plus-circle"></i> <?php echo lang('add_new'); ?>
-                            </button>
+                            </button> -->
+
+                            <a href="schedule/addScheduleView">
+                                <button class="btn green btn-xs">
+                                    <i class="fa fa-plus-circle"></i> <?php echo lang('add_new'); ?>
+                                </button>
+                            </a>
                         </div>
                     </a>
                 </div>
@@ -91,7 +97,13 @@
                                     <td> <?php echo  $this->doctor_model->getLocationId($schedule->location_id)->name; ?></td>
                                     <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
                                         <td>
-                                            <button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $schedule->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></button>
+                                            <!-- <button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $schedule->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></button> -->
+
+                                            <a href="schedule/editSchedule/<?= $schedule->id ?>">
+                                                <button class="btn btn-info btn-xs btn_width">
+                                                    <i class="fa fa-edit"></i> <?php echo lang('edit'); ?>
+                                                </button>
+                                            </a>
 
                                             <a class="btn btn-info btn-xs btn_width delete_button" href="schedule/deleteSchedule?id=<?php echo $schedule->id; ?>&doctor=<?php echo $schedule->doctor; ?>&weekday=<?php echo $schedule->weekday; ?>&all=all" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i> <?php echo lang('delete'); ?></a>
                                         </td>

@@ -162,7 +162,8 @@
                         <label for="exampleInputEmail1"><?php echo lang('profile'); ?></label>
                         <input type="text" class="form-control" name="profile" value='' placeholder="">
                     </div>
-                    <div class="form-group last col-md-6">
+
+                    <!-- <div class="form-group last col-md-6">
                         <label class="control-label">Image Upload</label>
                         <div class="">
                             <div class="fileupload fileupload-new" data-provides="fileupload">
@@ -179,8 +180,20 @@
                                     <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
                                 </div>
                             </div>
-
                         </div>
+                    </div> -->
+
+                    <div class="form-group last col-md-12">
+                        <label for="images" class="drop-container">
+                            <span class="drop-title">
+                                Image Upload
+                                <span class="text-danger">*</span>
+                            </span>
+                            <input class="py-2" type="file" id="img_url" name="img_url" value="" accept="image/*" onchange="loadDocFile(event,'img_url_output','img_url_error')">
+                            <div class="file-note"></div>
+                            <span id="img_url_error" style="font-size:12px; color:red"></span>
+                            <img id="img_url_output" style="display:none;" width="100" height="100" />
+                        </label>
                     </div>
 
                     <input type="hidden" name="id" value=''>
