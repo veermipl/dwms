@@ -121,36 +121,36 @@
                         <header class="panel-heading">
                             Photographic ID </header>
 
-                        <div class="col-lg-12 mt-3">
+                        <div class="col-lg-12 mg-m">
                             <div class="form-group">
 
                                 <div class="col-lg-12">
                                     <div class="row">
-                                        <div class="col-lg-4 mt-3">
+                                        <div class="col-lg-4 mg-m">
                                             <label>
                                                 <input type="radio" name="idType" value="passport" <?= (set_value('idType', $patient->idType) == 'passport') ? 'checked' : '' ?>> Passport number
                                             </label>
                                             <input type="text" class="form-control" name="idType_passport" value="<?= set_value('idType_passport', $patient->idType_passport) ?>">
                                         </div>
-                                        <div class="col-lg-4 mt-3">
+                                        <div class="col-lg-4 mg-m">
                                             <label>
                                                 <input type="radio" name="idType" value="drivers" <?= (set_value('idType', $patient->idType) == 'drivers') ? 'checked' : '' ?>> Driver’s license number
                                             </label>
                                             <input type="text" class="form-control" name="idType_drivers" value="<?= set_value('idType_drivers', $patient->idType_drivers) ?>">
                                         </div>
-                                        <div class="col-lg-4 mt-3">
+                                        <div class="col-lg-4 mg-m">
                                             <label>
                                                 <input type="radio" name="idType" value="other" <?= (set_value('idType', $patient->idType) == 'other') ? 'checked' : '' ?>> Other
                                             </label>
                                             <input type="text" class="form-control" name="idType_other" value="<?= set_value('idType_other', $patient->idType_other) ?>">
                                         </div>
-                                        <div class="col-lg-4 mt-3">
+                                        <div class="col-lg-4 mg-m">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1"><?php echo lang('address'); ?><span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" name="address" value='<?= set_value('address', $patient->address) ?>' placeholder="">
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 mt-3">
+                                        <div class="col-lg-4 mg-m">
                                             <div class="form-group">
                                                 <?php if ($id && isset($id)) : ?>
                                                     <label for="exampleInputEmail1"><?php echo lang('update') . ' ' . lang('password'); ?></label>
@@ -177,27 +177,27 @@
                     <div class="row">
                         <header class="panel-heading">
                             Medical History </header>
-                        <div class="col-lg-12 mt-3">
+                        <div class="col-lg-12 mg-m">
                             <div class="form-group">
                                 <div class="col-lg-12">
                                     <div class="row">
-                                        <div class="col-lg-4 mt-3">
+                                        <div class="col-lg-4 mg-m">
                                             <label for="chiefComplaint">Chief Complaint:</label>
                                             <textarea class="form-control" id="chiefComplaint" name="chiefComplaint"><?= set_value('chiefComplaint', $patient->chiefComplaint) ?></textarea>
                                         </div>
-                                        <div class="col-lg-4 mt-3">
+                                        <div class="col-lg-4 mg-m">
                                             <label for="historyOfIllness">History of Presenting Illness:</label>
                                             <textarea class="form-control" id="historyOfIllness" name="historyOfIllness"><?= set_value('historyOfIllness', $patient->historyOfIllness) ?></textarea>
                                         </div>
-                                        <div class="col-lg-4 mt-3">
+                                        <div class="col-lg-4 mg-m">
                                             <label for="pastMedicalHistory">Past Medical History and Drug History:</label>
                                             <textarea class="form-control" id="pastMedicalHistory" name="pastMedicalHistory"><?= set_value('pastMedicalHistory', $patient->pastMedicalHistory) ?></textarea>
                                         </div>
-                                        <div class="col-lg-4 mt-3">
+                                        <div class="col-lg-4 mg-m">
                                             <label for="pastSurgicalHistory">Past Surgical History:</label>
                                             <textarea class="form-control" id="pastSurgicalHistory" name="pastSurgicalHistory"><?= set_value('pastSurgicalHistory', $patient->pastSurgicalHistory) ?></textarea>
                                         </div>
-                                        <div class="col-lg-12 mt-3">
+                                        <div class="col-lg-12 mg-m">
                                             <label>Allergies:</label>
                                             <div>
                                                 <label class="radio-inline">
@@ -221,11 +221,11 @@
                     <div class="row">
                         <header class="panel-heading">
                             Lifestyle History </header>
-                        <div class="col-lg-12 mt-3">
+                        <div class="col-lg-12 mg-m">
                             <div class="form-group">
                                 <div class="col-lg-12">
                                     <div class="row">
-                                        <div class="col-lg-4 mt-3">
+                                        <div class="col-lg-4 mg-m">
                                             <label>Smoking:</label>
                                             <div>
                                                 <label class="radio-inline">
@@ -237,7 +237,7 @@
                                             </div>
                                             <textarea class="form-control mt-2" id="smoking_comment" name="smoking_comment" placeholder="Comment"><?= set_value('smoking_comment', $patient->smoking_comment) ?></textarea>
                                         </div>
-                                        <div class="col-lg-4 mt-3">
+                                        <div class="col-lg-4 mg-m">
                                             <label>Alcohol use:</label>
                                             <div>
                                                 <label class="radio-inline">
@@ -249,7 +249,7 @@
                                             </div>
                                             <textarea class="form-control mt-2" id="alcohol_comment" name="alcohol_comment" placeholder="Comment"><?= set_value('alcohol_comment', $patient->alcohol_comment) ?></textarea>
                                         </div>
-                                        <div class="col-lg-4 mt-3">
+                                        <div class="col-lg-4 mg-m">
                                             <label for="other">Other (Sexual activity, LMP, etc.):</label>
                                             <div>
                                                 <label class="radio-inline">

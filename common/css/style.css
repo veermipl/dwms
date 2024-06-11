@@ -3216,8 +3216,8 @@ ul.amounts li {
 
 .panel-heading .nav>li.active>a,
 .panel-heading .nav>li>a:hover {
-    color: #47596f;
-    background: #f1f1f1 !important;
+    color: #ffffff;
+    background: #2ea2d9 !important;
 }
 
 .panel-heading .nav>li:first-child.active>a,
@@ -6665,4 +6665,35 @@ table.dataTable.no-footer {
     width: 70px !important;
     height: 70px;
     border-radius: 50px;
+}
+
+.mg-m {
+    margin-top: 20px;
+}
+
+.personal-task {
+    background-color: #fff;
+}
+
+.personal-task td i {
+    color: #39b5aa !important;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.table-responsive {
+    overflow-x: scroll;
+}
+
+/* .adv-table table tr td {
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+} */
+
+.card-body .fw-bold {
+    color: #043f5c;
+    font-size: 16px;
 }
