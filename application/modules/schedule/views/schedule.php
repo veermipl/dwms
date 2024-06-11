@@ -2,19 +2,19 @@
 
 <!--main content start-->
 <style type="text/css">
-.center {
-    display: flex;
-    margin: 0 auto;
-    width: 100%;
-    padding: 10px;
-    letter-spacing: 2px;
-    text-indent: 5px;
-    text-align: center;
-}
+    .center {
+        display: flex;
+        margin: 0 auto;
+        width: 100%;
+        padding: 10px;
+        letter-spacing: 2px;
+        text-indent: 5px;
+        text-align: center;
+    }
 
-.mr-3 {
-    margin-right: 15px;
-}
+    .mr-3 {
+        margin-right: 15px;
+    }
 </style>
 
 <section id="main-content">
@@ -47,23 +47,19 @@
                     <div class="center">
 
                         <form method="get">
-                            <input type="radio" id="html" onclick="if(this.checked){this.form.submit()}" name="weekday"
-                                value="all"
-                                <?php if ($radio1 == 'all') {
+                            <input type="radio" id="html" onclick="if(this.checked){this.form.submit()}" name="weekday" value="all" <?php if ($radio1 == 'all') {
                                                                                                                                         echo "checked";
                                                                                                                                     } ?>>
                             <label class="mr-3" for="">All</label>
                         </form>
                         <?php foreach ($weekday as $week) { ?>
-                        <form method="get">
-                            <input type="radio" id="html" onclick="if(this.checked){this.form.submit()}" name="weekday"
-                                value="<?php echo $week->name; ?>"
-                                <?php if ($radio1 == $week->name) {
+                            <form method="get">
+                                <input type="radio" id="html" onclick="if(this.checked){this.form.submit()}" name="weekday" value="<?php echo $week->name; ?>" <?php if ($radio1 == $week->name) {
                                                                                                                                                                     echo "checked";
                                                                                                                                                                 } ?>>
 
-                            <label class="mr-3" for="<?php echo $week->name; ?>"><?php echo $week->name; ?></label><br>
-                        </form>
+                                <label class="mr-3" for="<?php echo $week->name; ?>"><?php echo $week->name; ?></label><br>
+                            </form>
                         <?php } ?>
 
                     </div>
@@ -80,7 +76,7 @@
                                 <th> <?php echo "Slot Type"; ?></th>
                                 <th> <?php echo lang('location'); ?></th>
                                 <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
-                                <th> <?php echo lang('options'); ?></th>
+                                    <th> <?php echo lang('options'); ?></th>
                                 <?php } ?>
 
                             </tr>
@@ -91,7 +87,6 @@
                             foreach ($schedules as $schedule) {
                                 $i = $i + 1;
                             ?>
-<<<<<<< Updated upstream
                                 <tr class="">
                                     <td> <?php echo $i; ?></td>
                                     <td> <?php echo $this->doctor_model->getDoctorById($schedule->doctor)->name; ?></td>
@@ -99,40 +94,16 @@
                                     <td> <?php echo $schedule->s_time; ?></td>
                                     <td> <?php echo $schedule->e_time; ?></td>
                                     <td> <?php echo $schedule->membership_code; ?></td>
-                                    <td> <?php echo  $this->doctor_model->getLocationId($schedule->location_id)->name; ?></td>
+                                    <td> <?php echo  $this->doctor_model->getLocationId($schedule->location_id)->name; ?>
+                                    </td>
                                     <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
                                         <td>
-                                            <!-- <button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $schedule->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></button> -->
+                                            <button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $schedule->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></button>
 
-                                            <a href="schedule/editSchedule/<?= $schedule->id ?>">
-                                                <button class="btn btn-info btn-xs btn_width">
-                                                    <i class="fa fa-edit"></i> <?php echo lang('edit'); ?>
-                                                </button>
-                                            </a>
-=======
-                            <tr class="">
-                                <td> <?php echo $i; ?></td>
-                                <td> <?php echo $this->doctor_model->getDoctorById($schedule->doctor)->name; ?></td>
-                                <td> <?php echo $schedule->weekday; ?></td>
-                                <td> <?php echo $schedule->s_time; ?></td>
-                                <td> <?php echo $schedule->e_time; ?></td>
-                                <td> <?php echo $schedule->membership_code; ?></td>
-                                <td> <?php echo  $this->doctor_model->getLocationId($schedule->location_id)->name; ?>
-                                </td>
-                                <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
-                                <td>
-                                    <button type="button" class="btn btn-info btn-xs btn_width editbutton"
-                                        data-toggle="modal" data-id="<?php echo $schedule->id; ?>"><i
-                                            class="fa fa-edit"></i> <?php echo lang('edit'); ?></button>
->>>>>>> Stashed changes
-
-                                    <a class="btn btn-info btn-xs btn_width delete_button"
-                                        href="schedule/deleteSchedule?id=<?php echo $schedule->id; ?>&doctor=<?php echo $schedule->doctor; ?>&weekday=<?php echo $schedule->weekday; ?>&all=all"
-                                        onclick="return confirm('Are you sure you want to delete this item?');"><i
-                                            class="fa fa-trash"> </i> <?php echo lang(''); ?></a>
-                                </td>
-                                <?php } ?>
-                            </tr>
+                                            <a class="btn btn-info btn-xs btn_width delete_button" href="schedule/deleteSchedule?id=<?php echo $schedule->id; ?>&doctor=<?php echo $schedule->doctor; ?>&weekday=<?php echo $schedule->weekday; ?>&all=all" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i> <?php echo lang(''); ?></a>
+                                        </td>
+                                    <?php } ?>
+                                </tr>
                             <?php } ?>
                         </tbody>
                     </table>
@@ -157,22 +128,21 @@
                 <h4 class="modal-title"> <?php echo lang('add'); ?> <?php echo lang('schedule'); ?></h4>
             </div>
             <div class="modal-body row">
-                <form role="form" action="schedule/addSchedule" class="clearfix" method="post"
-                    enctype="multipart/form-data">
+                <form role="form" action="schedule/addSchedule" class="clearfix" method="post" enctype="multipart/form-data">
 
                     <div class="col-md-6 panel">
                         <label for="exampleInputEmail1"> <?php echo lang('doctor'); ?></label>
                         <select class="form-control m-bot15" id="doctorchoose" name="doctor" value=''>
                             <?php if (!empty($prescription->doctor)) { ?>
-                            <option value="<?php echo $doctors->id; ?>" selected="selected">
-                                <?php echo $doctors->name; ?> - <?php echo $doctors->id; ?></option>
+                                <option value="<?php echo $doctors->id; ?>" selected="selected">
+                                    <?php echo $doctors->name; ?> - <?php echo $doctors->id; ?></option>
                             <?php } ?>
                             <?php
                             if (!empty($setval)) {
                                 $doctordetails1 = $this->db->get_where('doctor', array('id' => set_value('doctor')))->row();
                             ?>
-                            <option value="<?php echo $doctordetails1->id; ?>" selected="selected">
-                                <?php echo $doctordetails1->name; ?> - <?php echo $doctordetails1->id; ?></option>
+                                <option value="<?php echo $doctordetails1->id; ?>" selected="selected">
+                                    <?php echo $doctordetails1->name; ?> - <?php echo $doctordetails1->id; ?></option>
                             <?php }
                             ?>
                         </select>
@@ -187,9 +157,8 @@
                             <option value="">Select .....</option>
                             <?php foreach ($weekday as $week) { ?>
 
-                            <option value="<?php echo $week->name; ?>"
-                                <?php if ($_SESSION['weekday'] == $week->name) { ?> selected <?php } ?>>
-                                <?php echo $week->name; ?></option>
+                                <option value="<?php echo $week->name; ?>" <?php if ($_SESSION['weekday'] == $week->name) { ?> selected <?php } ?>>
+                                    <?php echo $week->name; ?></option>
 
                             <?php } ?>
                         </select>
@@ -200,7 +169,7 @@
                         <select class="form-control m-bot15" id="location_id" name="location_id" value=''>
                             <option value="">Select .....</option>
                             <?php foreach ($location as $loc) { ?>
-                            <option value="<?php echo $loc->id; ?>"><?php echo $loc->name; ?></option>
+                                <option value="<?php echo $loc->id; ?>"><?php echo $loc->name; ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -267,8 +236,7 @@
                     <div class="form-group col-md-6" style="margin-left:-1px !important;">
                         <label for="exampleInputEmail1"> <?php echo lang('end_time'); ?></label>
                         <div class="input-group bootstrap-timepicker">
-                            <input type="text" class="form-control timepicker-default e_time" name="e_time" value=''
-                                readonly="readonly">
+                            <input type="text" class="form-control timepicker-default e_time" name="e_time" value='' readonly="readonly">
                             <span class="input-group-btn">
                                 <button class="btn btn-default " type="button"><i class="fa fa-clock"></i></button>
                             </span>
@@ -331,8 +299,7 @@
             </div>
 
             <div class="modal-body">
-                <form role="form" id="editTimeSlotForm" action="schedule/addSchedule" method="post"
-                    enctype="multipart/form-data">
+                <form role="form" id="editTimeSlotForm" action="schedule/addSchedule" method="post" enctype="multipart/form-data">
 
                     <div class="col-md-12 col-md-6">
                         <div class="col-md-3 payment_label">
@@ -342,7 +309,7 @@
                         <select class="form-control m-bot15 js-example-basic-single" name="doctor" value=''>
                             <option value="">Select .....</option>
                             <?php foreach ($doctors as $doctor) { ?>
-                            <option value="<?php echo $doctor->id; ?>" <?php
+                                <option value="<?php echo $doctor->id; ?>" <?php
                                                                             if (!empty($schedule->doctor)) {
                                                                                 if ($schedule->doctor == $doctor->id) {
                                                                                     echo 'selected';
@@ -378,7 +345,7 @@
                         <label for="exampleInputEmail1"> <?php echo 'Location'; ?></label>
                         <select class="form-control m-bot15" id="location_id" name="location_id" value=''>
                             <option value="">Select .....</option>
-                            <?php 
+                            <?php
                             $locsa = $schedule->location_id;
 
                             foreach ($location as $loc) {
@@ -454,8 +421,7 @@
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"> <?php echo lang('end_time'); ?></label>
                         <div class="input-group bootstrap-timepicker">
-                            <input type="text" class="form-control timepicker-default e_time1" name="e_time" value=''
-                                readonly="readonly">
+                            <input type="text" class="form-control timepicker-default e_time1" name="e_time" value='' readonly="readonly">
                             <span class="input-group-btn">
                                 <button class="btn btn-default mt-0" type="button"><i class="fa fa-clock"></i></button>
                             </span>
@@ -500,13 +466,13 @@
 
 <script src="common/js/codearistos.min.js"></script>
 <script type="text/javascript">
-var select_doctor = "<?php echo lang('select_doctor'); ?>";
+    var select_doctor = "<?php echo lang('select_doctor'); ?>";
 </script>
 <script type="text/javascript">
-var select_patient = "<?php echo lang('select_patient'); ?>";
+    var select_patient = "<?php echo lang('select_patient'); ?>";
 </script>
 <script type="text/javascript">
-var language = "<?php echo $this->language; ?>";
+    var language = "<?php echo $this->language; ?>";
 </script>
 
 <script src="common/extranal/js/schedule/schedule.js"></script>
@@ -514,107 +480,107 @@ var language = "<?php echo $this->language; ?>";
 
 
 <script>
-$('.duration').change(function() {
-    calculateTime();
-});
+    $('.duration').change(function() {
+        calculateTime();
+    });
 
 
-// $('.timepicker-default').timepicker({defaultTime: 'value'}).on('change', function (event) {
-//                 alert('!!!');
-//             });
-
-
-
-function calculateTime() {
-    var tt = $(".s_time").val();
-
-    var minn = parseInt($(".duration").val()) * 5;
-
-
-    var datetime = '2010-10-18, ' + tt;
+    // $('.timepicker-default').timepicker({defaultTime: 'value'}).on('change', function (event) {
+    //                 alert('!!!');
+    //             });
 
 
 
-    var dd = Date.parse(datetime);
-    dd += minn * 60000;
+    function calculateTime() {
+        var tt = $(".s_time").val();
 
-    var addedtime = new Date(dd);
-
-
-
-    var hours = addedtime.getHours();
-    var minutes = addedtime.getMinutes();
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    hours = hours < 10 ? '0' + hours : hours;
+        var minn = parseInt($(".duration").val()) * 5;
 
 
-    var strTime = hours + ':' + minutes + ' ' + ampm;
+        var datetime = '2010-10-18, ' + tt;
 
-    $('.e_time').val(strTime);
-}
+
+
+        var dd = Date.parse(datetime);
+        dd += minn * 60000;
+
+        var addedtime = new Date(dd);
+
+
+
+        var hours = addedtime.getHours();
+        var minutes = addedtime.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        hours = hours < 10 ? '0' + hours : hours;
+
+
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+
+        $('.e_time').val(strTime);
+    }
 </script>
 
 
 <script>
-$('.duration1').change(function() {
+    $('.duration1').change(function() {
 
-    calculateTime1();
-});
+        calculateTime1();
+    });
 
-function calculateTime1() {
+    function calculateTime1() {
 
-    var tt1 = $(".s_time1").val();
+        var tt1 = $(".s_time1").val();
 
-    var minn1 = parseInt($(".duration1").val()) * 5;
-
-
-    var datetime1 = '2010-10-18, ' + tt1;
+        var minn1 = parseInt($(".duration1").val()) * 5;
 
 
-
-    var dd1 = Date.parse(datetime1);
-    dd1 += minn1 * 60000;
-
-    var addedtime1 = new Date(dd1);
+        var datetime1 = '2010-10-18, ' + tt1;
 
 
 
-    var hours1 = addedtime1.getHours();
-    var minutes1 = addedtime1.getMinutes();
-    var ampm1 = hours1 >= 12 ? 'PM' : 'AM';
-    hours1 = hours1 % 12;
-    hours1 = hours1 ? hours1 : 12; // the hour '0' should be '12'
-    minutes1 = minutes1 < 10 ? '0' + minutes1 : minutes1;
-    hours1 = hours1 < 10 ? '0' + hours1 : hours1;
+        var dd1 = Date.parse(datetime1);
+        dd1 += minn1 * 60000;
+
+        var addedtime1 = new Date(dd1);
 
 
-    var strTime1 = hours1 + ':' + minutes1 + ' ' + ampm1;
 
-    $('.e_time1').val(strTime1);
-}
+        var hours1 = addedtime1.getHours();
+        var minutes1 = addedtime1.getMinutes();
+        var ampm1 = hours1 >= 12 ? 'PM' : 'AM';
+        hours1 = hours1 % 12;
+        hours1 = hours1 ? hours1 : 12; // the hour '0' should be '12'
+        minutes1 = minutes1 < 10 ? '0' + minutes1 : minutes1;
+        hours1 = hours1 < 10 ? '0' + hours1 : hours1;
+
+
+        var strTime1 = hours1 + ':' + minutes1 + ' ' + ampm1;
+
+        $('.e_time1').val(strTime1);
+    }
 </script>
 
 
 <script type="text/javascript">
-function MyAlert() {
-    var radio1 = $('input[type="radio"]:checked').val();
-    // alert(radio1);
-    var pass_data = {
-        'radio1': radio1,
-    };
-    //alert(pass_data);
-    $.ajax({
-        url: "<?php echo base_url(); ?>schedule",
-        type: "POST",
-        data: pass_data,
-        success: function(data) {
-            $('#editable-sample').html(data);
+    function MyAlert() {
+        var radio1 = $('input[type="radio"]:checked').val();
+        // alert(radio1);
+        var pass_data = {
+            'radio1': radio1,
+        };
+        //alert(pass_data);
+        $.ajax({
+            url: "<?php echo base_url(); ?>schedule",
+            type: "POST",
+            data: pass_data,
+            success: function(data) {
+                $('#editable-sample').html(data);
 
-        }
-    });
-    return false;
-}
+            }
+        });
+        return false;
+    }
 </script>

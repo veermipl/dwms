@@ -2140,22 +2140,22 @@ class Patient extends MX_Controller
                         <li class="active">
                             <a data-toggle="tab" href="#appointments">' . lang("appointments") . '</a>
                         </li>
-                        <li class="">
+                        <li class="" style="display:none">
                             <a data-toggle="tab" href="#home">' . lang("case_history") . '</a>
                         </li>
-                         <li class="">
+                         <li class="" style="display:none">
                             <a data-toggle="tab" href="#prescription">' . lang("prescription") . '</a>
                         </li>
                         
-                        <li class="">
+                        <li class="" style="display:none">
                             <a data-toggle="tab" href="#lab">' . lang("lab") . '</a>
                         </li>
                         
-                        <li class="">
+                        <li class="" style="display:none">
                             <a data-toggle="tab" href="#profile">' . lang("documents") . '</a>
                         </li>
                          
-                        <li class="">
+                        <li class="" style="display:none">
                             <a data-toggle="tab" href="#timeline">' . lang("timeline") . '</a> 
                         </li>
                     </ul>
