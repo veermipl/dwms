@@ -106,7 +106,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="2" class="tab-pane">
+                    <div id=" 2" class="tab-pane">
                         <div class="">
                             <div class="panel-body">
                                 <div class="adv-table editable-table ">
@@ -208,6 +208,9 @@
                                 <div class="adv-table editable-table ">
 
                                     <div class="space15"></div>
+
+
+
                                     <table class="table table-striped table-hover table-bordered" id="editable-sample5">
                                         <thead>
                                             <tr>
@@ -220,7 +223,7 @@
                                                 <th> <?php echo "Consultation Mode"; ?></th>
                                                 <th> <?php echo "Location"; ?></th>
                                                 <th> <?php echo lang('status'); ?></th>
-                                                <th> <?php echo lang('options'); ?></th>
+                                                <th class="testClass"> <?php echo lang('options'); ?></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -229,6 +232,10 @@
 
                                         </tbody>
                                     </table>
+
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -557,7 +564,7 @@
     <div class="modal-dialog modal-lg med_his" role="document">
         <div class="modal-content">
 
-            <div id='medical_history'>
+            <div id=' medical_history'>
                 <div class="col-md-12">
 
                 </div>
@@ -685,7 +692,8 @@
 
 
                     <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo 'Type Of Consultation'; ?></label>
+                        <label for="exampleInputEmail1">
+                            <?php echo 'Type Of Consultation'; ?></label>
 
                         <select type="text" class="form-control" name="mode_of_consultation" id="modes_of_consultation">
                             <option value="">Select Mode Of Consultation</option>
@@ -704,7 +712,8 @@
                     </div>
 
                     <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo 'Type Of Consultation'; ?></label>
+                        <label for="exampleInputEmail1">
+                            <?php echo 'Type Of Consultation'; ?></label>
                         <select type="text" class="form-control" name="types_of_consultation" id="type_of_consultation"
                             placeholder="">
 
@@ -790,7 +799,8 @@ $(document).ready(function() {
                 }
             });
         } else {
-            $('#type_of_consultation').html('<option value="">Select Type Of Consultation</option>');
+            $('#type_of_consultation').html(
+                '<option value="">Select Type Of Consultation</option>');
 
         }
     });
