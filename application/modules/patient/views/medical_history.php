@@ -745,84 +745,84 @@ if ($this->ion_auth->in_group('Doctor')) {
 </div>
 
 <div class="modal fade" id="editAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg"">
+    <div class="modal-dialog modal-lg">
         <div class=" modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="modal-title"> <?php echo lang('edit_appointment'); ?></h4>
-        </div>
-        <div class="modal-body">
-            <form role="form" id="editAppointmentForm" class="clearfix row" action="appointment/addNew" method="post" enctype="multipart/form-data">
-                <div class="col-md-4 panel">
-                    <label for="exampleInputEmail1"> <?php echo lang('patient'); ?></label>
-                    <select class="form-control m-bot15 js-example-basic-single pos_select patient" id="pos_select" name="patient" value=''>
-                        <option value="">Select .....</option>
-                        <option value="<?php echo $patient->id; ?>"><?php echo $patient->name; ?> </option>
-                    </select>
-                </div>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"> <?php echo lang('edit_appointment'); ?></h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="editAppointmentForm" class="clearfix row" action="appointment/addNew" method="post" enctype="multipart/form-data">
+                    <div class="col-md-4  mb-3">
+                        <label for="exampleInputEmail1"> <?php echo lang('patient'); ?></label>
+                        <select class="form-control  js-example-basic-single pos_select patient" id="pos_select" name="patient" value=''>
+                            <option value="">Select .....</option>
+                            <option value="<?php echo $patient->id; ?>"><?php echo $patient->name; ?> </option>
+                        </select>
+                    </div>
 
-                <div class="col-md-4 panel doctor_div1">
-                    <label for="exampleInputEmail1"> <?php echo lang('doctor'); ?></label>
-                    <select class="form-control m-bot15 doctor" id="adoctors1" name="doctor" value=''>
+                    <div class="col-md-4 mb-3 doctor_div1">
+                        <label for="exampleInputEmail1"> <?php echo lang('doctor'); ?></label>
+                        <select class="form-control  doctor" id="adoctors1" name="doctor" value=''>
 
-                    </select>
-                </div>
-
-
-                <div class="col-md-4 panel">
-                    <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
-                    <input type="text" class="form-control default-date-picker" readonly="" id="date1" name="date" id="exampleInputEmail1" value='' placeholder="">
-                </div>
-
-                <div class="col-md-6 panel">
-                    <label class=""><?php echo lang('available_slots'); ?></label>
-                    <select class="form-control m-bot15" name="time_slot" id="aslots1" value=''>
-
-                    </select>
-                </div>
-
-                <div class="col-md-6 panel">
-                    <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
-                    <select class="form-control m-bot15" name="status" value=''>
-                        <?php if (!$this->ion_auth->in_group('Patient')) { ?>
-                            <option value="Pending Confirmation" <?php ?>> <?php echo lang('pending_confirmation'); ?> </option>
-                            <option value="Confirmed" <?php
-                                                        ?>> <?php echo lang('confirmed'); ?> </option>
-                            <option value="Treated" <?php
-                                                    ?>> <?php echo lang('treated'); ?> </option>
-                            <option value="Cancelled" <?php ?>> <?php echo lang('cancelled'); ?> </option>
-                        <?php } else { ?>
-                            <option value="Requested" <?php ?>> <?php echo lang('requested'); ?> </option>
-                        <?php } ?>
-                    </select>
-                </div>
-
-                <div class="col-md-8 panel">
-                    <label for="exampleInputEmail1"> <?php echo lang('remarks'); ?></label>
-                    <input type="text" class="form-control" name="remarks" id="exampleInputEmail1" value='' placeholder="">
-                </div>
+                        </select>
+                    </div>
 
 
+                    <div class="col-md-4 mb-3">
+                        <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
+                        <input type="text" class="form-control default-date-picker" readonly="" id="date1" name="date" id="exampleInputEmail1" value='' placeholder="">
+                    </div>
 
+                    <div class="col-md-6 mb-3 ">
+                        <label class=""><?php echo lang('available_slots'); ?></label>
+                        <select class="form-control " name="time_slot" id="aslots1" value=''>
 
-                <div class="col-md-6 panel">
-                    <input type="checkbox" name="sms" value="sms"> <?php echo lang('send_sms') ?><br>
-                </div>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3 ">
+                        <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
+                        <select class="form-control " name="status" value=''>
+                            <?php if (!$this->ion_auth->in_group('Patient')) { ?>
+                                <option value="Pending Confirmation" <?php ?>> <?php echo lang('pending_confirmation'); ?> </option>
+                                <option value="Confirmed" <?php
+                                                            ?>> <?php echo lang('confirmed'); ?> </option>
+                                <option value="Treated" <?php
+                                                        ?>> <?php echo lang('treated'); ?> </option>
+                                <option value="Cancelled" <?php ?>> <?php echo lang('cancelled'); ?> </option>
+                            <?php } else { ?>
+                                <option value="Requested" <?php ?>> <?php echo lang('requested'); ?> </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+
+                    <div class="col-md-12 mb-3 ">
+                        <label for="exampleInputEmail1"> <?php echo lang('remarks'); ?></label>
+                        <input type="text" class="form-control" name="remarks" id="exampleInputEmail1" value='' placeholder="">
+                    </div>
 
 
 
-                <input type="hidden" name="redirect" value='patient/medicalHistory?id=<?php echo $patient->id; ?>'>>
-                <input type="hidden" name="id" id="appointment_id" value=''>
 
-                <div class="col-md-12 panel">
-                    <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
-                </div>
+                    <div class="col-md-6 panel mb-3">
+                        <input type="checkbox" name="sms" value="sms"> <?php echo lang('send_sms') ?><br>
+                    </div>
 
-            </form>
 
-        </div>
-    </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
+
+                    <input type="hidden" name="redirect" value='patient/medicalHistory?id=<?php echo $patient->id; ?>'>>
+                    <input type="hidden" name="id" id="appointment_id" value=''>
+
+                    <div class="col-md-12 panel">
+                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div>
 <!-- Edit Event Modal-->
 

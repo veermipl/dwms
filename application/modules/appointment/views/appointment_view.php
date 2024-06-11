@@ -22,26 +22,26 @@ if ($this->ion_auth->in_group('Doctor')) {
                             <div class="">
                                 <div class="modal-body row">
                                     <!-- <?php var_dump($appointment); ?> -->
-                                    <div class="col-md-4 panel mb-3">
+                                    <div class="col-md-4  mb-3">
                                         <label for="exampleInputEmail1"> <?php echo lang('patient'); ?></label>
                                         <input type="text" readonly="readonly" class="form-control" readonly="" name="date" value='<?php $patientdetails = $this->patient_model->getPatientById($appointment->patient);
                                                                                                                                     echo $patientdetails->name; ?>' placeholder="">
 
                                     </div>
 
-                                    <div class="col-md-4 mb-3 panel doctor_div1">
+                                    <div class="col-md-4 mb-3  doctor_div1">
                                         <label for="exampleInputEmail1"> <?php echo lang('doctor'); ?> </label>
                                         <input type="text" readonly="readonly" class="form-control" readonly="" name="date" value='<?php echo $this->doctor_model->getDoctorById($appointment->doctor)->name; ?>' placeholder="">
 
                                     </div>
 
-                                    <div class="col-md-4 mb-3 panel">
+                                    <div class="col-md-4 mb-3 ">
                                         <label for="exampleInputEmail1"> Location </label>
                                         <input type="text" readonly="readonly" class="form-control" readonly="" name="date" value='<?php $getLocation =  $this->doctor_model->getLocationById($appointment->location_id);
                                                                                                                                     echo $getLocation->name; ?>' placeholder="">
                                     </div>
 
-                                    <div class="col-md-4 mb-3 panel">
+                                    <div class="col-md-4 mb-3 ">
                                         <label for="exampleInputEmail1"> <?php echo 'Date - Time' ?> </label>
                                         <input type="text" readonly="readonly" class="form-control default-date-picker" id="date1" readonly="" name="date" value='<?php echo $appointment->date ?> <?php echo $appointment->s_time ?>-<?php echo $appointment->e_time ?>' placeholder="">
                                     </div>
