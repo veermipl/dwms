@@ -2603,6 +2603,14 @@ ul.inbox-pagination li {
   margin: 6px 0 0;
   font-size: 12px;
   color: #777;
+  white-space: nowrap;
+  width: 174px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+.class .table.table.table-bordered {
+  font-size: 15px;
 }
 
 .p-text-area,
@@ -3191,10 +3199,10 @@ ul.amounts li {
   color: #667fa0;
 }
 
-.panel-heading .nav > li.active > a,
-.panel-heading .nav > li > a:hover {
-  color: #47596f;
-  background: #f1f1f1 !important;
+.panel-heading .nav>li.active>a,
+.panel-heading .nav>li>a:hover {
+    color: #ffffff;
+    background: #2ea2d9 !important;
 }
 
 .panel-heading .nav > li:first-child.active > a,
@@ -6614,11 +6622,33 @@ table.dataTable.no-footer {
   border-radius: 50px;
 }
 
-/* .table-responsive .coll-sm-12 {
-  overflow-x: scroll !important ;
+.mg-m {
+    margin-top: 20px;
 }
-.table-striped > tbody > tr:nth-child(odd) > td,
-.table-striped > tbody > tr:nth-child(odd) > th {
-  background-color: #fff;
-  white-space: nowrap;
+
+.personal-task {
+    background-color: #fff;
+}
+
+.personal-task td i {
+    color: #39b5aa !important;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.table-responsive {
+    overflow-x: scroll;
+}
+
+/* .adv-table table tr td {
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
 } */
+
+.card-body .fw-bold {
+    color: #043f5c;
+    font-size: 16px;
+}

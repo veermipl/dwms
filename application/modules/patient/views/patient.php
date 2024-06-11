@@ -360,7 +360,7 @@
 
                                     <div class="card mt-5">
                                         <div class="card-body">
-                                            <h5 class="card-title mb-4 fw-bold">Basic Information</h5>
+                                            <h5 class="card-title mb-4 fw-bold"><i class="	far fa-user-circle"></i> Basic Information</h5>
                                             <div>
                                                 <ul class="list-unstyled mb-0 text-muted">
                                                     <li>
@@ -393,7 +393,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-8">
+                                <div class="col-md-4">
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             <h5 class="card-title mb-4 fw-bold">General Information</h5>
@@ -445,6 +445,45 @@
                                     </div>
 
                                     <div class="card mb-3">
+                                        <div class="card-body ">
+                                            <h5 class="card-title mb-4 fw-bold">Lifestyle History</h5>
+
+                                            <ul class="list-unstyled mb-0">
+                                                <li class="pb-1">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="flex-grow-1">
+                                                            <h5 class="mb-0 font-size-14">Smoking <span id="info_smoking"></span></h5>
+                                                            <p class="text-muted mb-1 font-size-13" id="info_smoking_comment"></p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="pb-1">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="flex-grow-1">
+                                                            <h5 class="mb-0 font-size-14">Alcohol use <span id="info_alcohol"></span></h5>
+                                                            <p class="text-muted mb-1 font-size-13" id="info_alcohol_comment"></p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="pb-1">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="flex-grow-1">
+                                                            <h5 class="mb-0 font-size-14">Other (Sexual activity, LMP, etc.) <span id="info_other_activity"></span></h5>
+                                                            <p class="text-muted mb-1 font-size-13" id="info_other_activity_comment"></p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="col-d-4">
+
+
+                                    <div class="card mb-3">
                                         <div class="card-body">
                                             <h5 class="card-title mb-4 fw-bold">Medical Information</h5>
 
@@ -492,41 +531,8 @@
                                             </ul>
                                         </div>
                                     </div>
-
-                                    <div class="card mb-3">
-                                        <div class="card-body">
-                                            <h5 class="card-title mb-4 fw-bold">Lifestyle History</h5>
-
-                                            <ul class="list-unstyled mb-0">
-                                                <li class="pb-1">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-grow-1">
-                                                            <h5 class="mb-0 font-size-14">Smoking <span id="info_smoking"></span></h5>
-                                                            <p class="text-muted mb-1 font-size-13" id="info_smoking_comment"></p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="pb-1">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-grow-1">
-                                                            <h5 class="mb-0 font-size-14">Alcohol use <span id="info_alcohol"></span></h5>
-                                                            <p class="text-muted mb-1 font-size-13" id="info_alcohol_comment"></p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="pb-1">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-grow-1">
-                                                            <h5 class="mb-0 font-size-14">Other (Sexual activity, LMP, etc.) <span id="info_other_activity"></span></h5>
-                                                            <p class="text-muted mb-1 font-size-13" id="info_other_activity_comment"></p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
                                 </div>
+
                             </div>
                         </div>
 
