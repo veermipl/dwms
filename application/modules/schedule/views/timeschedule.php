@@ -182,7 +182,7 @@
 
                         <label for="exampleInputEmail1"> <?php echo lang('weekday'); ?></label>
 
-                        <div class="input-group bootstrap-timepicker">
+                        <div class="input-group bootstrap-timepicker w-100">
 
                             <select class="form-control m-bot15" id="weekday" name="weekday" value=''>
                                 <option value="">Select .....</option>
@@ -201,7 +201,7 @@
 
                         <label for="exampleInputEmail1"> <?php echo lang('location'); ?></label>
 
-                        <div class="input-group bootstrap-timepicker">
+                        <div class="input-group bootstrap-timepicker w-100">
 
                             <select class="form-control m-bot15" id="location_id" name="location_id" value=''>
                                 <option value="">Select .....</option>
@@ -272,7 +272,7 @@
 
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"> <?php echo "Slot Type"; ?></label>
-                        <div class="input-group">
+                        <div class="input-group w-100">
                             <select class="form-control m-bot15" name="membership_code" value=''>
 
                                 <option value="G" <?php
@@ -298,7 +298,7 @@
 
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"> <?php echo lang('end_time'); ?></label>
-                        <div class="input-group bootstrap-timepicker">
+                        <div class="input-group bootstrap-timepicker w-100">
                             <input type="text" class="form-control timepicker-default e_time" name="e_time" value='' readonly="readonly">
                             <span class="input-group-btn">
                                 <button class="btn btn-default custome-btn-dwms" type="button"><i class="fa fa-clock"></i></button>
