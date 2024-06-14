@@ -924,6 +924,14 @@ class Patient extends MX_Controller
         }
 
         $data['patient'] = $this->patient_model->getPatientById($id);
+        
+        if ($this->ion_auth->in_group(array('Doctor'))) {
+            $doctor_ion_id = $this->ion_auth->get_user_id();
+            $data['doctor'] = $this->doctor_model->getDoctorByIonUserId($doctor_ion_id);
+            $data['appointments'] = $this->appointment_model->getAppointmentByPatientAndDoctor($data['patient']->id,$data['doctor']->id);
+        }else{
+            $data['appointments'] = $this->appointment_model->getAppointmentByPatient($data['patient']->id);
+        }
         $data['appointments'] = $this->appointment_model->getAppointmentByPatient($data['patient']->id);
         $data['patients'] = $this->patient_model->getPatient();
         $data['doctors'] = $this->doctor_model->getDoctor();

@@ -223,6 +223,19 @@ class Appointment_model extends CI_model
         return $query->result();
     }
 
+    function getAppointmentByPatientAndDoctor($patient,$doctor_id)
+    {
+
+        $this->db->order_by('id', 'desc');
+
+        $this->db->where('patient', $patient);
+        $this->db->where('doctor', $doctor_id);
+
+        $query = $this->db->get('appointment');
+
+        return $query->result();
+    }
+
 
 
     function getAppointmentByStatus($status)
