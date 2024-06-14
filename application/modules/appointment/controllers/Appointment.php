@@ -1262,6 +1262,9 @@ class Appointment extends MX_Controller
             $option11 = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?apid=' . $appointment->id . '&id=' . $appointment->patient . '&tab=physical"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
 
 
+            $option111 = '<a class="btn btn-primary" title="' . lang('history') . '" style="color: #fff;" href="patient/medicalHistory?id=' . $appointment->patient.'&did='.$appointment->doctor.'"><i class="fa fa-stethoscope"></i> ' . lang('history') . '</a>';
+
+
             $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
@@ -1345,7 +1348,7 @@ class Appointment extends MX_Controller
 
                 $location,
                 $status,
-                $option11 . ' ' . $option1 . ' ' . $invOpt . ' ' . $option2 . ' ' . $options7
+                $option11 . ' ' . $option1 . ' ' . $invOpt. ' '. $option111 . ' ' . $option2 . ' ' . $options7
             );
         }
 

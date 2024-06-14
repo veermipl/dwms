@@ -21,8 +21,10 @@
                         <?php } ?>
                         <h1> <?php echo $patient->name; ?> </h1>
                         <p> <?php echo $patient->email; ?> </p>
-                        <?php if (!$this->ion_auth->in_group(array('Patient'))) { ?>
+                        <?php if (!$this->ion_auth->in_group(array('Patient','Doctor'))) { ?>
+
                             <button type="button" class="btn btn-info btn-xs btn_width editPatient" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $patient->id; ?>"><i class="fa fa-edit"> </i> <?php echo lang('edit'); ?></button>
+
                         <?php } ?>
                     </div>
 
@@ -82,13 +84,13 @@
                     <div class="tab-content">
                         <div id="appointments" class="tab-pane active">
                             <div class="">
-                                <?php if (!$this->ion_auth->in_group('Patient')) { ?>
+                                <?php if (!$this->ion_auth->in_group(array('Patient','Doctor'))) { ?>
                                     <div class=" no-print">
                                         <!-- <a class="btn btn-info btn_width btn-xs" data-toggle="modal" href="#addAppointmentModal">
                                             <i class="fa fa-plus-circle"> </i> <?php echo lang('add_new'); ?> 
                                         </a> -->
                                         <a href="appointment/addNewView">
-                                            <button class="btn green btn-xs">
+                                            <button class="btn green btn-xs dd">
                                                 <i class="fa fa-plus-circle"></i> <?php echo lang('add_appointment'); ?>
                                             </button>
                                         </a>
@@ -109,7 +111,7 @@
                                                 <th><?php echo lang('time_slot'); ?></th>
                                                 <th><?php echo lang('doctor'); ?></th>
                                                 <th><?php echo lang('status'); ?></th>
-                                                <?php if (!$this->ion_auth->in_group('Patient')) { ?>
+                                                <?php if (!$this->ion_auth->in_group(array('Patient','Doctor'))) { ?>
                                                     <th class="no-print"><?php echo lang('options'); ?></th>
                                                 <?php } ?>
                                             </tr>
@@ -138,7 +140,7 @@
                                                         echo $getStatus->status_name;
                                                         ?></td>
 
-                                                    <?php if (!$this->ion_auth->in_group('Patient')) { ?>
+                                                    <?php if (!$this->ion_auth->in_group(array('Patient','Doctor'))) { ?>
                                                         <td class="no-print edit_appointment_button">
                                                             <button type="button" class="btn btn-info btn-xs btn_width editAppointmentButton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $appointment->id; ?>"><i class="fa fa-edit"></i> </button>
                                                             <a class="btn btn-info btn-xs btn_width delete_button" title="<?php echo lang('delete'); ?>" href="appointment/delete?id=<?php echo $appointment->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i> </a>
