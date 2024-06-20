@@ -101,26 +101,59 @@
                         <?php } ?>
                     </div> -->
 
-
-                    <div class="col-lg-3 col-sm-6">
-                        <?php if ($this->ion_auth->in_group('admin')) { ?>
-                            <a href="patient">
-                            <?php } ?>
-                            <section class="panel home_sec_blue">
-                                <div class="symbol blue">
-                                    <i class="fa fa-users-medical"></i>
-                                </div>
-                                <div class="value">
-                                    <h3 class="">
-                                        <?php echo $this->db->count_all('patient'); ?>
-                                    </h3>
-                                    <p><?php echo lang('patient'); ?></p>
-                                </div>
-                            </section>
-                            <?php if ($this->ion_auth->in_group('admin')) { ?>
+                    <?php if ($this->ion_auth->in_group('admin')) { ?>
+                        <div class="col-lg-3 col-sm-6">
+                            <a href="doctor">
+                                <section class="panel home_sec_blue">
+                                    <div class="symbol blue">
+                                        <i class="fa fa-user-md"></i>
+                                    </div>
+                                    <div class="value">
+                                        <h3 class="">
+                                            <?php echo $this->db->count_all('doctor'); ?>
+                                        </h3>
+                                        <p><?php echo lang('doctor'); ?></p>
+                                    </div>
+                                </section>
                             </a>
-                        <?php } ?>
-                    </div>
+                        </div>
+                    <?php } ?>
+
+                    <?php if ($this->ion_auth->in_group('admin')) { ?>
+                        <div class="col-lg-3 col-sm-6">
+                            <a href="nurse">
+                                <section class="panel home_sec_blue">
+                                    <div class="symbol blue">
+                                        <i class="fa fa-user-nurse"></i>
+                                    </div>
+                                    <div class="value">
+                                        <h3 class="">
+                                            <?php echo $this->db->count_all('nurse'); ?>
+                                        </h3>
+                                        <p><?php echo lang('staff'); ?></p>
+                                    </div>
+                                </section>
+                            </a>
+                        </div>
+                    <?php } ?>
+
+                    <?php if ($this->ion_auth->in_group(array('admin', 'Nurse'))) { ?>
+                        <div class="col-lg-3 col-sm-6">
+                            <a href="patient">
+                                <section class="panel home_sec_blue">
+                                    <div class="symbol blue">
+                                        <i class="fa fa-users-medical"></i>
+                                    </div>
+                                    <div class="value">
+                                        <h3 class="">
+                                            <?php echo $this->db->count_all('patient'); ?>
+                                        </h3>
+                                        <p><?php echo lang('patient'); ?></p>
+                                    </div>
+                                </section>
+                            </a>
+                        </div>
+                    <?php } ?>
 
                     <div class="col-lg-3 col-sm-6">
                         <?php if ($this->ion_auth->in_group('admin')) { ?>
@@ -142,7 +175,7 @@
                         <?php } ?>
                     </div>
 
-                    <?php if ($this->ion_auth->in_group('admin')) { ?>
+                    <?php if ($this->ion_auth->in_group('admin_')) { ?>
                         <div class="col-lg-3 col-sm-6">
                             <?php if ($this->ion_auth->in_group('admin')) { ?>
                                 <a href="prescription/all">
@@ -166,7 +199,7 @@
 
 
                         <div class="col-lg-3 col-sm-6">
-                            <?php if ($this->ion_auth->in_group('admin')) { ?>
+                            <?php if ($this->ion_auth->in_group('admin_')) { ?>
                                 <a href="dispatches/all">
                                 <?php } ?>
                                 <section class="panel home_sec_yellow">
@@ -198,7 +231,7 @@
                         </div>
 
                         <div class="col-lg-3 col-sm-6">
-                            <?php if ($this->ion_auth->in_group('admin')) { ?>
+                            <?php if ($this->ion_auth->in_group('admin_')) { ?>
                                 <a href="patient/caseList">
                                 <?php } ?>
                                 <section class="panel home_sec_blue">
@@ -218,7 +251,7 @@
                         </div>
 
                         <div class="col-lg-3 col-sm-6">
-                            <?php if ($this->ion_auth->in_group('admin')) { ?>
+                            <?php if ($this->ion_auth->in_group('admin_')) { ?>
                                 <a href="lab">
                                 <?php } ?>
                                 <section class="panel home_sec_green">
@@ -240,7 +273,7 @@
 
 
                         <div class="col-lg-3 col-sm-6">
-                            <?php if ($this->ion_auth->in_group('admin')) { ?>
+                            <?php if ($this->ion_auth->in_group('admin_')) { ?>
                                 <a href="patient/documents">
                                 <?php } ?>
                                 <section class="panel home_sec_blue">
@@ -259,7 +292,7 @@
                             <?php } ?>
                         </div>
                         <div class="col-lg-3 col-sm-6">
-                            <?php if ($this->ion_auth->in_group('admin')) { ?>
+                            <?php if ($this->ion_auth->in_group('admin_')) { ?>
                                 <a href="finance/payment">
                                 <?php } ?>
                                 <section class="panel home_sec_yellow">

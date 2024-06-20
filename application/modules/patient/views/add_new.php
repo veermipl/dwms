@@ -22,7 +22,7 @@
                 ?>
             </header>
 
-            <section class="panel">
+            <section class="">
                 <div class="panel-body">
 
                     <div class="col-lg-12">
@@ -37,7 +37,7 @@
                         <form role="form" action="patient/addNew" method="post" enctype="multipart/form-data">
 
                             <div class="row">
-                                <div class="form-group col-lg-4">
+                                <div class="form-group col-lg-4" style="display: none;">
                                     <label for="exampleInputEmail1"><?php echo lang('doctor'); ?></label>
                                     <select class="form-control m-bot15 js-example-basic-single" name="doctor" value=''>
                                         <?php foreach ($doctors as $doctor) { ?>
@@ -52,20 +52,34 @@
                                     </select>
                                 </div>
 
+
+                                <div class="form-group col-md-4">
+                                    <label for="exampleInputEmail1"><?php echo lang('company'); ?><span class="text-danger">*</span></label>
+                                    <select class="form-control" name="company_id" required>
+                                        <option>--Select Company --</option>
+                                        <?php if ($company && count($company)) : ?>
+                                            <?php foreach ($company as $row) : ?>
+                                                <?php if ($row->id) : ?>
+                                                    <option value="<?= $row->id ?>" <?= (@$patient->company_id == $row->id)  ? 'selected' : '' ?>><?= ucwords($row->name) ?></option>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </select>
+                                </div>
+
+
                                 <div class="form-group col-md-4">
                                     <label for="exampleInputEmail1"><?php echo lang('name'); ?><span class="text-danger">*</span></label>
                                     <input type="text" required class="form-control" name="name" value='<?= set_value('name', @$patient->name) ?>' placeholder="">
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label for="exampleInputEmail1"><?php echo lang('email'); ?><span class="text-danger">*</span></label>
-                                    <input type="text" required id="patientEmail" class="form-control" name="email" value='<?= set_value('email', @$patient->email) ?>' patient_id="<?= @$patient->ion_user_id ?>" placeholder="">
+                                    <label for="exampleInputEmail1"><?php echo lang('email'); ?></label>
+                                    <input type="text" id="patientEmail" class="form-control" name="email" value='<?= set_value('email', @$patient->email) ?>' patient_id="<?= @$patient->ion_user_id ?>" placeholder="">
 
                                     <span id="emailErr" class="text-danger"></span>
                                 </div>
-                            </div>
 
-                            <div class="row">
 
                                 <div class="form-group col-md-4">
                                     <label><?php echo lang('birth_date'); ?></label>
@@ -79,17 +93,15 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="exampleInputEmail1"><?php echo lang('gender'); ?></label>
-                                    <select class="form-control m-bot15" name="sex" value=''>
+                                    <select class="form-control" name="sex" value=''>
                                         <option value="Male" <?= set_value('sex', @$patient->sex) == 'Male' ? 'selected' : '' ?>> Male </option>
                                         <option value="Female" <?= set_value('sex', @$patient->sex) == 'Female' ? 'selected' : '' ?>> Female </option>
                                         <option value="Others" <?= set_value('sex', @$patient->sex) == 'Others' ? 'selected' : '' ?>> Others </option>
                                     </select>
                                 </div>
-                            </div>
 
-                            <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label for="exampleInputEmail1"><?php echo lang('phone'); ?><span class="text-danger">*</span></label>
+                                    <label for="exampleInputEmail1"><?php echo lang('phone'); ?></label>
                                     <input type="text" class="form-control" name="phone" value='<?= set_value('phone', @$patient->phone) ?>' placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                 </div>
 
@@ -105,10 +117,22 @@
                                     </select>
                                 </div>
 
+                                <div class="col-lg-12 form-group">
+                                    <label for="exampleInputEmail1"><?php echo lang('address'); ?><span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="address" value='<?= set_value('address', $patient->address) ?>' placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="form-group col-md-4">
                                     <?php if ($id && isset($id)) : ?>
                                         <label for="exampleInputEmail1"><?php echo lang('update') . ' ' . lang('image'); ?></label>
                                         <input type="file" class="form-control" name="img_url">
+
+                                        <?php
+                                            $profile_img = (trim(@$patient->img_url)) ? @$patient->img_url : 'https://dwms.digitalnoticeboard.biz/uploads/image-removebg-preview.png';
+                                        ?>
+                                        <img src="<?= $profile_img ?>" alt="" style="width: 100px;">
                                     <?php else : ?>
                                         <label for="exampleInputEmail1"><?php echo lang('image'); ?></label>
                                         <input type="file" class="form-control" name="img_url">
@@ -116,7 +140,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row" style="display: none;">
                                 <header class="panel-heading">
                                     Photographic ID </header>
 
@@ -156,7 +180,7 @@
                                                             <input type="password" class="form-control" name="password" placeholder="">
                                                         <?php else : ?>
                                                             <label for="exampleInputEmail1"><?php echo lang('password'); ?></label>
-                                                            <input type="password" class="form-control" name="password" placeholder="Enter Password" required>
+                                                            <input type="password" class="form-control" name="password" placeholder="Enter Password">
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
@@ -167,7 +191,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row" style="display:none">
                                 <header class="panel-heading">
                                     Medical History </header>
                                 <div class="col-lg-12 mg-m">
@@ -210,7 +234,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row" style="display: none;">
                                 <header class="panel-heading">
                                     Lifestyle History </header>
                                 <div class="col-lg-12 mg-m">
@@ -288,7 +312,7 @@
 
                             <div class="col-lg-12">
                                 <div class="row">
-                                    <div class="col-lg-12 my-4">
+                                    <div class=" my-4">
                                         <section class="">
                                             <button type="submit" name="submit" class="btn btn-info"><?php echo (empty($id)) ? lang('submit') : lang('update'); ?></button>
                                         </section>

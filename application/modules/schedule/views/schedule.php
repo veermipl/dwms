@@ -249,9 +249,9 @@
                         <div class="input-group">
                             <select class="form-control m-bot15" name="membership_code" value=''>
 
-                                <option value="G" <?php
+                                <option value="General" <?php
                                                     if (!empty($settings->membership_code)) {
-                                                        if ($settings->membership_code == 'G') {
+                                                        if ($settings->membership_code == 'General') {
                                                             echo 'selected';
                                                         }
                                                     }
@@ -301,7 +301,7 @@
             <div class="modal-body">
                 <form role="form" id="editTimeSlotForm" action="schedule/addSchedule" method="post" enctype="multipart/form-data">
 
-                    <div class="col-md-12 col-md-6">
+                    <div class=" col-md-6">
                         <div class="col-md-3 payment_label">
                             <label for="exampleInputEmail1"> <?php echo lang('doctor'); ?></label>
                         </div>
@@ -321,7 +321,7 @@
 
                     </div>
 
-                    <div class="col-md-12 col-md-6">
+                    <div class="col-md-6 pd-0">
                         <label for="exampleInputEmail1"> <?php echo lang('weekday'); ?></label>
 
                         <select class="form-control m-bot15" id="weekday1" name="weekday" value=''>
@@ -418,7 +418,7 @@
 
 
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 pd-0">
                         <label for="exampleInputEmail1"> <?php echo lang('end_time'); ?></label>
                         <div class="input-group bootstrap-timepicker">
                             <input type="text" class="form-control timepicker-default e_time1" name="e_time" value='' readonly="readonly">
@@ -434,9 +434,9 @@
                         <div class="input-group">
                             <select class="form-control m-bot15" name="membership_code" value=''>
 
-                                <option value="G" <?php
+                                <option value="General" <?php
 
-                                                    if ($schedule->membership_code == 'G') { ?> selected <?php } ?>>
+                                                    if ($schedule->membership_code == 'General') { ?> selected <?php } ?>>
                                     General </option>
 
                                 <option value="VIP" <?php
@@ -452,8 +452,13 @@
 
                     <input type="hidden" name="redirect" value='schedule'>
                     <input type="hidden" name="id" value='<?php echo $schedule->id; ?>'>
-                    <button type="submit" name="submit" class="btn btn-info" style="margin-top:27px !important">
+                    <hr class="line-hr">
+                    <div class="row">
+                        <div class="col-md-12 bdr-top-btn">
+                    <button type="submit" name="submit" class="btn btn-info" style="text-align: right;!important">
                         <?php echo lang('submit'); ?></button>
+                    </div>
+                </div>
                 </form>
 
             </div>

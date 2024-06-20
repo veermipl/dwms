@@ -11,7 +11,7 @@ class SendMail
         $this->CI->load->library('email');
     }
 
-    public function send($from, $to, $subject, $message, $from_name, $email_settings)
+    public function send($from, $to, $subject, $message, $from_name, $email_settings, $attach = null)
     {
         $from_email = $from;
         $to_email = $to;
@@ -36,6 +36,7 @@ class SendMail
         $this->CI->email->to($to_email);
         $this->CI->email->subject($subject);
         $this->CI->email->message($message);
+        $this->CI->email->attach($attach);
         $this->CI->email->send();
 
         return true;

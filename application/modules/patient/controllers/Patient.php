@@ -20,6 +20,7 @@ class Patient extends MX_Controller
         require APPPATH . 'third_party/stripe/stripe-php/init.php';
         $this->load->model('medicine/medicine_model');
         $this->load->model('doctor/doctor_model');
+        $this->load->model('company/company_model');
         $this->load->module('paypal');
         $this->load->library('SendMail');
         if (!$this->ion_auth->in_group(array('admin', 'Nurse', 'Patient', 'Doctor', 'Laboratorist', 'Accountant', 'Receptionist'))) {
@@ -57,6 +58,7 @@ class Patient extends MX_Controller
         $data['doctors'] = $this->doctor_model->getDoctor();
         $data['settings'] = $this->settings_model->getSettings();
         $data['groups'] = $this->doctor_model->getBloodGroup();
+        $data['company'] = $this->company_model->getActiveCompany();
 
         $this->load->view('home/dashboard');
         $this->load->view('add_new', $data);
@@ -108,12 +110,13 @@ class Patient extends MX_Controller
             $this->form_validation->set_rules('email', 'Email', 'trim|required|min_length[2]|max_length[100]|xss_clean|is_unique[users.email]');
         }
         $this->form_validation->set_rules('name', 'Name', 'trim|required|min_length[2]|max_length[100]|xss_clean');
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|min_length[2]|max_length[100]|xss_clean');
+        $this->form_validation->set_rules('company_id', 'Company', 'trim|required');
+        $this->form_validation->set_rules('email', 'Email', 'trim|min_length[2]|max_length[100]|xss_clean');
         $this->form_validation->set_rules('birthdate', 'Birth Date', 'trim|min_length[2]|max_length[500]|xss_clean');
         $this->form_validation->set_rules('sex', 'Sex', 'trim|min_length[2]|max_length[100]|xss_clean');
-        $this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[2]|max_length[50]|xss_clean');
+        $this->form_validation->set_rules('phone', 'Phone', 'trim|min_length[2]|max_length[50]|xss_clean');
         $this->form_validation->set_rules('bloodgroup', 'Blood Group', 'trim|min_length[1]|max_length[10]|xss_clean');
-        $this->form_validation->set_rules('address', 'Address', 'trim|required|min_length[2]|max_length[500]|xss_clean');
+        $this->form_validation->set_rules('address', 'Address', 'trim|min_length[2]|max_length[500]|xss_clean');
 
         if ($this->form_validation->run() == FALSE) {
             if (!empty($id)) {
@@ -186,7 +189,8 @@ class Patient extends MX_Controller
                 'other_activity' => htmlentities($this->input->post('other_activity')),
                 'other_activity_comment' => htmlentities($this->input->post('other_activity_comment')),
                 'add_date' => $add_date,
-                'registration_time' => $registration_time
+                'registration_time' => $registration_time,
+                'company_id' => htmlentities($this->input->post('company_id')),
             );
 
             if ($this->upload->do_upload('img_url')) {
@@ -195,6 +199,7 @@ class Patient extends MX_Controller
 
                 $data['img_url'] = $img_url;
             }
+
 
             $username = $this->input->post('name');
 
@@ -287,6 +292,7 @@ class Patient extends MX_Controller
                 } else {
                     $password = $this->ion_auth_model->hash_password($password);
                 }
+                
                 $this->patient_model->updateIonUser($username, $email, $password, $ion_user_id);
                 $this->patient_model->updatePatient($id, $data);
                 $this->session->set_flashdata('feedback', lang('updated'));
@@ -298,6 +304,33 @@ class Patient extends MX_Controller
                 redirect('patient');
             }
         }
+    }
+
+    public function UpdateGeneralForm(){
+        $id = $this->input->post('id');
+        $data = array(
+            'patient_id' => $patient_id,
+            'idType' => htmlentities($this->input->post('idType')),
+            'idType_passport' => htmlentities($this->input->post('idType_passport')),
+            'idType_drivers' => htmlentities($this->input->post('idType_drivers')),
+            'idType_other' => htmlentities($this->input->post('idType_other')),
+            'address' => htmlentities($this->input->post('address')),
+            'chiefComplaint' => htmlentities($this->input->post('chiefComplaint')),
+            'historyOfIllness' => htmlentities($this->input->post('historyOfIllness')),
+            'pastMedicalHistory' => htmlentities($this->input->post('pastMedicalHistory')),
+            'pastSurgicalHistory' => htmlentities($this->input->post('pastSurgicalHistory')),
+            'allergies' => htmlentities($this->input->post('allergies')),
+            'allergies_comment' => htmlentities($this->input->post('allergies_comment')),
+            'smoking' => htmlentities($this->input->post('smoking')),
+            'smoking_comment' => htmlentities($this->input->post('smoking_comment')),
+            'alcohol' => htmlentities($this->input->post('alcohol')),
+            'alcohol_comment' => htmlentities($this->input->post('alcohol_comment')),
+            'other_activity' => htmlentities($this->input->post('other_activity')),
+            'other_activity_comment' => htmlentities($this->input->post('other_activity_comment')),
+        );
+        $this->patient_model->updatePatient($id, $data);
+        $this->session->set_flashdata('feedback', lang('updated'));
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
     function validatePatientMail()
@@ -345,6 +378,7 @@ class Patient extends MX_Controller
         $data['doctors'] = $this->doctor_model->getDoctor();
         $data['settings'] = $this->settings_model->getSettings();
         $data['groups'] = $this->doctor_model->getBloodGroup();
+        $data['company'] = $this->company_model->getActiveCompany();
 
         $this->load->view('home/dashboard');
         $this->load->view('add_new', $data);
@@ -913,6 +947,181 @@ class Patient extends MX_Controller
         $this->load->view('home/footer');
     }
 
+    // function medicalHistory()
+    // {
+    //     $data = array();
+    //     $id = $this->input->get('id');
+
+    //     if ($this->ion_auth->in_group(array('Patient'))) {
+    //         $patient_ion_id = $this->ion_auth->get_user_id();
+    //         $id = $this->patient_model->getPatientByIonUserId($patient_ion_id)->id;
+    //     }
+
+    //     $data['patient'] = $this->patient_model->getPatientById($id);
+    //     $data['appointments'] = $this->appointment_model->getAppointmentByPatient($data['patient']->id);
+    //     $data['patients'] = $this->patient_model->getPatient();
+    //     $data['doctors'] = $this->doctor_model->getDoctor();
+    //     $data['prescriptions'] = $this->prescription_model->getPrescriptionByPatientId($id);
+    //     $data['labs'] = $this->lab_model->getLabByPatientId($id);
+    //     $data['medical_histories'] = $this->patient_model->getMedicalHistoryByPatientId($id);
+    //     $data['patient_materials'] = $this->patient_model->getPatientMaterialByPatientId($id);
+    //     $data['folders'] = $this->patient_model->getFolderByPatientId($id);
+
+
+    //     foreach ($data['appointments'] as $appointment) {
+    //         $doctor_details = $this->doctor_model->getDoctorById($appointment->doctor);
+    //         if (!empty($doctor_details)) {
+    //             $doctor_name = $doctor_details->name;
+    //         } else {
+    //             $doctor_name = '';
+    //         }
+    //         $timeline[$appointment->date + 1] = '<div class="panel-body profile-activity" >
+    //             <h5 class="pull-left"><span class="label pull-right r-activity">' . lang('appointment') . '</span></h5>
+    //                                         <h5 class="pull-right">' . date('d-m-Y', $appointment->date) . '</h5>
+    //                                         <div class="activity terques">
+    //                                             <span>
+    //                                                 <i class="fa fa-stethoscope"></i>
+    //                                             </span>
+    //                                             <div class="activity-desk">
+    //                                                 <div class="panel col-md-6">
+    //                                                     <div class="panel-body">
+    //                                                         <div class="arrow"></div>
+    //                                                         <i class=" fa fa-calendar"></i>
+    //                                                         <h4>' . date('d-m-Y', $appointment->date) . '</h4>
+    //                                                         <p></p>
+    //                                                         <i class=" fa fa-user-md"></i>
+    //                                                             <h4>' . $doctor_name . '</h4>
+    //                                                                 <p></p>
+    //                                                                 <i class=" fa fa-clock-o"></i>
+    //                                                             <p>' . $appointment->s_time . ' - ' . $appointment->e_time . '</p>
+    //                                                     </div>
+    //                                                 </div>
+    //                                             </div>
+    //                                         </div>
+    //                                     </div>';
+    //     }
+
+    //     foreach ($data['prescriptions'] as $prescription) {
+    //         $doctor_details = $this->doctor_model->getDoctorById($prescription->doctor);
+    //         if (!empty($doctor_details)) {
+    //             $doctor_name = $doctor_details->name;
+    //         } else {
+    //             $doctor_name = '';
+    //         }
+    //         $timeline[$prescription->date + 2] = '<div class="panel-body profile-activity" >
+    //                                        <h5 class="pull-left"><span class="label pull-right r-activity">' . lang('prescription') . '</span></h5>
+    //                                         <h5 class="pull-right">' . date('d-m-Y', $prescription->date) . '</h5>
+    //                                         <div class="activity purple">
+    //                                             <span>
+    //                                                 <i class="fa fa-medkit"></i>
+    //                                             </span>
+    //                                             <div class="activity-desk">
+    //                                                 <div class="panel col-md-6">
+    //                                                     <div class="panel-body">
+    //                                                         <div class="arrow"></div>
+    //                                                         <i class=" fa fa-calendar"></i>
+    //                                                         <h4>' . date('d-m-Y', $prescription->date) . '</h4>
+    //                                                         <p></p>
+    //                                                         <i class=" fa fa-user-md"></i>
+    //                                                             <h4>' . $doctor_name . '</h4>
+    //                                                                 <a class="btn btn-info btn-xs detailsbutton" title="View" href="prescription/viewPrescription?id=' . $prescription->id . '"><i class="fa fa-eye"> View</i></a>
+    //                                                     </div>
+    //                                                 </div>
+    //                                             </div>
+    //                                         </div>
+    //                                     </div>';
+    //     }
+
+    //     foreach ($data['labs'] as $lab) {
+
+    //         $doctor_details = $this->doctor_model->getDoctorById($lab->doctor);
+    //         if (!empty($doctor_details)) {
+    //             $lab_doctor = $doctor_details->name;
+    //         } else {
+    //             $lab_doctor = '';
+    //         }
+
+    //         $timeline[$lab->date + 3] = '<div class="panel-body profile-activity" >
+    //                                         <h5 class="pull-left"><span class="label pull-right r-activity">' . lang('lab') . '</span></h5>
+    //                                         <h5 class="pull-right">' . date('d-m-Y', $lab->date) . '</h5>
+    //                                         <div class="activity blue">
+    //                                             <span>
+    //                                                 <i class="fa fa-flask"></i>
+    //                                             </span>
+    //                                             <div class="activity-desk">
+    //                                                 <div class="panel col-md-6">
+    //                                                     <div class="panel-body">
+    //                                                         <div class="arrow"></div>
+    //                                                         <i class=" fa fa-calendar"></i>
+    //                                                         <h4>' . date('d-m-Y', $lab->date) . '</h4>
+    //                                                         <p></p>
+    //                                                          <i class=" fa fa-user-md"></i>
+    //                                                             <h4>' . $lab_doctor . '</h4>
+    //                                                                 <a class="btn btn-xs invoicebutton" title="Lab" style="color: #fff;" href="lab/invoice?id=' . $lab->id . '"><i class="fa fa-file-text"></i>' . lang('report') . '</a>
+    //                                                     </div>
+    //                                                 </div> 
+    //                                             </div>
+    //                                         </div>
+    //                                     </div>';
+    //     }
+
+    //     foreach ($data['medical_histories'] as $medical_history) {
+    //         $timeline[$medical_history->date + 4] = '<div class="panel-body profile-activity" >
+    //                                         <h5 class="pull-left"><span class="label pull-right r-activity">' . lang('case_history') . '</span></h5>
+    //                                         <h5 class="pull-right">' . date('d-m-Y', $medical_history->date) . '</h5>
+    //                                         <div class="activity greenn">
+    //                                             <span>
+    //                                                 <i class="fa fa-file"></i>
+    //                                             </span>
+    //                                             <div class="activity-desk">
+    //                                                 <div class="panel col-md-6">
+    //                                                     <div class="panel-body">
+    //                                                         <div class="arrow"></div>
+    //                                                         <i class=" fa fa-calendar"></i>
+    //                                                         <h4>' . date('d-m-Y', $medical_history->date) . '</h4>
+    //                                                         <p></p>
+    //                                                          <i class=" fa fa-note"></i> 
+    //                                                             <p>' . $medical_history->description . '</p>
+    //                                                     </div>
+    //                                                 </div> 
+    //                                             </div>
+    //                                         </div>
+    //                                     </div>';
+    //     }
+
+    //     foreach ($data['patient_materials'] as $patient_material) {
+    //         $timeline[$patient_material->date + 5] = '<div class="panel-body profile-activity" >
+    //                                        <h5 class="pull-left"><span class="label pull-right r-activity">' . lang('documents') . '</span></h5>
+    //                                         <h5 class="pull-right">' . date('d-m-Y', $patient_material->date) . '</h5>
+    //                                         <div class="activity purplee">
+    //                                             <span>
+    //                                                 <i class="fa fa-file-o"></i>
+    //                                             </span>
+    //                                             <div class="activity-desk">
+    //                                                 <div class="panel col-md-6">
+    //                                                     <div class="panel-body">
+    //                                                         <div class="arrow"></div>
+    //                                                         <i class=" fa fa-calendar"></i>
+    //                                                         <h4>' . date('d-m-Y', $patient_material->date) . ' <a class="pull-right" title="' . lang('download') . '"  href="' . $patient_material->url . '" download=""> <i class=" fa fa-download"></i> </a> </h4>
+                                                                
+    //                                                              <h4>' . $patient_material->title . '</h4>
+                                                            
+                                                                
+    //                                                     </div>
+    //                                                 </div> 
+    //                                             </div>
+    //                                         </div>
+    //                                     </div>';
+    //     }
+
+    //     if (!empty($timeline)) {
+    //         $data['timeline'] = $timeline;
+    //     }
+    //     $this->load->view('home/dashboard');
+    //     $this->load->view('medical_history', $data);
+    //     $this->load->view('home/footer');
+    // }
+
     function medicalHistory()
     {
         $data = array();
@@ -924,6 +1133,14 @@ class Patient extends MX_Controller
         }
 
         $data['patient'] = $this->patient_model->getPatientById($id);
+        
+        if ($this->ion_auth->in_group(array('Doctor'))) {
+            $doctor_ion_id = $this->ion_auth->get_user_id();
+            $data['doctor'] = $this->doctor_model->getDoctorByIonUserId($doctor_ion_id);
+            $data['appointments'] = $this->appointment_model->getAppointmentByPatientAndDoctor($data['patient']->id,$data['doctor']->id);
+        }else{
+            $data['appointments'] = $this->appointment_model->getAppointmentByPatient($data['patient']->id);
+        }
         $data['appointments'] = $this->appointment_model->getAppointmentByPatient($data['patient']->id);
         $data['patients'] = $this->patient_model->getPatient();
         $data['doctors'] = $this->doctor_model->getDoctor();
@@ -1314,6 +1531,7 @@ class Patient extends MX_Controller
             "0" => "id",
             "1" => "name",
             "2" => "phone",
+            "3" => "company",
         );
         $values = $this->settings_model->getColumnOrder($order, $columns_valid);
         $dir = $values[0];
@@ -1338,38 +1556,43 @@ class Patient extends MX_Controller
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
 
                 // $options1 = ' <a type="button" class="btn editbutton" title="' . lang('edit') . '" data-toggle = "modal" data-id="' . $patient->id . '"><i class="fa fa-edit"> </i> ' . lang('edit') . '</a>';
-                $options1 = '<a class="btn btn-success" title="' . lang('edit') . '" style="color: #fff;" href="patient/editPatient?id=' . $patient->id . '"><i class="fa fa-edit"></i> ' . lang('edit') . '</a>';
+                $options1 = '<a class="btn edit-bg-new btn-success" title="' . lang('edit') . '" style="color: #fff;" href="patient/editPatient?id=' . $patient->id . '"><i class="fa fa-edit"></i> ' . lang('edit') . '</a>';
             }
 
-            $options2 = '<a class="btn detailsbutton" title="' . lang('info') . '" style="color: #fff;" href="patient/patientDetails?id=' . $patient->id . '"><i class="fa fa-info"></i> ' . lang('info') . '</a>';
+            $options2 = '<a class="btn info-bg-new detailsbutton" title="' . lang('info') . '" style="color: #fff;" href="patient/patientDetails?id=' . $patient->id . '"><i class="fa fa-info"></i> ' . lang('info') . '</a>';
 
-            $options3 = '<a class="btn green" title="' . lang('history') . '" style="color: #fff;" href="patient/medicalHistory?id=' . $patient->id . '"><i class="fa fa-stethoscope"></i> ' . lang('history') . '</a>';
+            $options3 = '<a class="btn history-bg-new green" title="' . lang('history') . '" style="color: #fff;" href="patient/medicalHistory?id=' . $patient->id . '"><i class="fa fa-stethoscope"></i> ' . lang('history') . '</a>';
 
-            $options4 = '<a class="btn invoicebutton" title="' . lang('payment') . '" style="color: #fff;" href="finance/patientPaymentHistory?patient=' . $patient->id . '"><i class="fa fa-money-bill-alt"></i> ' . lang('payment') . '</a>';
+            $options4 = '<a class="btn payment-bg-new invoicebutton" title="' . lang('payment') . '" style="color: #fff;" href="finance/patientPaymentHistory?patient=' . $patient->id . '"><i class="fa fa-money-bill-alt"></i> ' . lang('payment') . '</a>';
 
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
-                $options5 = '<a class="btn delete_button" title="' . lang('delete') . '" href="patient/delete?id=' . $patient->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"></i> ' . lang('delete') . '</a>';
+                $options5 = '<a class="btn delete-bg-new delete_button" title="' . lang('delete') . '" href="patient/delete?id=' . $patient->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"></i> ' . lang('delete') . '</a>';
             }
 
-            $options6 = ' <a type="button" class="btn detailsbutton inffo" title="' . lang('info') . '" data-toggle = "modal" data-id="' . $patient->id . '"><i class="fa fa-info"> </i> ' . lang('info') . '</a>';
+            $options6 = ' <a type="button" class="btn info-bg-new detailsbutton inffo" title="' . lang('info') . '" data-toggle = "modal" data-id="' . $patient->id . '"><i class="fa fa-info"> </i> ' . lang('info') . '</a>';
 
             // $medicalOpt = '<a class="btn btn-primary" title="' . lang('medical_info') . '" style="color: #fff;" href="patient/medical?id=' . $patient->id . '&tab=general"><i class="fa fa-notes-medical"></i> ' . lang('medical_info') . '</a>';
             $medicalOpt = '';
 
 
             if ($this->ion_auth->in_group('Doctor')) {
-                $options7 = '<a class="btn green detailsbutton" title="' . lang('instant_meeting') . '" style="color: #fff;" href="meeting/instantLive?id=' . $patient->id . '" onclick="return confirm(\'Are you sure you want to start a live meeting with this patient? SMS and Email will be sent to the Patient.\');"><i class="fa fa-headphones"></i> ' . lang('start_live') . '</a>';
+                $options7 = '<a class="btn green start-live-bg-new detailsbutton" title="' . lang('instant_meeting') . '" style="color: #fff;" href="meeting/instantLive?id=' . $patient->id . '" onclick="return confirm(\'Are you sure you want to start a live meeting with this patient? SMS and Email will be sent to the Patient.\');"><i class="fa fa-headphones"></i> ' . lang('start_live') . '</a>';
             } else {
                 $options7 = '';
             }
 
+            $companyDetails = $this->company_model->getCompanyById($patient->company_id);
 
             if ($this->ion_auth->in_group(array('admin'))) {
                 $info[] = array(
                     $patient->id,
                     $patient->name,
                     $patient->phone,
-                    $this->settings_model->getSettings()->currency . $this->patient_model->getDueBalanceByPatientId($patient->id),
+                    
+                    $patient->sex,
+                    $companyDetails->name??'',
+                    
+                    // $this->settings_model->getSettings()->currency . $this->patient_model->getDueBalanceByPatientId($patient->id),
                     $options1 . ' ' . $options6 . ' ' . $medicalOpt . ' ' . $options3 . ' ' . $options4 . ' ' . $options5,
                 );
             }
@@ -1379,7 +1602,9 @@ class Patient extends MX_Controller
                     $patient->id,
                     $patient->name,
                     $patient->phone,
-                    $this->settings_model->getSettings()->currency . $this->patient_model->getDueBalanceByPatientId($patient->id),
+                    $patient->sex,
+                    $companyDetails->name??'',
+                    // $this->settings_model->getSettings()->currency . $this->patient_model->getDueBalanceByPatientId($patient->id),
                     $options1 . ' ' . $options6 . ' ' . $options4,
                 );
             }
@@ -1389,6 +1614,8 @@ class Patient extends MX_Controller
                     $patient->id,
                     $patient->name,
                     $patient->phone,
+                    $patient->sex,
+                    $companyDetails->name??'',
                     $options1 . ' ' . $options6 . ' ' . $medicalOpt . ' ' . $options3,
                 );
             }
@@ -1475,17 +1702,17 @@ class Patient extends MX_Controller
 
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
 
-                $options1 = ' <a type="button" class="btn editbutton" title="' . lang('edit') . '" data-toggle = "modal" data-id="' . $patient->id . '"><i class="fa fa-edit"> </i> ' . lang('edit') . '</a>';
+                $options1 = ' <a type="button" class="btn edit-bg-new editbutton" title="' . lang('edit') . '" data-toggle = "modal" data-id="' . $patient->id . '"><i class="fa fa-edit"> </i> ' . lang('edit') . '</a>';
             }
 
-            $options2 = '<a class="btn detailsbutton" title="' . lang('info') . '" style="color: #fff;" href="patient/patientDetails?id=' . $patient->id . '"><i class="fa fa-info"></i> ' . lang('info') . '</a>';
+            $options2 = '<a class="btn info-bg-new detailsbutton" title="' . lang('info') . '" style="color: #fff;" href="patient/patientDetails?id=' . $patient->id . '"><i class="fa fa-info"></i> ' . lang('info') . '</a>';
 
-            $options3 = '<a class="btn green" title="' . lang('history') . '" style="color: #fff;" href="patient/medicalHistory?id=' . $patient->id . '"><i class="fa fa-stethoscope"></i> ' . lang('history') . '</a>';
+            $options3 = '<a class="btn history-bg-new green" title="' . lang('history') . '" style="color: #fff;" href="patient/medicalHistory?id=' . $patient->id . '"><i class="fa fa-stethoscope"></i> ' . lang('history') . '</a>';
 
-            $options4 = '<a class="btn btn-xs green" title="' . lang('payment') . ' ' . lang('history') . '" style="color: #fff;" href="finance/patientPaymentHistory?patient=' . $patient->id . '"><i class="fa fa-money-bill-alt"></i> ' . lang('payment') . ' ' . lang('history') . '</a>';
+            $options4 = '<a class="btn payment-bg-new btn-xs green" title="' . lang('payment') . ' ' . lang('history') . '" style="color: #fff;" href="finance/patientPaymentHistory?patient=' . $patient->id . '"><i class="fa fa-money-bill-alt"></i> ' . lang('payment') . ' ' . lang('history') . '</a>';
 
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
-                $options5 = '<a class="btn delete_button" title="' . lang('delete') . '" href="patient/delete?id=' . $patient->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"></i> ' . lang('delete') . '</a>';
+                $options5 = '<a class="btn delete-bg-new delete_button" title="' . lang('delete') . '" href="patient/delete?id=' . $patient->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"></i> ' . lang('delete') . '</a>';
             }
 
             $due = $this->settings_model->getSettings()->currency . $this->patient_model->getDueBalanceByPatientId($patient->id);
@@ -1554,11 +1781,11 @@ class Patient extends MX_Controller
 
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
 
-                $options1 = ' <a type="button" class="btn btn-info btn-xs btn_width editbutton" title="' . lang('edit') . '" data-toggle = "modal" data-id="' . $case->id . '"><i class="fa fa-edit"> </i> </a>';
+                $options1 = ' <a type="button" class="btn edit-bg-new btn-info btn-xs btn_width editbutton" title="' . lang('edit') . '" data-toggle = "modal" data-id="' . $case->id . '"><i class="fa fa-edit"> </i> </a>';
             }
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
-                $options2 = '<a class="btn btn-info btn-xs btn_width delete_button" title="' . lang('delete') . '" href="patient/deleteCaseHistory?id=' . $case->id . '&redirect=case" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"></i></a>';
-                $options3 = ' <a type="button" class="btn btn-info btn-xs btn_width detailsbutton case" title="' . lang('case') . '" data-toggle = "modal" data-id="' . $case->id . '"><i class="fa fa-file"> </i> </a>';
+                $options2 = '<a class="btn delete-bg-new btn-info btn-xs btn_width delete_button" title="' . lang('delete') . '" href="patient/deleteCaseHistory?id=' . $case->id . '&redirect=case" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"></i></a>';
+                $options3 = ' <a type="button" class="btn case-bg-new btn-info btn-xs btn_width detailsbutton case" title="' . lang('case') . '" data-toggle = "modal" data-id="' . $case->id . '"><i class="fa fa-file"> </i> </a>';
             }
 
             if (!empty($case->patient_id)) {

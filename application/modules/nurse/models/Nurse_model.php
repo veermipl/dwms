@@ -1,49 +1,74 @@
 <?php
 
+
+
 if (!defined('BASEPATH'))
+
     exit('No direct script access allowed');
 
-class Nurse_model extends CI_model {
 
-    function __construct() {
+
+class Nurse_model extends CI_model
+{
+    function __construct()
+    {
         parent::__construct();
+
         $this->load->database();
     }
 
-    function insertNurse($data) {
+
+    function insertNurse($data)
+    {
         $this->db->insert('nurse', $data);
     }
 
-    function getNurse() {
-        $query = $this->db->order_by('id','desc')->get('nurse');
+
+    function getNurse()
+    {
+        $query = $this->db->order_by('id', 'desc')->get('nurse');
         return $query->result();
+
+        // $query = $this->db->select('nurse.*')->from('users')->join('nurse', 'users.id = nurse.ion_user_id', 'right')->where('users.active', 1);
+        // return $query->result();
     }
 
-    function getNurseById($id) {
+
+    function getNurseById($id)
+    {
         $this->db->where('id', $id);
         $query = $this->db->get('nurse');
+
         return $query->row();
     }
 
-    function updateNurse($id, $data) {
+
+    function updateNurse($id, $data)
+    {
         $this->db->where('id', $id);
         $this->db->update('nurse', $data);
     }
 
-    function delete($id) {
+
+    function delete($id)
+    {
         $this->db->where('id', $id);
         $this->db->delete('nurse');
     }
 
-    function updateIonUser($username, $email, $password, $ion_user_id) {
+
+    function updateIonUser($username, $email, $password, $ion_user_id)
+    {
         $uptade_ion_user = array(
             'username' => $username,
             'email' => $email,
             'password' => $password
         );
+
         $this->db->where('id', $ion_user_id);
         $this->db->update('users', $uptade_ion_user);
     }
+
 
     function getNurseUser($id)
     {
@@ -57,6 +82,7 @@ class Nurse_model extends CI_model {
         }
     }
 
+
     function changeUserStatus($id, $status)
     {
         $data = [
@@ -68,5 +94,4 @@ class Nurse_model extends CI_model {
 
         return true;
     }
-
 }
